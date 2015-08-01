@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="cbstatus_array">
+        <item>已采集</item>
+        <item>人户分离未采集</item>
+        <item>长期外出未采集</item>
+        <item>情况不明未采集</item>
+    </string-array>
+
+    <string-array name="cbstate_array">
+        <item>从未参保</item>
+        <item>参保后断保</item>
+        <item>在外地参保（或享受社保待遇）</item>
+    </string-array>
+
+    <string-array name="status_array">
+        <item>学龄前</item>
+        <item>在校（园）学生</item>
+        <item>单位就业</item>
+        <item>灵活就业</item>
+        <item>无业</item>
+        <item>务农</item>
+        <item>参军</item>
+        <item>服刑</item>
+        <item>老年无待遇</item>
+    </string-array>
+
+    <string-array name="reason_array">
+        <item>无意愿参保</item>
+        <item>无缴费能力</item>
+        <item>政策不了解</item>
+        <item>单位未参保</item>
+        <item>无意愿参保</item>
+    </string-array>
+
+</resources>

@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="#f2f2f2"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:visibility="visible">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="未参保信息"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/login_text_size"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@android:color/white"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center|left"
+                android:padding="10dp"
+                android:text="当前常住地："
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/common_text_size" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:gravity="center|left"
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:id="@+id/WCBprovSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:gravity="center|left" />
+
+                <Spinner
+                    android:id="@+id/WCBcitySpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center|left" />
+
+                <Spinner
+                    android:id="@+id/WCBtownSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center|left" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center|left"
+                android:padding="10dp"
+                android:text="地址："
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/common_text_size" />
+
+            <EditText
+                android:id="@+id/WCBaddressEditText"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:gravity="center|left"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:padding="5dp"
+                android:textColor="@android:color/black"
+                android:background="@drawable/input_bg"
+                android:textSize="@dimen/common_text_size" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@android:color/white"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center|left"
+                android:padding="10dp"
+                android:text="当前状态："
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/common_text_size" />
+
+            <Spinner
+                android:id="@+id/WCBStatusSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:gravity="center|left"
+                android:entries="@array/status_array"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center|left"
+                android:padding="10dp"
+                android:text="当前未参保原因："
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/common_text_size" />
+
+            <Spinner
+                android:id="@+id/WCBReasonSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:gravity="center|left"
+                android:entries="@array/reason_array"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@android:color/white"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center|left"
+                android:padding="10dp"
+                android:text="单位（学校）名称："
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/common_text_size" />
+
+            <EditText
+                android:id="@+id/WCBorgNameEditText"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:gravity="center|left"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:textColor="@android:color/black"
+                android:padding="5dp"
+                android:background="@drawable/input_bg"
+                android:textSize="@dimen/common_text_size" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center|left"
+                android:padding="10dp"
+                android:text="单位（学校）所在地："
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/common_text_size" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:gravity="center|left"
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:id="@+id/WCBorgProvSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:gravity="center|left" />
+
+                <Spinner
+                    android:id="@+id/WCBorgCitySpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center|left" />
+
+                <Spinner
+                    android:id="@+id/WCBorgTownSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center|left" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center|left"
+                android:padding="10dp"
+                android:text="单位（学校）地址："
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/common_text_size" />
+
+            <EditText
+                android:id="@+id/WCBorgAddrEditText"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:gravity="center|left"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:padding="5dp"
+                android:background="@drawable/input_bg"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/common_text_size" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@android:color/white"
+            android:orientation="horizontal"
+            android:padding="10dp">
+            <CheckBox
+                android:id="@+id/WCBCheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center|left"
+                android:padding="10dp"
+                android:text="经宣传后确认参保"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/common_text_size" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
