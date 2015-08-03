@@ -35,7 +35,7 @@
                     android:textSize="@dimen/common_text_size" />
 
                 <TextView
-                    android:id="@+id/NameTextView"
+                    android:id="@+id/UndealNameTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="chenguoquan"
@@ -59,7 +59,7 @@
                     android:textSize="@dimen/common_text_size" />
 
                 <TextView
-                    android:id="@+id/SexTextView"
+                    android:id="@+id/UndealSexTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="男"
@@ -83,7 +83,7 @@
                     android:textSize="@dimen/common_text_size" />
 
                 <TextView
-                    android:id="@+id/BirthTextView"
+                    android:id="@+id/UndealBirthTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="1990-10－12"
@@ -107,7 +107,7 @@
                     android:textSize="@dimen/common_text_size" />
 
                 <TextView
-                    android:id="@+id/AgeTextView"
+                    android:id="@+id/UndealAgeTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="25"
@@ -131,7 +131,7 @@
                     android:textSize="@dimen/common_text_size" />
 
                 <TextView
-                    android:id="@+id/RoonNoTextView"
+                    android:id="@+id/UndealRoonNoTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="1234568"
@@ -155,7 +155,7 @@
                     android:textSize="@dimen/common_text_size" />
 
                 <TextView
-                    android:id="@+id/ContractTextView"
+                    android:id="@+id/UndealContractTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="15926395578"
@@ -179,7 +179,7 @@
                     android:textSize="@dimen/common_text_size" />
 
                 <TextView
-                    android:id="@+id/RegionTextView"
+                    android:id="@+id/UndealRegionTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="姑苏区"
@@ -203,7 +203,7 @@
                     android:textSize="@dimen/common_text_size" />
 
                 <TextView
-                    android:id="@+id/AreaTextView"
+                    android:id="@+id/UndealAreaTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="xx街道"
@@ -227,7 +227,7 @@
                     android:textSize="@dimen/common_text_size" />
 
                 <TextView
-                    android:id="@+id/PropTextView"
+                    android:id="@+id/UndealPropTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="xx社区"
@@ -251,7 +251,7 @@
                     android:textSize="@dimen/common_text_size" />
 
                 <TextView
-                    android:id="@+id/LocationTextView"
+                    android:id="@+id/UndealLocationTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="xx省xx市xx县"
@@ -284,7 +284,7 @@
                     android:textSize="@dimen/common_text_size" />
 
                 <TextView
-                    android:id="@+id/TurnInTimeTextView"
+                    android:id="@+id/UndealTurnInTimeTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="chenguoquan"
@@ -308,7 +308,7 @@
                     android:textSize="@dimen/common_text_size" />
 
                 <TextView
-                    android:id="@+id/BeforeRoadTextView"
+                    android:id="@+id/UndealBeforeRoadTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="男"
@@ -332,7 +332,7 @@
                     android:textSize="@dimen/common_text_size" />
 
                 <TextView
-                    android:id="@+id/BeforeAreaTextView"
+                    android:id="@+id/UndealBeforeAreaTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="1990-10－12"
@@ -356,7 +356,7 @@
                     android:textSize="@dimen/common_text_size" />
 
                 <TextView
-                    android:id="@+id/TurnReasonTextView"
+                    android:id="@+id/UndealTurnReasonTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="25"
@@ -379,6 +379,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:text="接受"
+                android:onClick="UndealReceiveClick"
                 android:textColor="@android:color/black"
                 android:layout_marginRight="10dp"
                 android:textSize="@dimen/button_text_size" />
@@ -389,6 +390,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:text="拒绝"
+                android:onClick="UndealRejectClick"
                 android:textColor="@android:color/black"
                 android:layout_marginRight="10dp"
                 android:textSize="@dimen/button_text_size" />

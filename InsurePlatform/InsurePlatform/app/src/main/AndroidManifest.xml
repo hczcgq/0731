@@ -40,6 +40,10 @@
         <activity android:name=".ui.CollectionActivity"/>
         <activity android:name=".ui.TurnInActivity"/>
         <activity android:name=".ui.TurnOutActivity"/>
+        <activity android:name=".ui.TurnInReceiveDialogActivity"
+                  android:theme="@style/MyDialogStyle"/>
+        <activity android:name=".ui.TurnInRejectDialogActivity"
+                  android:theme="@style/MyDialogStyle"/>
     </application>
 
 </manifest>

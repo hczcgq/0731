@@ -18,6 +18,7 @@ import android.widget.ViewFlipper;
 
 import com.chen.insurre.R;
 import com.chen.insurre.adapter.TurnAdapter;
+import com.chen.insurre.bean.TurnOutDetailInfo;
 import com.chen.insurre.bean.ResultInfo;
 import com.chen.insurre.bean.TurnItemInfo;
 import com.chen.insurre.bean.TurnListItem;
@@ -42,7 +43,7 @@ public class TurnOutActivity extends Activity implements View.OnClickListener{
 
     private TextView UndealTextview, ReceiveTextview, RejectTextview;
 
-    private TextView TurnListNameTextView;
+    private TextView TurnListNameTextView,TurnDetailNameTextView;
 
     private ListView TurnListView;
 
@@ -89,6 +90,7 @@ public class TurnOutActivity extends Activity implements View.OnClickListener{
         RejectTextview = (TextView) findViewById(R.id.RejectTextview);
 
         TurnListNameTextView= (TextView) findViewById(R.id.TurnListNameTextView);
+        TurnDetailNameTextView= (TextView) findViewById(R.id.TurnDetailNameTextView);
 
         ListViewButton=(Button)findViewById(R.id.ListViewButton);
         DetailButton=(Button)findViewById(R.id.DetailButton);
@@ -167,13 +169,13 @@ public class TurnOutActivity extends Activity implements View.OnClickListener{
      * @param info
      */
     private void showItemDate(TurnItemInfo info){
-        CharSequence receiceMsg= Html.fromHtml("转入人员<font color=\"#1026FB\">（已接收" + info.getReceive() + "人）</font>");
+        CharSequence receiceMsg= Html.fromHtml("转出人员<font color=\"#1026FB\">（已接收" + info.getReceive() + "人）</font>");
         ReceiveTextview.setText(receiceMsg);
 
-        CharSequence undealMsg= Html.fromHtml("转入人员<font color=\"#FB1E27\">（未处理" + info.getUndeal() + "人）</font>");
+        CharSequence undealMsg= Html.fromHtml("转出人员<font color=\"#FB1E27\">（未处理" + info.getUndeal() + "人）</font>");
         UndealTextview.setText(undealMsg);
 
-        CharSequence rejectMsg= Html.fromHtml("转入人员<font color=\"#D07D57\">（已拒绝" + info.getReject() + "人）</font>");
+        CharSequence rejectMsg= Html.fromHtml("转出人员<font color=\"#D07D57\">（已拒绝" + info.getReject() + "人）</font>");
         RejectTextview.setText(rejectMsg);
     }
     /**
@@ -182,13 +184,13 @@ public class TurnOutActivity extends Activity implements View.OnClickListener{
      */
     private void showTurnListName(int requestType,String index){
         if(requestType==TRUN_OUT_RECEIVE) {
-            CharSequence receiceMsg= Html.fromHtml("转入人员<font color=\"#1026FB\">（已接收" + index + "人）</font>");
+            CharSequence receiceMsg= Html.fromHtml("转出人员<font color=\"#1026FB\">（已接收" + index + "人）</font>");
             TurnListNameTextView.setText(receiceMsg);
         }else if(requestType==TRUN_OUT_REJECT) {
-            CharSequence receiceMsg= Html.fromHtml("转入人员<font color=\"#D07D57\">（已拒绝" +index + "人）</font>");
+            CharSequence receiceMsg= Html.fromHtml("转出人员<font color=\"#D07D57\">（已拒绝" +index + "人）</font>");
             TurnListNameTextView.setText(receiceMsg);
         }else if(requestType==TRUN_OUT_UNDEAL) {
-            CharSequence receiceMsg= Html.fromHtml("转入人员<font color=\"#FB1E27\">（未处理" +index + "人）</font>");
+            CharSequence receiceMsg= Html.fromHtml("转出人员<font color=\"#FB1E27\">（未处理" +index + "人）</font>");
             TurnListNameTextView.setText(receiceMsg);
         }
 
@@ -197,16 +199,16 @@ public class TurnOutActivity extends Activity implements View.OnClickListener{
      * 第三页面title
      * @param requestType
      */
-    private void showTurnDetailName(int requestType,String index){
+    private void showTurnDetailName(int requestType){
         if(requestType==TRUN_OUT_RECEIVE) {
-            CharSequence receiceMsg= Html.fromHtml("转入人员<font color=\"#1026FB\">（已接收" + index + "人）</font>");
-            TurnListNameTextView.setText(receiceMsg);
+            CharSequence receiceMsg= Html.fromHtml("转出人员<font color=\"#1026FB\">（已接收）</font>");
+            TurnDetailNameTextView.setText(receiceMsg);
         }else if(requestType==TRUN_OUT_REJECT) {
-            CharSequence receiceMsg= Html.fromHtml("转入人员<font color=\"#D07D57\">（已拒绝" +index + "人）</font>");
-            TurnListNameTextView.setText(receiceMsg);
+            CharSequence receiceMsg= Html.fromHtml("转出人员<font color=\"#D07D57\">（已拒绝）</font>");
+            TurnDetailNameTextView.setText(receiceMsg);
         }else if(requestType==TRUN_OUT_UNDEAL) {
-            CharSequence receiceMsg= Html.fromHtml("转入人员<font color=\"#FB1E27\">（未处理" +index + "人）</font>");
-            TurnListNameTextView.setText(receiceMsg);
+            CharSequence receiceMsg= Html.fromHtml("转出人员<font color=\"#FB1E27\">（未处理）</font>");
+            TurnDetailNameTextView.setText(receiceMsg);
         }
     }
 
@@ -338,21 +340,29 @@ public class TurnOutActivity extends Activity implements View.OnClickListener{
                         showFaik(Item);
                     }
                 }else if(requestType==TRUN_OUT_DETAIL) {
+                    showTurnDetailName(Tag);
+                    ResultInfo<TurnOutDetailInfo> Item=new Gson().fromJson(result,new TypeToken<ResultInfo<TurnOutDetailInfo>>(){}.getType());
                     if (viewFlipper.getDisplayedChild() != 0) {
                         viewFlipper.showNext();
-                        if(Tag==TRUN_OUT_RECEIVE){
-                            DetailReceiveView.setVisibility(View.VISIBLE);
-                            DetailRejectView.setVisibility(View.GONE);
-                            DetailUndealView.setVisibility(View.GONE);
-                        }else if(Tag==TRUN_OUT_REJECT){
-                            DetailReceiveView.setVisibility(View.GONE);
-                            DetailRejectView.setVisibility(View.VISIBLE);
-                            DetailUndealView.setVisibility(View.GONE);
-                        }else if(Tag==TRUN_OUT_UNDEAL){
-                            DetailReceiveView.setVisibility(View.GONE);
-                            DetailRejectView.setVisibility(View.GONE);
-                            DetailUndealView.setVisibility(View.VISIBLE);
+                        if (Item != null && Item.getResult() != null
+                                && Item.getResult().equals("0")) {
+                            if(Tag==TRUN_OUT_RECEIVE){
+                                DetailReceiveView.setVisibility(View.VISIBLE);
+                                DetailRejectView.setVisibility(View.GONE);
+                                DetailUndealView.setVisibility(View.GONE);
+                            }else if(Tag==TRUN_OUT_REJECT){
+                                DetailReceiveView.setVisibility(View.GONE);
+                                DetailRejectView.setVisibility(View.VISIBLE);
+                                DetailUndealView.setVisibility(View.GONE);
+                            }else if(Tag==TRUN_OUT_UNDEAL){
+                                DetailReceiveView.setVisibility(View.GONE);
+                                DetailRejectView.setVisibility(View.GONE);
+                                DetailUndealView.setVisibility(View.VISIBLE);
+                            }
+                        } else{
+                            showFaik(Item);
                         }
+
                     }
                 }
             }

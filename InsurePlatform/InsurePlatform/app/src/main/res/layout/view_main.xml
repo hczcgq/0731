@@ -94,7 +94,7 @@
                     android:id="@+id/TurnOutTextView"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/login_text_size"
-                    android:text="走访对象采集"
+                    android:text="走访对象转出"
                     android:textColor="@android:color/black"
                     android:layout_gravity="center"
                     android:gravity="center"
