@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
@@ -15,6 +16,7 @@ import com.chen.insurre.R;
 import com.chen.insurre.bean.LoginInfo;
 import com.chen.insurre.bean.ResultInfo;
 import com.chen.insurre.http.HttpHelper;
+import com.chen.insurre.http.InsureClient;
 import com.chen.insurre.util.CommTools;
 import com.chen.insurre.util.Constant;
 import com.chen.insurre.util.NetworkUtil;
@@ -24,6 +26,12 @@ import com.chen.insurre.util.ToastUtil;
 import com.chen.insurre.view.ValidateImageView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.apache.http.Header;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 
@@ -40,8 +48,9 @@ public class LoginActivity extends Activity {
 
     private Activity mContext=this;
 
-
     private LoginTask mLoginTask;
+
+    private Dialog dialog;
 
 
     @Override
@@ -120,21 +129,27 @@ public class LoginActivity extends Activity {
 //            return;
 //        }
 
+
+
         if (mLoginTask != null
                 && mLoginTask.getStatus() != AsyncTask.Status.FINISHED)
             mLoginTask.cancel(true);
         mLoginTask = new LoginTask();
         mLoginTask.execute(username, password);
+
+
+
+//        loginServer(username,password);
+
     }
 
+
     private class LoginTask extends AsyncTask<String, Void, ResultInfo> {
-        private Dialog dialog;
         private String userName;
 
         protected void onPreExecute() {
             // TODO Auto-generated method stub
             super.onPreExecute();
-
             try {
                 dialog = ProgressDialog.show(LoginActivity.this, "请稍后",
                         "登录中...");
@@ -193,6 +208,65 @@ public class LoginActivity extends Activity {
                 Toast.makeText(mContext, "登录失败，请稍后再试!", Toast.LENGTH_SHORT)
                         .show();
             }
+        }
+    }
+
+
+
+
+
+    private void loginServer(String username,String password){
+        String url = CommTools.getRequestUrl(mContext, R.string.login_url);
+        HashMap<String, String> hashParams = new HashMap<String, String>();
+        hashParams.put("uname", username);
+        hashParams.put("upass", password);
+        RequestParams params = new RequestParams(hashParams);
+        InsureClient.get(url,params,new JsonHttpResponseHandler(){
+            @Override
+            public void onStart() {
+                super.onStart();
+                try {
+                    dialog = ProgressDialog.show(LoginActivity.this, "请稍后",
+                            "登录中...");
+                    dialog.setCancelable(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                if (dialog != null)
+                    dialog.dismiss();
+                Log.d("chen1",response.toString());
+                processResult(response.toString());
+            }
+        });
+    }
+
+    private void processResult(String result){
+        ResultInfo resultInfo=new Gson().fromJson(result ,new TypeToken<ResultInfo<LoginInfo>>(){}.getType());
+        if (resultInfo != null && resultInfo.getResult() != null
+                && resultInfo.getResult().equals("0")) {
+            LoginInfo loginInfo=(LoginInfo)resultInfo.getBean();
+            if(loginInfo!=null){
+                PreferencesUtils.putString(mContext, Constant.SP_USER_ID,loginInfo.getId());
+                PreferencesUtils.putString(mContext,Constant.SP_USER_PASSWD,loginInfo.getPasswd());
+                PreferencesUtils.putString(mContext,Constant.SP_USER_NAME,loginInfo.getName());
+                PreferencesUtils.putString(mContext,Constant.SP_USER_KEY,loginInfo.getKey());
+                PreferencesUtils.putString(mContext, Constant.SP_USER_REGKEY, loginInfo.getRegkey());
+            }
+            Intent intent=new Intent(mContext,MainActivity.class);
+            startActivity(intent);
+            finish();
+        } else if (resultInfo != null && resultInfo.getDescription() != null
+                && !resultInfo.getDescription().equals("")) {
+            Toast.makeText(mContext, "登录失败，" + resultInfo.getDescription(),
+                    Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(mContext, "登录失败，请稍后再试!", Toast.LENGTH_SHORT)
+                    .show();
         }
     }
 }

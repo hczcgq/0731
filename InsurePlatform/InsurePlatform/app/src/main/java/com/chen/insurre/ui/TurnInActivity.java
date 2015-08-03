@@ -42,11 +42,13 @@ public class TurnInActivity extends Activity implements View.OnClickListener{
 
     private TextView UndealTextview, ReceiveTextview, RejectTextview;
 
-    private TextView TurnInNameTextView;
+    private TextView TurnListNameTextView,TurnDetailNameTextView;
 
     private ListView TurnListView;
 
     private Button ListViewButton,DetailButton;
+
+    private View DetailUndealView,DetailReceiveView,DetailRejectView;
 
     private ViewFlipper viewFlipper;
 
@@ -58,6 +60,8 @@ public class TurnInActivity extends Activity implements View.OnClickListener{
 
     private TurnItemInfo mTurnItemInfo;
 
+    private String cardno;
+
 
     private static final int TRUN_IN=0;
     private static final int TRUN_IN_UNDEAL=1;
@@ -65,15 +69,16 @@ public class TurnInActivity extends Activity implements View.OnClickListener{
     private static final int TRUN_IN_REJECT=3;
     private static final int TRUN_IN_DETAIL=4;
 
+
+    private int Tag=TRUN_IN_UNDEAL;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.view_turn);
 
-
         initView();
-
         loadDate(TRUN_IN);
     }
 
@@ -83,12 +88,17 @@ public class TurnInActivity extends Activity implements View.OnClickListener{
         UndealTextview = (TextView) findViewById(R.id.UndealTextview);
         RejectTextview = (TextView) findViewById(R.id.RejectTextview);
 
-        TurnInNameTextView= (TextView) findViewById(R.id.TurnInNameTextView);
+        TurnListNameTextView= (TextView) findViewById(R.id.TurnListNameTextView);
+        TurnDetailNameTextView= (TextView) findViewById(R.id.TurnDetailNameTextView);
 
         ListViewButton=(Button)findViewById(R.id.ListViewButton);
         DetailButton=(Button)findViewById(R.id.DetailButton);
 
         TurnListView= (ListView) findViewById(R.id.TurnListView);
+
+        DetailUndealView=findViewById(R.id.DetailUndealView);
+        DetailReceiveView=findViewById(R.id.DetailReceiveView);
+        DetailRejectView=findViewById(R.id.DetailRejectView);
 
         ReceiveTextview.setOnClickListener(this);
         UndealTextview.setOnClickListener(this);
@@ -100,10 +110,11 @@ public class TurnInActivity extends Activity implements View.OnClickListener{
         TurnListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.d("cc","-------111111");
-                if (viewFlipper.getDisplayedChild() != 0) {
-                    viewFlipper.showNext();
-                }
+//                if (viewFlipper.getDisplayedChild() != 0) {
+//                    viewFlipper.showNext();
+//                }
+                cardno=datas.get(position).getCardno();
+                loadDate(TRUN_IN_DETAIL);
             }
         });
 
@@ -124,18 +135,21 @@ public class TurnInActivity extends Activity implements View.OnClickListener{
                 if (viewFlipper.getDisplayedChild() == 0) {
                     viewFlipper.showNext();
                     loadDate(TRUN_IN_RECEIVE);
+                    Tag=TRUN_IN_RECEIVE;
                 }
                 break;
             case R.id.RejectTextview:
                 if (viewFlipper.getDisplayedChild() == 0) {
                     viewFlipper.showNext();
                     loadDate(TRUN_IN_REJECT);
+                    Tag=TRUN_IN_REJECT;
                 }
                 break;
             case R.id.UndealTextview:
                 if (viewFlipper.getDisplayedChild() == 0) {
                     viewFlipper.showNext();
                     loadDate(TRUN_IN_UNDEAL);
+                    Tag=TRUN_IN_UNDEAL;
                 }
                 break;
             case R.id.ListViewButton:
@@ -153,33 +167,65 @@ public class TurnInActivity extends Activity implements View.OnClickListener{
     }
 
 
-
+    /**
+     * 第一页面title
+     * @param info
+     */
     private void showItemDate(TurnItemInfo info){
-        CharSequence receiceMsg= Html.fromHtml("转入人员<font color=\"#FB1E27\">（已接收" + info.getReceive() + "人）</font>");
+        CharSequence receiceMsg= Html.fromHtml("转入人员<font color=\"#1026FB\">（已接收" + info.getReceive() + "人）</font>");
         ReceiveTextview.setText(receiceMsg);
 
-        CharSequence undealMsg= Html.fromHtml("转入人员<font color=\"#1026FB\">（未处理" + info.getUndeal() + "人）</font>");
+        CharSequence undealMsg= Html.fromHtml("转入人员<font color=\"#FB1E27\">（未处理" + info.getUndeal() + "人）</font>");
         UndealTextview.setText(undealMsg);
 
         CharSequence rejectMsg= Html.fromHtml("转入人员<font color=\"#D07D57\">（已拒绝" + info.getReject() + "人）</font>");
         RejectTextview.setText(rejectMsg);
     }
+    /**
+     * 第二页面title
+     * @param requestType
+     */
+    private void showTurnListName(int requestType,String index){
+        if(requestType==TRUN_IN_RECEIVE) {
+            CharSequence receiceMsg= Html.fromHtml("转入人员<font color=\"#1026FB\">（已接收" + index + "人）</font>");
+            TurnListNameTextView.setText(receiceMsg);
+        }else if(requestType==TRUN_IN_REJECT) {
+            CharSequence receiceMsg= Html.fromHtml("转入人员<font color=\"#D07D57\">（已拒绝" +index + "人）</font>");
+            TurnListNameTextView.setText(receiceMsg);
+        }else if(requestType==TRUN_IN_UNDEAL) {
+            CharSequence receiceMsg= Html.fromHtml("转入人员<font color=\"#FB1E27\">（未处理" +index + "人）</font>");
+            TurnListNameTextView.setText(receiceMsg);
+        }
 
-    private void showTurnName(String name,String index){
-        CharSequence receiceMsg= Html.fromHtml("转入人员<font color=\"#FB1E27\">（" + name+index + "人）</font>");
-        TurnInNameTextView.setText(receiceMsg);
+    }
+    /**
+     * 第三页面title
+     * @param requestType
+     */
+    private void showTurnDetailName(int requestType,String index){
+        if(requestType==TRUN_IN_RECEIVE) {
+            CharSequence receiceMsg= Html.fromHtml("转入人员<font color=\"#1026FB\">（已接收" + index + "人）</font>");
+            TurnListNameTextView.setText(receiceMsg);
+        }else if(requestType==TRUN_IN_REJECT) {
+            CharSequence receiceMsg= Html.fromHtml("转入人员<font color=\"#D07D57\">（已拒绝" +index + "人）</font>");
+            TurnListNameTextView.setText(receiceMsg);
+        }else if(requestType==TRUN_IN_UNDEAL) {
+            CharSequence receiceMsg= Html.fromHtml("转入人员<font color=\"#FB1E27\">（未处理" +index + "人）</font>");
+            TurnListNameTextView.setText(receiceMsg);
+        }
     }
 
 
+    /**
+     * 显示列表
+     * @param list
+     */
     private void showList(List<TurnListItem> list){
         if(datas==null){
             datas=new ArrayList<TurnListItem>();
         }
-
         datas.clear();
         datas.addAll(list);
-
-
         if(adapter==null){
             adapter=new TurnAdapter(this,datas);
             TurnListView.setAdapter(adapter);
@@ -187,8 +233,6 @@ public class TurnInActivity extends Activity implements View.OnClickListener{
             adapter.notifyDataSetChanged();
         }
     }
-
-
 
 
     private class TurnInTask extends AsyncTask<String, Void, String> {
@@ -233,7 +277,7 @@ public class TurnInActivity extends Activity implements View.OnClickListener{
             Log.e("e", PreferencesUtils.getString(mContext, Constant.SP_USER_REGKEY));
             hashParams.put("regkey", PreferencesUtils.getString(mContext, Constant.SP_USER_REGKEY));
             if(requestType==TRUN_IN_DETAIL){
-                hashParams.put("cardno", "cardno");
+                hashParams.put("cardno", cardno);
             }
             String result = null;
             try {
@@ -265,40 +309,53 @@ public class TurnInActivity extends Activity implements View.OnClickListener{
                         showFaik(Item);
                     }
                 }else if(requestType==TRUN_IN_RECEIVE) {
-                    showTurnName("已接收",mTurnItemInfo.getReceive());
-                    List<TurnListItem> list=new ArrayList<>();
-                    for(int i=0;i<5;i++){
-                        TurnListItem item=new TurnListItem();
-                        item.setName("Chenguoquan");
-                        item.setIdCard("123456789");
-                        item.setCreate_time("1992-12-11");
-                        list.add(item);
+                    showTurnListName(TRUN_IN_RECEIVE,mTurnItemInfo.getReceive());
+                    ResultInfo<List<TurnListItem>> Item=new Gson().fromJson(result,new TypeToken<ResultInfo<List<TurnListItem>>>(){}.getType());
+                    if (Item != null && Item.getResult() != null
+                            && Item.getResult().equals("0")) {
+                        List<TurnListItem> list=Item.getBean();
+                        showList(list);
+                    } else{
+                        showFaik(Item);
                     }
-                    showList(list);
-                }else if(requestType==TRUN_IN_REJECT) {
-                    showTurnName("已拒绝",mTurnItemInfo.getReject());
-                    List<TurnListItem> list=new ArrayList<>();
-                    for(int i=0;i<5;i++){
-                        TurnListItem item=new TurnListItem();
-                        item.setName("liupeng");
-                        item.setIdCard("123456789");
-                        item.setCreate_time("1992-12-11");
-                        list.add(item);
-                    }
-                    showList(list);
-                }else if(requestType==TRUN_IN_UNDEAL) {
-                    showTurnName("未处理",mTurnItemInfo.getUndeal());
-                    List<TurnListItem> list=new ArrayList<>();
-                    for(int i=0;i<5;i++){
-                        TurnListItem item=new TurnListItem();
-                        item.setName("Lifei");
-                        item.setIdCard("123456789");
-                        item.setCreate_time("1992-12-11");
-                        list.add(item);
-                    }
-                    showList(list);
-                }else if(requestType==TRUN_IN_DETAIL) {
 
+                }else if(requestType==TRUN_IN_REJECT) {
+                    showTurnListName(TRUN_IN_REJECT,mTurnItemInfo.getReject());
+                    ResultInfo<List<TurnListItem>> Item=new Gson().fromJson(result,new TypeToken<ResultInfo<List<TurnListItem>>>(){}.getType());
+                    if (Item != null && Item.getResult() != null
+                            && Item.getResult().equals("0")) {
+                        List<TurnListItem> list=Item.getBean();
+                        showList(list);
+                    } else{
+                        showFaik(Item);
+                    }
+                }else if(requestType==TRUN_IN_UNDEAL) {
+                    showTurnListName(TRUN_IN_UNDEAL,mTurnItemInfo.getUndeal());
+                    ResultInfo<List<TurnListItem>> Item=new Gson().fromJson(result,new TypeToken<ResultInfo<List<TurnListItem>>>(){}.getType());
+                    if (Item != null && Item.getResult() != null
+                            && Item.getResult().equals("0")) {
+                        List<TurnListItem> list=Item.getBean();
+                        showList(list);
+                    } else{
+                        showFaik(Item);
+                    }
+                }else if(requestType==TRUN_IN_DETAIL) {
+                    if (viewFlipper.getDisplayedChild() != 0) {
+                        viewFlipper.showNext();
+                        if(Tag==TRUN_IN_RECEIVE){
+                            DetailReceiveView.setVisibility(View.VISIBLE);
+                            DetailRejectView.setVisibility(View.GONE);
+                            DetailUndealView.setVisibility(View.GONE);
+                        }else if(Tag==TRUN_IN_REJECT){
+                            DetailReceiveView.setVisibility(View.GONE);
+                            DetailRejectView.setVisibility(View.VISIBLE);
+                            DetailUndealView.setVisibility(View.GONE);
+                        }else if(Tag==TRUN_IN_UNDEAL){
+                            DetailReceiveView.setVisibility(View.GONE);
+                            DetailRejectView.setVisibility(View.GONE);
+                            DetailUndealView.setVisibility(View.VISIBLE);
+                        }
+                    }
                 }
             }
         }

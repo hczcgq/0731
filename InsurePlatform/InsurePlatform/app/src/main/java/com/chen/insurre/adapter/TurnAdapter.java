@@ -33,8 +33,8 @@ public class TurnAdapter extends BaseAdapterHelpter<TurnListItem>{
         TextView time=holder.getView(R.id.TimeTextView);
         TurnListItem item=datas.get(position);
         name.setText(item.getName());
-        idCard.setText(item.getIdCard());
-        time.setText(item.getCreate_time());
+        idCard.setText(item.getCardno());
+        time.setText(item.getDate());
         return holder.getConvertView();
     }
 }

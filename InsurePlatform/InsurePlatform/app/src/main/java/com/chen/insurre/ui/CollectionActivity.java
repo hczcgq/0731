@@ -17,8 +17,10 @@ import android.widget.Toast;
 
 import com.chen.insurre.R;
 import com.chen.insurre.bean.CanbaoInfo;
+import com.chen.insurre.bean.CityInfo;
 import com.chen.insurre.bean.CollectionInfo;
 import com.chen.insurre.bean.PersonInfo;
+import com.chen.insurre.bean.ProvinceInfo;
 import com.chen.insurre.bean.ResultInfo;
 import com.chen.insurre.http.HttpHelper;
 import com.chen.insurre.util.CommTools;
@@ -31,15 +33,20 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by chenguoquan on 7/30/15.
  */
 public class CollectionActivity extends Activity{
 
+    public static List<ProvinceInfo> ProvinceList;
+
     private Activity mContext=this;
 
     private CollectionTask mCollectionTask;
+
+    private ParamTask mParamTask;
 
     private EditText IDCardEdittext;
 
@@ -61,6 +68,15 @@ public class CollectionActivity extends Activity{
     private CheckBox WDCBzzJfCheckBox,WDCBltDyCheckBox,WDCBjnJfCheckBox,WDCBjnDyCheckBox,WDCBqtJfCheckBox
                      ,WDCBqtDyCheckBox,WDCBzgYbCheckBox,WDCBjnYbCheckBox,WDCBqtYbCheckBox;
 
+    private View weicanboaView,waidicanbaoView;
+
+    private String Cbstate; //参保状态
+
+    private String name,cardno;
+
+    private static final int REQUEST_SEARCH=0;
+    private static final int REQUEST_SAVE=1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +85,7 @@ public class CollectionActivity extends Activity{
         setContentView(R.layout.view_collection);
 
         initView();
+        loadParam();
     }
 
     private void initView() {
@@ -116,7 +133,12 @@ public class CollectionActivity extends Activity{
         WDCBzgYbCheckBox= (CheckBox) findViewById(R.id.WDCBzgYbCheckBox);
         WDCBjnYbCheckBox= (CheckBox) findViewById(R.id.WDCBjnYbCheckBox);
         WDCBqtYbCheckBox= (CheckBox) findViewById(R.id.WDCBqtYbCheckBox);
+
+        weicanboaView=findViewById(R.id.weicanboaView);
+        waidicanbaoView=findViewById(R.id.waidicanbaoView);
     }
+
+
 
 
     public void Search(View view){
@@ -125,17 +147,167 @@ public class CollectionActivity extends Activity{
             ToastUtil.showToastShort(mContext,"身份证不能为空");
             return;
         }
+        HashMap<String, String> hashParams = new HashMap<String, String>();
+        hashParams.put("cardno", cardName);
 
+
+        loadData(REQUEST_SEARCH,hashParams);
+
+    }
+
+    private void loadData(int requestCode,HashMap<String, String> hashParams){
         if (mCollectionTask != null
                 && mCollectionTask.getStatus() != AsyncTask.Status.FINISHED)
             mCollectionTask.cancel(true);
-        mCollectionTask = new CollectionTask();
-        mCollectionTask.execute(cardName);
+        mCollectionTask = new CollectionTask(requestCode,hashParams);
+        mCollectionTask.execute();
+    }
+
+    private void loadParam(){
+        if (mParamTask != null
+                && mParamTask.getStatus() != AsyncTask.Status.FINISHED)
+            mParamTask.cancel(true);
+        mParamTask = new ParamTask();
+        mParamTask.execute();
+    }
+
+    public void SaveClick(View view){
+        HashMap<String, String> hashParams = new HashMap<String, String>();
+        String jhname=JHRNameEditText.getText().toString();
+        String jhcardno=JHRIDCardEditText.getText().toString();
+        String jhtelephone=JHRMobileEditText.getText().toString();
+        String cbstatus=getSpinnerData(CJSpinner);
+        String cbstate=getSpinnerData(CBSpinner);
+        String telephone=MobileEditText.getText().toString();
+        if(Cbstate.equals("3")){
+            String zzJf,ltDy,jnJf,jnDy,qtJf,qtDy,zgYb,jnYb,qtYb;
+            String prov=getSpinnerData(WDCBprovSpinner);
+            String city=getSpinnerData(WDCBcitySpinner);
+            if(WDCBzzJfCheckBox.isChecked()){
+                zzJf="1";
+            }else{
+                zzJf="0";
+            }
+            if(WDCBltDyCheckBox.isChecked()){
+                ltDy="1";
+            }else{
+                ltDy="0";
+            }
+            if(WDCBjnJfCheckBox.isChecked()){
+                jnJf="1";
+            }else{
+                jnJf="0";
+            }
+            if(WDCBjnDyCheckBox.isChecked()){
+                jnDy="1";
+            }else{
+                jnDy="0";
+            }
+            if(WDCBqtJfCheckBox.isChecked()){
+                qtJf="1";
+            }else{
+                qtJf="0";
+            }
+            if(WDCBqtDyCheckBox.isChecked()){
+                qtDy="1";
+            }else{
+                qtDy="0";
+            }
+            if(WDCBzgYbCheckBox.isChecked()){
+                zgYb="1";
+            }else{
+                zgYb="0";
+            }
+            if(WDCBjnYbCheckBox.isChecked()){
+                jnYb="1";
+            }else{
+                jnYb="0";
+            }
+
+            if(WDCBqtYbCheckBox.isChecked()){
+                qtYb="1";
+            }else{
+                qtYb="0";
+            }
+
+            hashParams.put("cardno", cardno);
+            hashParams.put("name", name);
+            hashParams.put("jhname", jhname);
+            hashParams.put("jhcardno", jhcardno);
+            hashParams.put("jhtelephone", jhtelephone);
+            hashParams.put("cbstatus", cbstatus);
+            hashParams.put("cbstate", cbstate);
+            hashParams.put("telephone", telephone);
+            hashParams.put("prov", prov);
+            hashParams.put("city", city);
+            hashParams.put("zzJf", zzJf);
+            hashParams.put("ltDy", ltDy);
+            hashParams.put("jnJf", jnJf);
+            hashParams.put("jnDy", jnDy);
+            hashParams.put("qtJf", qtJf);
+            hashParams.put("qtDy", qtDy);
+            hashParams.put("zgYb", zgYb);
+            hashParams.put("jnYb", jnYb);
+            hashParams.put("qtYb", qtYb);
+        }else{
+            String prov=getSpinnerData(WCBprovSpinner);
+            String city=getSpinnerData(WCBcitySpinner);
+            String town=getSpinnerData(WCBtownSpinner);
+            String addr=WCBaddressEditText.getText().toString();
+            String status=getSpinnerData(WCBStatusSpinner);
+            String reason=getSpinnerData(WCBReasonSpinner);
+            String orgName=WCBorgNameEditText.getText().toString();
+            String orgProv=getSpinnerData(WCBorgProvSpinner);
+            String orgCity=getSpinnerData(WCBorgCitySpinner);
+            String orgTown=getSpinnerData(WCBorgTownSpinner);
+            String orgAddr=WCBorgAddrEditText.getText().toString();
+            String canbao;
+            if(WCBCheckBox.isChecked()){
+                canbao="Y";
+            }else{
+                canbao="N";
+            }
+
+            hashParams.put("cardno", cardno);
+            hashParams.put("name", name);
+            hashParams.put("jhname", jhname);
+            hashParams.put("jhcardno", jhcardno);
+            hashParams.put("jhtelephone", jhtelephone);
+            hashParams.put("cbstatus", cbstatus);
+            hashParams.put("cbstate", cbstate);
+            hashParams.put("telephone", telephone);
+            hashParams.put("prov", prov);
+            hashParams.put("city", city);
+            hashParams.put("town", town);
+            hashParams.put("addr", addr);
+            hashParams.put("status", status);
+            hashParams.put("reason", reason);
+            hashParams.put("orgName", orgName);
+            hashParams.put("orgProv", orgProv);
+            hashParams.put("orgCity", orgCity);
+            hashParams.put("orgTown", orgTown);
+            hashParams.put("orgAddr", orgAddr);
+            hashParams.put("canbao", canbao);
+        }
+
+        loadData(REQUEST_SAVE,hashParams);
+    }
+
+    public void ResetClick(View view){
 
     }
 
     private class CollectionTask extends AsyncTask<String, Void, ResultInfo> {
         private Dialog dialog;
+
+        private int requestCode;
+
+        HashMap<String, String> hashParams;
+
+        public CollectionTask(int requestCode, HashMap<String, String> hashParams) {
+            this.requestCode=requestCode;
+            this.hashParams=hashParams;
+        }
 
         protected void onPreExecute() {
             // TODO Auto-generated method stub
@@ -155,11 +327,9 @@ public class CollectionActivity extends Activity{
             if (!NetworkUtil.networkIsAvailable(mContext)) {
                 return null;
             }
-            String cardid = params[0];
+
             String url = CommTools.getRequestUrl(mContext, R.string.conllection_url);
-            HashMap<String, String> hashParams = new HashMap<String, String>();
             hashParams.put("regkey", PreferencesUtils.getString(mContext, Constant.SP_USER_REGKEY));
-            hashParams.put("cardno", cardid);
             ResultInfo resultInfo = null;
             try {
                 String result = HttpHelper.doRequestForString(mContext, url,
@@ -179,10 +349,14 @@ public class CollectionActivity extends Activity{
                 dialog.dismiss();
             if (result != null && result.getResult() != null
                     && result.getResult().equals("0")) {
-                CollectionInfo info= (CollectionInfo) result.getBean();
-                if(info!=null){
-                    ContentLayout.setVisibility(View.VISIBLE);
-                    ShowContentInfo(info);
+                if(requestCode==REQUEST_SEARCH) {
+                    CollectionInfo info = (CollectionInfo) result.getBean();
+                    if (info != null) {
+                        ContentLayout.setVisibility(View.VISIBLE);
+                        ShowContentInfo(info);
+                    }
+                }else{
+                    Log.d("chen","save---------------------");
                 }
             } else if (result != null && result.getDescription() != null
                     && !result.getDescription().equals("")) {
@@ -191,6 +365,52 @@ public class CollectionActivity extends Activity{
             } else {
                 Toast.makeText(mContext, "请求失败，请稍后再试!", Toast.LENGTH_SHORT)
                         .show();
+            }
+        }
+    }
+
+
+    private class ParamTask extends AsyncTask<String, Void, ResultInfo> {
+
+
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected ResultInfo doInBackground(String... params) {
+            if (!NetworkUtil.networkIsAvailable(mContext)) {
+                return null;
+            }
+            HashMap<String, String> hashParams = new HashMap<String, String>();
+            String url = CommTools.getRequestUrl(mContext, R.string.param_url);
+            hashParams.put("regkey", PreferencesUtils.getString(mContext, Constant.SP_USER_REGKEY));
+            hashParams.put("code","0");
+            hashParams.put("r","Y");
+            ResultInfo resultInfo = null;
+            try {
+                String result = HttpHelper.doRequestForString(mContext, url,
+                        HttpHelper.HTTP_GET, hashParams);
+                resultInfo = new Gson().fromJson(result ,new TypeToken<ResultInfo<List<ProvinceInfo>>>(){}.getType());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return resultInfo;
+        }
+
+        @Override
+        protected void onPostExecute(ResultInfo result) {
+            super.onPostExecute(result);
+            if (result != null && result.getResult() != null
+                    && result.getResult().equals("0")) {
+                ProvinceList= (List<ProvinceInfo>) result.getBean();
+                for(int i=0;i<ProvinceList.size();i++){
+                    Log.d("chen",ProvinceList.get(i).getId()+"----"+ProvinceList.get(i).getName());
+                    List<CityInfo> cityInfolist=ProvinceList.get(i).getChild();
+                    for(int j=0;j<ProvinceList.size();j++){
+
+                    }
+                }
             }
         }
     }
@@ -210,6 +430,10 @@ public class CollectionActivity extends Activity{
         PropTextView.setText(personInfo.getProp());
         LocationTextView.setText(personInfo.getLocation());
 
+        cardno=IDCardEdittext.getText().toString();
+        name=NameTextView.getText().toString();
+
+
         CanbaoInfo canbaoInfo=info.getCanbaoInfo();
         JHRNameEditText.setText(canbaoInfo.getJhname());
         JHRIDCardEditText.setText(canbaoInfo.getJhcardno());
@@ -217,6 +441,16 @@ public class CollectionActivity extends Activity{
         setSpinnerData(CJSpinner,canbaoInfo.getCbstatus());
         setSpinnerData(CBSpinner,canbaoInfo.getCbstate());
         MobileEditText.setText(canbaoInfo.getTelephone());
+
+        Cbstate=canbaoInfo.getCbstate();
+
+        if(Cbstate.equals("3")){
+            weicanboaView.setVisibility(View.GONE);
+            waidicanbaoView.setVisibility(View.VISIBLE);
+        }else{
+            weicanboaView.setVisibility(View.VISIBLE);
+            waidicanbaoView.setVisibility(View.GONE);
+        }
 
     }
 

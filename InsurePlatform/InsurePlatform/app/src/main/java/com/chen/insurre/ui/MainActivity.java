@@ -7,6 +7,7 @@ import android.app.TabActivity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.TabHost;
@@ -14,6 +15,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chen.insurre.R;
+import com.chen.insurre.bean.CityInfo;
+import com.chen.insurre.bean.CollectionInfo;
+import com.chen.insurre.bean.ProvinceInfo;
 import com.chen.insurre.bean.ResultInfo;
 import com.chen.insurre.http.HttpHelper;
 import com.chen.insurre.util.CommTools;
@@ -21,8 +25,10 @@ import com.chen.insurre.util.Constant;
 import com.chen.insurre.util.NetworkUtil;
 import com.chen.insurre.util.PreferencesUtils;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.HashMap;
+import java.util.List;
 
 
 public class MainActivity extends TabActivity implements View.OnClickListener{
@@ -38,8 +44,6 @@ public class MainActivity extends TabActivity implements View.OnClickListener{
     public static final int MODE_COLLECTION = 0;
     public static final int MODE_TRUNIN= 1;
     public static final int MODE_TRUNOUT= 2;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -197,5 +201,9 @@ public class MainActivity extends TabActivity implements View.OnClickListener{
             }
         }
     }
+
+
+
+
 
 }

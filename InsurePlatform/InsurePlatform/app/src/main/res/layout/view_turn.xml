@@ -57,11 +57,11 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="48dp"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/TurnInNameTextView"
+                android:id="@+id/TurnListNameTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -73,8 +73,8 @@
 
             <Button
                 android:id="@+id/ListViewButton"
-                android:layout_width="80dp"
-                android:layout_height="40dp"
+                android:layout_width="100dp"
+                android:layout_height="48dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:text="返回"
@@ -96,14 +96,17 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="vertical"
+        android:layout_margin="10dp"
+        android:background="#f2f2f2"
         android:layout_height="match_parent">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="48dp"
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/TurnDetailNameTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -115,8 +118,8 @@
 
             <Button
                 android:id="@+id/DetailButton"
-                android:layout_width="80dp"
-                android:layout_height="40dp"
+                android:layout_width="100dp"
+                android:layout_height="48dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:text="返回"
@@ -128,12 +131,26 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
-
-            <include
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                layout="@layout/view_turn_detail" />
+                android:orientation="vertical">
+            <include
+                android:id="@+id/DetailUndealView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                layout="@layout/view_turn_detail_undeal" />
+            <include
+                android:id="@+id/DetailReceiveView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                layout="@layout/view_turn_detail_receive"/>
+            <include
+                android:id="@+id/DetailRejectView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                layout="@layout/view_turn_detail_reject"/>
+            </LinearLayout>
         </ScrollView>
     </LinearLayout>
 </ViewFlipper>

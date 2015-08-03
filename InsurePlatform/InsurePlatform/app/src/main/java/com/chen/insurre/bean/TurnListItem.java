@@ -5,8 +5,8 @@ package com.chen.insurre.bean;
  */
 public class TurnListItem {
     private String name;
-    private String IdCard;
-    private String create_time;
+    private String cardno;
+    private String date;
 
     public String getName() {
         return name;
@@ -16,19 +16,19 @@ public class TurnListItem {
         this.name = name;
     }
 
-    public String getIdCard() {
-        return IdCard;
+    public String getCardno() {
+        return cardno;
     }
 
-    public void setIdCard(String idCard) {
-        IdCard = idCard;
+    public void setCardno(String cardno) {
+        this.cardno = cardno;
     }
 
-    public String getCreate_time() {
-        return create_time;
+    public String getDate() {
+        return date;
     }
 
-    public void setCreate_time(String create_time) {
-        this.create_time = create_time;
+    public void setDate(String date) {
+        this.date = date;
     }
 }

@@ -55,11 +55,13 @@
                 android:layout_height="wrap_content" />
 
             <include
+                android:id="@+id/weicanboaView"
                 layout="@layout/view_collection_weicanbao"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
             <include
+                android:id="@+id/waidicanbaoView"
                 layout="@layout/view_collection_waidicanbao"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -73,6 +75,7 @@
                 android:orientation="horizontal">
 
                 <Button
+                    android:onClick="SaveClick"
                     android:layout_width="130dp"
                     android:layout_height="40dp"
                     android:layout_margin="10dp"
@@ -81,6 +84,7 @@
                     android:textSize="@dimen/button_text_size" />
 
                 <Button
+                    android:onClick="ResetClick"
                     android:layout_width="130dp"
                     android:layout_height="40dp"
                     android:layout_margin="10dp"
