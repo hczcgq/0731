@@ -38,8 +38,8 @@
         </activity>
         <activity android:name=".ui.MainActivity"/>
         <activity android:name=".ui.CollectionActivity"/>
-        <activity android:name=".ui.TrunInActivity"/>
-        <activity android:name=".ui.TrunOutActivity"/>
+        <activity android:name=".ui.TurnInActivity"/>
+        <activity android:name=".ui.TurnOutActivity"/>
     </application>
 
 </manifest>

@@ -93,13 +93,13 @@ public class MainActivity extends TabActivity implements View.OnClickListener{
         TabHost.TabSpec indexTabSpec = mTabHost.newTabSpec("trunin_tab");
         indexTabSpec.setIndicator(getString(R.string.app_name),
                 getResources().getDrawable(R.drawable.login_corners_bg));
-        indexTabSpec.setContent(new Intent(this, TrunInActivity.class));
+        indexTabSpec.setContent(new Intent(this, TurnInActivity.class));
         mTabHost.addTab(indexTabSpec);
 
         TabHost.TabSpec messageTabSpec = mTabHost.newTabSpec("trunout_tab");
         messageTabSpec.setIndicator(getString(R.string.app_name),
                 getResources().getDrawable(R.drawable.login_corners_bg));
-        messageTabSpec.setContent(new Intent(this, TrunOutActivity.class));
+        messageTabSpec.setContent(new Intent(this, TurnOutActivity.class));
         mTabHost.addTab(messageTabSpec);
 
         mMode = 0;

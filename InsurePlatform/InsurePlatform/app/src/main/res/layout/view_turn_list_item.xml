@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     android:orientation="vertical">
 
     <LinearLayout
@@ -11,13 +12,14 @@
         android:padding="10dp">
 
         <TextView
-            android:layout_width="100dp"
+            android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:text="姓名："
             android:textColor="@android:color/black"
             android:textSize="@dimen/login_text_size" />
 
         <TextView
+            android:id="@+id/NameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="chenguoquan"
@@ -33,13 +35,14 @@
         android:padding="10dp">
 
         <TextView
-            android:layout_width="100dp"
+            android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:text="身份证："
             android:textColor="@android:color/black"
             android:textSize="@dimen/login_text_size" />
 
         <TextView
+            android:id="@+id/IDCardTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="chenguoquan"
@@ -55,13 +58,14 @@
         android:padding="10dp">
 
         <TextView
-            android:layout_width="100dp"
+            android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:text="转出时间："
             android:textColor="@android:color/black"
             android:textSize="@dimen/login_text_size" />
 
         <TextView
+            android:id="@+id/TimeTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="chenguoquan"

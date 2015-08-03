@@ -9,6 +9,7 @@ import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -16,8 +17,10 @@ import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.chen.insurre.R;
+import com.chen.insurre.adapter.TurnAdapter;
 import com.chen.insurre.bean.ResultInfo;
 import com.chen.insurre.bean.TurnItemInfo;
+import com.chen.insurre.bean.TurnListItem;
 import com.chen.insurre.http.HttpHelper;
 import com.chen.insurre.util.CommTools;
 import com.chen.insurre.util.Constant;
@@ -26,24 +29,34 @@ import com.chen.insurre.util.PreferencesUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by chenguoquan on 7/30/15.
  */
-public class TrunOutActivity extends Activity implements View.OnClickListener{
+public class TurnOutActivity extends Activity implements View.OnClickListener{
 
     private Activity mContext = this;
 
     private TextView UndealTextview, ReceiveTextview, RejectTextview;
 
-    private ListView TrunListView;
+    private TextView TurnInNameTextView;
+
+    private ListView TurnListView;
 
     private Button ListViewButton,DetailButton;
 
     private ViewFlipper viewFlipper;
 
-    private TrunInTask mTrunInTask;
+    private TurnInTask mTurnInTask;
+
+    private TurnAdapter adapter;
+
+    private List<TurnListItem> datas;
+
+    private TurnItemInfo mTurnItemInfo;
 
 
     private static final int TRUN_OUT=0;
@@ -56,7 +69,7 @@ public class TrunOutActivity extends Activity implements View.OnClickListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.view_turn_out);
+        setContentView(R.layout.view_turn);
 
 
         initView();
@@ -70,10 +83,12 @@ public class TrunOutActivity extends Activity implements View.OnClickListener{
         UndealTextview = (TextView) findViewById(R.id.UndealTextview);
         RejectTextview = (TextView) findViewById(R.id.RejectTextview);
 
+        TurnInNameTextView= (TextView) findViewById(R.id.TurnInNameTextView);
+
         ListViewButton=(Button)findViewById(R.id.ListViewButton);
         DetailButton=(Button)findViewById(R.id.DetailButton);
 
-        TrunListView= (ListView) findViewById(R.id.TrunListView);
+        TurnListView= (ListView) findViewById(R.id.TurnListView);
 
         ReceiveTextview.setOnClickListener(this);
         UndealTextview.setOnClickListener(this);
@@ -82,14 +97,24 @@ public class TrunOutActivity extends Activity implements View.OnClickListener{
         ListViewButton.setOnClickListener(this);
         DetailButton.setOnClickListener(this);
 
+        TurnListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d("cc","-------111111");
+                if (viewFlipper.getDisplayedChild() != 0) {
+                    viewFlipper.showNext();
+                }
+            }
+        });
+
     }
 
     private void loadDate(int requestType) {
-        if (mTrunInTask != null
-                && mTrunInTask.getStatus() != AsyncTask.Status.FINISHED)
-            mTrunInTask.cancel(true);
-        mTrunInTask = new TrunInTask(requestType);
-        mTrunInTask.execute();
+        if (mTurnInTask != null
+                && mTurnInTask.getStatus() != AsyncTask.Status.FINISHED)
+            mTurnInTask.cancel(true);
+        mTurnInTask = new TurnInTask(requestType);
+        mTurnInTask.execute();
     }
 
     @Override
@@ -138,8 +163,31 @@ public class TrunOutActivity extends Activity implements View.OnClickListener{
         RejectTextview.setText(rejectMsg);
     }
 
+    private void showTurnName(String name,String index){
+        CharSequence receiceMsg= Html.fromHtml("转出人员<font color=\"#FB1E27\">（" + name+index + "人）</font>");
+        TurnInNameTextView.setText(receiceMsg);
+    }
 
-    private class TrunInTask extends AsyncTask<String, Void, String> {
+
+    private void showList(List<TurnListItem> list){
+        if(datas==null){
+            datas=new ArrayList<TurnListItem>();
+        }
+
+        datas.clear();
+        datas.addAll(list);
+
+
+        if(adapter==null){
+            adapter=new TurnAdapter(this,datas);
+            TurnListView.setAdapter(adapter);
+        }else{
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+
+    private class TurnInTask extends AsyncTask<String, Void, String> {
         private Dialog dialog;
 
         protected void onPreExecute() {
@@ -156,7 +204,7 @@ public class TrunOutActivity extends Activity implements View.OnClickListener{
         }
 
         private int requestType;
-        public TrunInTask(int requestType){
+        public TurnInTask(int requestType){
             this.requestType=requestType;
         }
 
@@ -200,7 +248,6 @@ public class TrunOutActivity extends Activity implements View.OnClickListener{
             super.onPostExecute(result);
             if (dialog != null)
                 dialog.dismiss();
-
             if(result!=null){
                 System.out.println("result:"+result);
                 if(requestType==TRUN_OUT) {
@@ -208,16 +255,44 @@ public class TrunOutActivity extends Activity implements View.OnClickListener{
                     if (Item != null && Item.getResult() != null
                             && Item.getResult().equals("0")) {
                         Log.d("ccc",Item.getDescription()+"---"+Item.getBean());
-                        showItemDate(((TurnItemInfo) Item.getBean()));
+                        mTurnItemInfo=((TurnItemInfo) Item.getBean());
+                        showItemDate(mTurnItemInfo);
                     } else{
                         showFaik(Item);
                     }
                 }else if(requestType==TRUN_OUT_RECEIVE) {
-
+                    showTurnName("已接收",mTurnItemInfo.getReceive());
+                    List<TurnListItem> list=new ArrayList<>();
+                    for(int i=0;i<5;i++){
+                        TurnListItem item=new TurnListItem();
+                        item.setName("Chenguoquan");
+                        item.setIdCard("123456789");
+                        item.setCreate_time("1992-12-11");
+                        list.add(item);
+                    }
+                    showList(list);
                 }else if(requestType==TRUN_OUT_REJECT) {
-
+                    showTurnName("已拒绝",mTurnItemInfo.getReject());
+                    List<TurnListItem> list=new ArrayList<>();
+                    for(int i=0;i<5;i++){
+                        TurnListItem item=new TurnListItem();
+                        item.setName("liupeng");
+                        item.setIdCard("123456789");
+                        item.setCreate_time("1992-12-11");
+                        list.add(item);
+                    }
+                    showList(list);
                 }else if(requestType==TRUN_OUT_UNDEAL) {
-
+                    showTurnName("未处理",mTurnItemInfo.getUndeal());
+                    List<TurnListItem> list=new ArrayList<>();
+                    for(int i=0;i<5;i++){
+                        TurnListItem item=new TurnListItem();
+                        item.setName("Lifei");
+                        item.setIdCard("123456789");
+                        item.setCreate_time("1992-12-11");
+                        list.add(item);
+                    }
+                    showList(list);
                 }else if(requestType==TRUN_OUT_DETAIL) {
 
                 }
