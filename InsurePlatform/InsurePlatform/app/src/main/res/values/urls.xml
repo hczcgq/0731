@@ -16,7 +16,6 @@
     <string name="trun_out_receive_url">out/receive</string>
     <string name="trun_in_detail_url">in/detail</string>
     <string name="trun_out_detail_url">out/detail</string>
-    
     <string name="param_url">param</string>
 
 </resources>

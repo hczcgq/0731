@@ -7,18 +7,19 @@ import android.widget.TextView;
 
 import com.chen.insurre.R;
 import com.chen.insurre.bean.ItemInfo;
+import com.chen.insurre.bean.TownInfo;
 
 import java.util.List;
 
 /**
  * Created by hm-soft on 2015/8/3.
  */
-public class ItemAdapter extends BaseAdapterHelpter<ItemInfo>{
+public class TownAdapter extends BaseAdapterHelpter<TownInfo>{
 
     private Context context;
-    private List<ItemInfo> datas;
+    private List<TownInfo> datas;
 
-    public ItemAdapter(Context context, List<ItemInfo> datas) {
+    public TownAdapter(Context context, List<TownInfo> datas) {
         super(context, datas);
         this.context=context;
         this.datas=datas;

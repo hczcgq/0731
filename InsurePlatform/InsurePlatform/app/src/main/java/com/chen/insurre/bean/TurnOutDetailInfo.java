@@ -5,15 +5,15 @@ package com.chen.insurre.bean;
  */
 public class TurnOutDetailInfo {
 
-    private TurnOutInfo turnOutInfo;
+    private TurnOutInfo inoutInfo;
     private PersonInfo personInfo;
 
-    public TurnOutInfo getTurnOutInfo() {
-        return turnOutInfo;
+    public TurnOutInfo getInoutInfo() {
+        return inoutInfo;
     }
 
-    public void setTurnOutInfo(TurnOutInfo turnOutInfo) {
-        this.turnOutInfo = turnOutInfo;
+    public void setInoutInfo(TurnOutInfo inoutInfo) {
+        this.inoutInfo = inoutInfo;
     }
 
     public PersonInfo getPersonInfo() {

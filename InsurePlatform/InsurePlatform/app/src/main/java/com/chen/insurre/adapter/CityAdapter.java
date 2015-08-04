@@ -6,19 +6,20 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.chen.insurre.R;
-import com.chen.insurre.bean.ItemInfo;
+import com.chen.insurre.bean.CityInfo;
+import com.chen.insurre.bean.ProvinceInfo;
 
 import java.util.List;
 
 /**
  * Created by hm-soft on 2015/8/3.
  */
-public class ItemAdapter extends BaseAdapterHelpter<ItemInfo>{
+public class CityAdapter extends BaseAdapterHelpter<CityInfo>{
 
     private Context context;
-    private List<ItemInfo> datas;
+    private List<CityInfo> datas;
 
-    public ItemAdapter(Context context, List<ItemInfo> datas) {
+    public CityAdapter(Context context, List<CityInfo> datas) {
         super(context, datas);
         this.context=context;
         this.datas=datas;

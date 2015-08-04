@@ -18,10 +18,14 @@ import android.widget.ViewFlipper;
 
 import com.chen.insurre.R;
 import com.chen.insurre.adapter.TurnAdapter;
+import com.chen.insurre.bean.PersonInfo;
+import com.chen.insurre.bean.TurnInDetailInfo;
+import com.chen.insurre.bean.TurnInInfo;
 import com.chen.insurre.bean.TurnOutDetailInfo;
 import com.chen.insurre.bean.ResultInfo;
 import com.chen.insurre.bean.TurnItemInfo;
 import com.chen.insurre.bean.TurnListItem;
+import com.chen.insurre.bean.TurnOutInfo;
 import com.chen.insurre.http.HttpHelper;
 import com.chen.insurre.util.CommTools;
 import com.chen.insurre.util.Constant;
@@ -53,6 +57,11 @@ public class TurnOutActivity extends Activity implements View.OnClickListener{
 
     private ViewFlipper viewFlipper;
 
+    private TextView UndealNameTextView,UndealSexTextView,UndealBirthTextView,UndealAgeTextView
+            ,UndealRoonNoTextView,UndealContractTextView,UndealRegionTextView,UndealAreaTextView,
+            UndealPropTextView,UndealLocationTextView,UndealTurnOutTimeTextView,UndealTurnOutReasonTextView
+            ,UndealReceiveRoadTextView,UndealReveiveAreaTextView;
+
     private TurnInTask mTurnInTask;
 
     private TurnAdapter adapter;
@@ -75,7 +84,7 @@ public class TurnOutActivity extends Activity implements View.OnClickListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.view_turn);
+        setContentView(R.layout.view_turn_out);
 
 
         initView();
@@ -100,6 +109,21 @@ public class TurnOutActivity extends Activity implements View.OnClickListener{
         DetailUndealView=findViewById(R.id.DetailUndealView);
         DetailReceiveView=findViewById(R.id.DetailReceiveView);
         DetailRejectView=findViewById(R.id.DetailRejectView);
+
+        UndealNameTextView= (TextView) findViewById(R.id.UndealNameTextView);
+        UndealSexTextView= (TextView) findViewById(R.id.UndealSexTextView);
+        UndealBirthTextView= (TextView) findViewById(R.id.UndealBirthTextView);
+        UndealAgeTextView= (TextView) findViewById(R.id.UndealAgeTextView);
+        UndealRoonNoTextView= (TextView) findViewById(R.id.UndealRoonNoTextView);
+        UndealContractTextView= (TextView) findViewById(R.id.UndealContractTextView);
+        UndealRegionTextView= (TextView) findViewById(R.id.UndealRegionTextView);
+        UndealAreaTextView= (TextView) findViewById(R.id.UndealAreaTextView);
+        UndealPropTextView= (TextView) findViewById(R.id.UndealPropTextView);
+        UndealLocationTextView= (TextView) findViewById(R.id.UndealLocationTextView);
+        UndealTurnOutTimeTextView= (TextView) findViewById(R.id.UndealTurnOutTimeTextView);
+        UndealTurnOutReasonTextView= (TextView) findViewById(R.id.UndealTurnOutReasonTextView);
+        UndealReceiveRoadTextView= (TextView) findViewById(R.id.UndealReceiveRoadTextView);
+        UndealReveiveAreaTextView= (TextView) findViewById(R.id.UndealReveiveAreaTextView);
 
         ReceiveTextview.setOnClickListener(this);
         UndealTextview.setOnClickListener(this);
@@ -358,6 +382,8 @@ public class TurnOutActivity extends Activity implements View.OnClickListener{
                                 DetailReceiveView.setVisibility(View.GONE);
                                 DetailRejectView.setVisibility(View.GONE);
                                 DetailUndealView.setVisibility(View.VISIBLE);
+                                TurnOutDetailInfo detailInfo=Item.getBean();
+                                showUndealDetail(detailInfo);
                             }
                         } else{
                             showFaik(Item);
@@ -369,6 +395,26 @@ public class TurnOutActivity extends Activity implements View.OnClickListener{
         }
     }
 
+    private void showUndealDetail(TurnOutDetailInfo item) {
+        PersonInfo personInfo=item.getPersonInfo();
+        UndealNameTextView.setText(personInfo.getName());
+        UndealSexTextView.setText(personInfo.getSex());
+        UndealBirthTextView.setText(personInfo.getBirthday());
+        UndealAgeTextView.setText(personInfo.getAge());
+        UndealRoonNoTextView.setText(personInfo.getRoomno());
+        UndealContractTextView.setText(personInfo.getContract());
+        UndealRegionTextView.setText(personInfo.getRegion());
+        UndealAreaTextView.setText(personInfo.getArea());
+        UndealPropTextView.setText(personInfo.getProp());
+        UndealLocationTextView.setText(personInfo.getLocation());
+
+        TurnOutInfo turnOutInfo=item.getInoutInfo();
+        UndealTurnOutTimeTextView.setText(turnOutInfo.getSqDate());
+        UndealReveiveAreaTextView.setText(turnOutInfo.getInArea());
+        UndealReceiveRoadTextView.setText(turnOutInfo.getInStreet());
+        UndealTurnOutReasonTextView.setText(turnOutInfo.getReason());
+
+    }
 
 
     private void showFaik(ResultInfo<?> items){

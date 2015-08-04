@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -16,12 +17,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chen.insurre.R;
+import com.chen.insurre.adapter.CityAdapter;
+import com.chen.insurre.adapter.ItemAdapter;
+import com.chen.insurre.adapter.ProvinceAdapter;
+import com.chen.insurre.adapter.TownAdapter;
 import com.chen.insurre.bean.CanbaoInfo;
 import com.chen.insurre.bean.CityInfo;
 import com.chen.insurre.bean.CollectionInfo;
+import com.chen.insurre.bean.ItemInfo;
+import com.chen.insurre.bean.ParamInfo;
 import com.chen.insurre.bean.PersonInfo;
 import com.chen.insurre.bean.ProvinceInfo;
 import com.chen.insurre.bean.ResultInfo;
+import com.chen.insurre.bean.TownInfo;
 import com.chen.insurre.http.HttpHelper;
 import com.chen.insurre.util.CommTools;
 import com.chen.insurre.util.Constant;
@@ -40,7 +48,12 @@ import java.util.List;
  */
 public class CollectionActivity extends Activity{
 
-    public static List<ProvinceInfo> ProvinceList;
+    private List<ItemInfo> caijiList;
+    private List<ItemInfo> reasonList;
+    private List<ProvinceInfo> provsList;
+    private List<CityInfo> cityList;
+    private List<ItemInfo> stateList;
+    private List<ItemInfo> canbaoList;
 
     private Activity mContext=this;
 
@@ -86,7 +99,10 @@ public class CollectionActivity extends Activity{
 
         initView();
         loadParam();
+        initEvent();
     }
+
+
 
     private void initView() {
         IDCardEdittext= (EditText) findViewById(R.id.IDCardEdittext);
@@ -136,6 +152,72 @@ public class CollectionActivity extends Activity{
 
         weicanboaView=findViewById(R.id.weicanboaView);
         waidicanbaoView=findViewById(R.id.waidicanbaoView);
+    }
+
+    private void initEvent() {
+        WCBprovSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                cityList=provsList.get(position).getChild();
+                WCBcitySpinner.setAdapter(new CityAdapter(mContext,cityList));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        WCBcitySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                List<TownInfo> townList=cityList.get(position).getChild();
+                WCBtownSpinner.setAdapter(new TownAdapter(mContext,townList));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+        WCBorgProvSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                cityList = provsList.get(position).getChild();
+                WCBorgCitySpinner.setAdapter(new CityAdapter(mContext, cityList));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        WCBorgCitySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                List<TownInfo> townList=cityList.get(position).getChild();
+                WCBorgTownSpinner.setAdapter(new TownAdapter(mContext,townList));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        WDCBprovSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                cityList = provsList.get(position).getChild();
+                WDCBcitySpinner.setAdapter(new CityAdapter(mContext,cityList));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
 
@@ -385,13 +467,12 @@ public class CollectionActivity extends Activity{
             HashMap<String, String> hashParams = new HashMap<String, String>();
             String url = CommTools.getRequestUrl(mContext, R.string.param_url);
             hashParams.put("regkey", PreferencesUtils.getString(mContext, Constant.SP_USER_REGKEY));
-            hashParams.put("code","0");
             hashParams.put("r","Y");
             ResultInfo resultInfo = null;
             try {
                 String result = HttpHelper.doRequestForString(mContext, url,
                         HttpHelper.HTTP_GET, hashParams);
-                resultInfo = new Gson().fromJson(result ,new TypeToken<ResultInfo<List<ProvinceInfo>>>(){}.getType());
+                resultInfo = new Gson().fromJson(result ,new TypeToken<ResultInfo<ParamInfo>>(){}.getType());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -403,14 +484,25 @@ public class CollectionActivity extends Activity{
             super.onPostExecute(result);
             if (result != null && result.getResult() != null
                     && result.getResult().equals("0")) {
-                ProvinceList= (List<ProvinceInfo>) result.getBean();
-                for(int i=0;i<ProvinceList.size();i++){
-                    Log.d("chen",ProvinceList.get(i).getId()+"----"+ProvinceList.get(i).getName());
-                    List<CityInfo> cityInfolist=ProvinceList.get(i).getChild();
-                    for(int j=0;j<ProvinceList.size();j++){
+                ParamInfo paramInfo= (ParamInfo) result.getBean();
+                caijiList=paramInfo.getCaiji();
+                reasonList=paramInfo.getReason();
+                provsList=paramInfo.getProvs();
+                stateList=paramInfo.getState();
+                canbaoList=paramInfo.getCanbao();
 
-                    }
-                }
+                CJSpinner.setAdapter(new ItemAdapter(mContext,caijiList));
+                CBSpinner.setAdapter(new ItemAdapter(mContext,canbaoList));
+
+
+                WCBprovSpinner.setAdapter(new ProvinceAdapter(mContext,provsList));
+                WCBStatusSpinner.setAdapter(new ItemAdapter(mContext,stateList));
+                WCBReasonSpinner.setAdapter(new ItemAdapter(mContext,reasonList));
+
+                WCBorgProvSpinner.setAdapter(new ProvinceAdapter(mContext,provsList));
+
+                WDCBprovSpinner.setAdapter(new ProvinceAdapter(mContext,provsList));
+
             }
         }
     }

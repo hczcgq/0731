@@ -7,18 +7,19 @@ import android.widget.TextView;
 
 import com.chen.insurre.R;
 import com.chen.insurre.bean.ItemInfo;
+import com.chen.insurre.bean.ProvinceInfo;
 
 import java.util.List;
 
 /**
  * Created by hm-soft on 2015/8/3.
  */
-public class ItemAdapter extends BaseAdapterHelpter<ItemInfo>{
+public class ProvinceAdapter extends BaseAdapterHelpter<ProvinceInfo>{
 
     private Context context;
-    private List<ItemInfo> datas;
+    private List<ProvinceInfo> datas;
 
-    public ItemAdapter(Context context, List<ItemInfo> datas) {
+    public ProvinceAdapter(Context context, List<ProvinceInfo> datas) {
         super(context, datas);
         this.context=context;
         this.datas=datas;

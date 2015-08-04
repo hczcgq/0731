@@ -69,7 +69,7 @@ public class TurnInActivity extends Activity implements View.OnClickListener{
 
     private TurnItemInfo mTurnItemInfo;
 
-    private String cardno;
+    private String cardno,name;
 
 
     private static final int TRUN_IN=0;
@@ -85,7 +85,7 @@ public class TurnInActivity extends Activity implements View.OnClickListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.view_turn);
+        setContentView(R.layout.view_turn_in);
 
         initView();
         loadDate(TRUN_IN);
@@ -136,6 +136,7 @@ public class TurnInActivity extends Activity implements View.OnClickListener{
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 cardno=datas.get(position).getCardno();
+                name=datas.get(position).getName();
                 loadDate(TRUN_IN_DETAIL);
             }
         });
@@ -189,13 +190,17 @@ public class TurnInActivity extends Activity implements View.OnClickListener{
     }
 
     public void UndealReceiveClick(View view){
-        Intent intent=new Intent(this,TurnInRejectDialogActivity.class);
+        Intent intent=new Intent(this,TurnInReceiveDialogActivity.class);
+        intent.putExtra("cardno",cardno);
+        intent.putExtra("name",name);
         startActivity(intent);
 
     }
 
     public void UndealRejectClick(View view){
-        Intent intent=new Intent(this,TurnInReceiveDialogActivity.class);
+        Intent intent=new Intent(this,TurnInRejectDialogActivity.class);
+        intent.putExtra("cardno",cardno);
+        intent.putExtra("name",name);
         startActivity(intent);
     }
 
@@ -420,8 +425,8 @@ public class TurnInActivity extends Activity implements View.OnClickListener{
 
         TurnInInfo turnInInfo=item.getInoutInfo();
         UndealTurnInTimeTextView.setText(turnInInfo.getSqDate());
-        UndealBeforeAreaTextView.setText(turnInInfo.getInArea());
-        UndealBeforeRoadTextView.setText(turnInInfo.getInStreet());
+        UndealBeforeAreaTextView.setText(turnInInfo.getyArea());
+        UndealBeforeRoadTextView.setText(turnInInfo.getyStreet());
         UndealTurnReasonTextView.setText(turnInInfo.getReason());
 
     }

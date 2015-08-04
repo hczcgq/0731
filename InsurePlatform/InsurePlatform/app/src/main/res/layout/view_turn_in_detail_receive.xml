@@ -1,121 +1,176 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center"
-    android:layout_gravity="center"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center|left"
-        android:padding="10dp"
-        android:layout_gravity="center"
         android:layout_margin="10dp"
         android:background="#f2f2f2"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center|left"
-            android:text="拒绝转入"
-            android:textStyle="bold"
-            android:textColor="@android:color/black"
-            android:textSize="@dimen/common_text_size" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:background="@android:color/white"
             android:orientation="vertical"
             android:padding="10dp">
 
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center|left"
-                android:text="您将拒绝XXX的转入，请选择或输入拒绝原因"
-                android:textColor="@android:color/holo_red_dark"
-                android:textSize="@dimen/common_text_size" />
-
-
-            <RadioGroup
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:gravity="center|left"
-                android:orientation="vertical">
+                android:orientation="horizontal">
 
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:id="@+id/RadioButton1"
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:gravity="center|right"
+                    android:text="姓名："
                     android:textColor="@android:color/black"
-                    android:text="非本区人员"
-                    android:checked="true" />
+                    android:textSize="@dimen/common_text_size" />
 
-
-                <RadioButton
+                <TextView
+                    android:id="@+id/NameTextView"
                     android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:id="@+id/RadioButton2"
+                    android:layout_height="wrap_content"
+                    android:text="chenguoquan"
                     android:textColor="@android:color/black"
-                    android:text="查无此人" />
+                    android:textSize="@dimen/common_text_size" />
+            </LinearLayout>
 
-                <RadioButton
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center|left"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:gravity="center|right"
+                    android:text="性别："
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/common_text_size" />
+
+                <TextView
+                    android:id="@+id/SexTextView"
                     android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:id="@+id/RadioButton3"
+                    android:layout_height="wrap_content"
+                    android:text="男"
                     android:textColor="@android:color/black"
-                    android:text="其他" />
+                    android:textSize="@dimen/common_text_size" />
+            </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center|left"
+                android:orientation="horizontal">
 
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
-                    android:padding="5dp"
-                    android:background="@drawable/input_bg"
-                    android:layout_height="40dp"
-                    android:textColor="#686868" />
-            </RadioGroup>
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:gravity="center|right"
+                    android:text="出生日期："
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/common_text_size" />
+
+                <TextView
+                    android:id="@+id/BirthTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1990-10－12"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/common_text_size" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center|left"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:gravity="center|right"
+                    android:text="接收时间："
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/common_text_size" />
+
+                <TextView
+                    android:id="@+id/AgeTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="25"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/common_text_size" />
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:layout_marginTop="10dp"
-            android:orientation="horizontal">
+            android:background="@android:color/white"
+            android:orientation="vertical"
+            android:padding="10dp">
 
-            <Button
-                android:onClick="ComfirmClick"
-                android:layout_width="120dp"
-                android:layout_height="40dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:text="确定"
-                android:textColor="@android:color/black"
-                android:background="#DEDFDF"
-                android:layout_marginRight="10dp"
-                android:textSize="@dimen/button_text_size" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center|left"
+                android:orientation="horizontal">
 
-            <Button
-                android:layout_width="120dp"
-                android:layout_height="40dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:text="取消"
-                android:onClick="CancelClick"
-                android:background="#DEDFDF"
-                android:textColor="@android:color/black"
-                android:layout_marginRight="10dp"
-                android:textSize="@dimen/button_text_size" />
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:gravity="center|right"
+                    android:text="转入时间："
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/common_text_size" />
 
+                <TextView
+                    android:id="@+id/RoonNoTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1234568"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/common_text_size" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center|left"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:gravity="center|right"
+                    android:text="原社区："
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/common_text_size" />
+
+                <TextView
+                    android:id="@+id/ContractTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="15926395578"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/common_text_size" />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
