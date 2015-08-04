@@ -8,6 +8,8 @@ public class TurnOutInfo {
     private String inArea;
     private String reason;
     private String sqDate;
+    private String rejectReason;
+    private String rejectDate;
 
 
     public String getInStreet() {
@@ -40,5 +42,21 @@ public class TurnOutInfo {
 
     public void setSqDate(String sqDate) {
         this.sqDate = sqDate;
+    }
+
+    public String getRejectReason() {
+        return rejectReason;
+    }
+
+    public void setRejectReason(String rejectReason) {
+        this.rejectReason = rejectReason;
+    }
+
+    public String getRejectDate() {
+        return rejectDate;
+    }
+
+    public void setRejectDate(String rejectDate) {
+        this.rejectDate = rejectDate;
     }
 }

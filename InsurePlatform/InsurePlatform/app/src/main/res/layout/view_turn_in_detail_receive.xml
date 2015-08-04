@@ -35,7 +35,7 @@
                     android:textSize="@dimen/common_text_size" />
 
                 <TextView
-                    android:id="@+id/NameTextView"
+                    android:id="@+id/ReceiveNameTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="chenguoquan"
@@ -59,7 +59,7 @@
                     android:textSize="@dimen/common_text_size" />
 
                 <TextView
-                    android:id="@+id/SexTextView"
+                    android:id="@+id/ReceiveSexTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="男"
@@ -83,7 +83,7 @@
                     android:textSize="@dimen/common_text_size" />
 
                 <TextView
-                    android:id="@+id/BirthTextView"
+                    android:id="@+id/ReceiveBirthTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="1990-10－12"
@@ -107,7 +107,7 @@
                     android:textSize="@dimen/common_text_size" />
 
                 <TextView
-                    android:id="@+id/AgeTextView"
+                    android:id="@+id/ReceiveTimeTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="25"
@@ -140,7 +140,7 @@
                     android:textSize="@dimen/common_text_size" />
 
                 <TextView
-                    android:id="@+id/RoonNoTextView"
+                    android:id="@+id/ReceiveTurnInTimeTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="1234568"
@@ -164,7 +164,7 @@
                     android:textSize="@dimen/common_text_size" />
 
                 <TextView
-                    android:id="@+id/ContractTextView"
+                    android:id="@+id/ReceiveBeforeAreaTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="15926395578"

@@ -35,7 +35,7 @@
                     android:textSize="@dimen/common_text_size" />
 
                 <TextView
-                    android:id="@+id/NameTextView"
+                    android:id="@+id/RejectNameTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="chenguoquan"
@@ -59,7 +59,7 @@
                     android:textSize="@dimen/common_text_size" />
 
                 <TextView
-                    android:id="@+id/SexTextView"
+                    android:id="@+id/RejectSexTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="男"
@@ -83,7 +83,7 @@
                     android:textSize="@dimen/common_text_size" />
 
                 <TextView
-                    android:id="@+id/BirthTextView"
+                    android:id="@+id/RejectBirthTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="1990-10－12"
@@ -116,7 +116,7 @@
                     android:textSize="@dimen/common_text_size" />
 
                 <TextView
-                    android:id="@+id/AgeTextView"
+                    android:id="@+id/RejectTurnInTimeTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="25"
@@ -140,7 +140,7 @@
                     android:textSize="@dimen/common_text_size" />
 
                 <TextView
-                    android:id="@+id/RoonNoTextView"
+                    android:id="@+id/RejectBeforeAreaTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="1234568"
@@ -173,7 +173,7 @@
                     android:textSize="@dimen/common_text_size" />
 
                 <TextView
-                    android:id="@+id/TurnInTimeTextView"
+                    android:id="@+id/RejectTimeTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="chenguoquan"
@@ -197,7 +197,7 @@
                     android:textSize="@dimen/common_text_size" />
 
                 <TextView
-                    android:id="@+id/BeforeRoadTextView"
+                    android:id="@+id/RejectReasonTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="男"

@@ -19,12 +19,10 @@ import android.widget.ViewFlipper;
 import com.chen.insurre.R;
 import com.chen.insurre.adapter.TurnAdapter;
 import com.chen.insurre.bean.PersonInfo;
-import com.chen.insurre.bean.TurnInDetailInfo;
-import com.chen.insurre.bean.TurnInInfo;
-import com.chen.insurre.bean.TurnOutDetailInfo;
 import com.chen.insurre.bean.ResultInfo;
 import com.chen.insurre.bean.TurnItemInfo;
 import com.chen.insurre.bean.TurnListItem;
+import com.chen.insurre.bean.TurnOutDetailInfo;
 import com.chen.insurre.bean.TurnOutInfo;
 import com.chen.insurre.http.HttpHelper;
 import com.chen.insurre.util.CommTools;
@@ -61,6 +59,13 @@ public class TurnOutActivity extends Activity implements View.OnClickListener{
             ,UndealRoonNoTextView,UndealContractTextView,UndealRegionTextView,UndealAreaTextView,
             UndealPropTextView,UndealLocationTextView,UndealTurnOutTimeTextView,UndealTurnOutReasonTextView
             ,UndealReceiveRoadTextView,UndealReveiveAreaTextView;
+
+    private TextView ReceiveNameTextView, ReceiveSexTextView, ReceiveBirthTextView, ReceiveTimeTextView,
+            ReceiveTurnInTimeTextView, ReceiveBeforeAreaTextView;
+
+    private TextView RejectNameTextView, RejectSexTextView, RejectBirthTextView, RejectTurnInTimeTextView,
+            RejectBeforeAreaTextView, RejectTimeTextView, RejectReasonTextView;
+
 
     private TurnInTask mTurnInTask;
 
@@ -124,6 +129,21 @@ public class TurnOutActivity extends Activity implements View.OnClickListener{
         UndealTurnOutReasonTextView= (TextView) findViewById(R.id.UndealTurnOutReasonTextView);
         UndealReceiveRoadTextView= (TextView) findViewById(R.id.UndealReceiveRoadTextView);
         UndealReveiveAreaTextView= (TextView) findViewById(R.id.UndealReveiveAreaTextView);
+
+        ReceiveNameTextView = (TextView) findViewById(R.id.ReceiveNameTextView);
+        ReceiveSexTextView = (TextView) findViewById(R.id.ReceiveSexTextView);
+        ReceiveBirthTextView = (TextView) findViewById(R.id.ReceiveBirthTextView);
+        ReceiveTimeTextView = (TextView) findViewById(R.id.ReceiveTimeTextView);
+        ReceiveTurnInTimeTextView = (TextView) findViewById(R.id.ReceiveTurnInTimeTextView);
+        ReceiveBeforeAreaTextView = (TextView) findViewById(R.id.ReceiveBeforeAreaTextView);
+
+        RejectNameTextView = (TextView) findViewById(R.id.RejectNameTextView);
+        RejectSexTextView = (TextView) findViewById(R.id.RejectSexTextView);
+        RejectBirthTextView = (TextView) findViewById(R.id.RejectBirthTextView);
+        RejectTurnInTimeTextView = (TextView) findViewById(R.id.RejectTurnInTimeTextView);
+        RejectBeforeAreaTextView = (TextView) findViewById(R.id.RejectBeforeAreaTextView);
+        RejectTimeTextView = (TextView) findViewById(R.id.RejectTimeTextView);
+        RejectReasonTextView = (TextView) findViewById(R.id.RejectReasonTextView);
 
         ReceiveTextview.setOnClickListener(this);
         UndealTextview.setOnClickListener(this);
@@ -370,19 +390,21 @@ public class TurnOutActivity extends Activity implements View.OnClickListener{
                         viewFlipper.showNext();
                         if (Item != null && Item.getResult() != null
                                 && Item.getResult().equals("0")) {
+                            TurnOutDetailInfo detailInfo=Item.getBean();
                             if(Tag==TRUN_OUT_RECEIVE){
                                 DetailReceiveView.setVisibility(View.VISIBLE);
                                 DetailRejectView.setVisibility(View.GONE);
                                 DetailUndealView.setVisibility(View.GONE);
+                                showReceiveDetail(detailInfo);
                             }else if(Tag==TRUN_OUT_REJECT){
                                 DetailReceiveView.setVisibility(View.GONE);
                                 DetailRejectView.setVisibility(View.VISIBLE);
                                 DetailUndealView.setVisibility(View.GONE);
+                                showRejectDetail(detailInfo);
                             }else if(Tag==TRUN_OUT_UNDEAL){
                                 DetailReceiveView.setVisibility(View.GONE);
                                 DetailRejectView.setVisibility(View.GONE);
                                 DetailUndealView.setVisibility(View.VISIBLE);
-                                TurnOutDetailInfo detailInfo=Item.getBean();
                                 showUndealDetail(detailInfo);
                             }
                         } else{
@@ -394,6 +416,32 @@ public class TurnOutActivity extends Activity implements View.OnClickListener{
             }
         }
     }
+
+    private void showReceiveDetail(TurnOutDetailInfo item) {
+        PersonInfo personInfo = item.getPersonInfo();
+        ReceiveNameTextView.setText(personInfo.getName());
+        ReceiveSexTextView.setText(personInfo.getSex());
+        ReceiveBirthTextView.setText(personInfo.getBirthday());
+        TurnOutInfo turnOutInfo = item.getInoutInfo();
+//        ReceiveTimeTextView.setText(turnOutInfo.getShDate());
+//        ReceiveTurnInTimeTextView.setText(turnOutInfo.getSqDate());
+//        ReceiveBeforeAreaTextView.setText(turnOutInfo.getyArea());
+
+    }
+
+    private void showRejectDetail(TurnOutDetailInfo item){
+        PersonInfo personInfo = item.getPersonInfo();
+        RejectNameTextView.setText(personInfo.getName());
+        RejectSexTextView.setText(personInfo.getSex());
+        RejectBirthTextView.setText(personInfo.getBirthday());
+        TurnOutInfo turnOutInfo = item.getInoutInfo();
+//        RejectTurnInTimeTextView.setText(turnInInfo.getShDate());
+//        RejectBeforeAreaTextView.setText(turnInInfo.getyArea());
+        RejectTimeTextView.setText(turnOutInfo.getRejectDate());
+        RejectReasonTextView.setText(turnOutInfo.getRejectReason());
+    }
+
+
 
     private void showUndealDetail(TurnOutDetailInfo item) {
         PersonInfo personInfo=item.getPersonInfo();
