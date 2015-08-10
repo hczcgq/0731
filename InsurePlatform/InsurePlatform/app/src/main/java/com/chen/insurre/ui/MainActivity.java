@@ -7,33 +7,34 @@ import android.app.TabActivity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chen.insurre.R;
-import com.chen.insurre.bean.CityInfo;
-import com.chen.insurre.bean.CollectionInfo;
-import com.chen.insurre.bean.ProvinceInfo;
 import com.chen.insurre.bean.ResultInfo;
+import com.chen.insurre.bean.TurnItemInfo;
 import com.chen.insurre.http.HttpHelper;
 import com.chen.insurre.util.CommTools;
 import com.chen.insurre.util.Constant;
 import com.chen.insurre.util.NetworkUtil;
 import com.chen.insurre.util.PreferencesUtils;
+import com.chen.insurre.util.ToastUtil;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.HashMap;
-import java.util.List;
 
 
 public class MainActivity extends TabActivity implements View.OnClickListener{
 
     private TextView NameTextView,CollectionTextView,TurnInTextView,TurnOutTextView;
+    private ImageView TurnInTagImageView;
     private Activity mContext = this;
 
     private LogOutTask mLogOutTask;
@@ -45,6 +46,8 @@ public class MainActivity extends TabActivity implements View.OnClickListener{
     public static final int MODE_TRUNIN= 1;
     public static final int MODE_TRUNOUT= 2;
 
+    private TurnInTask mTurnInTask;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +55,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener{
         setContentView(R.layout.view_main);
 
         initView();
+        loadDate();
     }
 
     private void initView() {
@@ -61,6 +65,8 @@ public class MainActivity extends TabActivity implements View.OnClickListener{
         CollectionTextView= (TextView) findViewById(R.id.CollectionTextView);
         TurnInTextView= (TextView) findViewById(R.id.TurnInTextView);
         TurnOutTextView= (TextView) findViewById(R.id.TurnOutTextView);
+
+        TurnInTagImageView= (ImageView) findViewById(R.id.TurnInTagImageView);
 
         CollectionTextView.setOnClickListener(this);
         TurnInTextView.setOnClickListener(this);
@@ -72,12 +78,25 @@ public class MainActivity extends TabActivity implements View.OnClickListener{
 
 
     public void LogOut(View view) {
+        if (!NetworkUtil.networkIsAvailable(mContext)) {
+            ToastUtil.showToastShort(this, "请检查网络连接状态。");
+            return ;
+        }
         if (mLogOutTask != null
                 && mLogOutTask.getStatus() != AsyncTask.Status.FINISHED)
             mLogOutTask.cancel(true);
         mLogOutTask = new LogOutTask();
         mLogOutTask.execute();
 
+    }
+
+    private void loadDate() {
+
+        if (mTurnInTask != null
+                && mTurnInTask.getStatus() != AsyncTask.Status.FINISHED)
+            mTurnInTask.cancel(true);
+        mTurnInTask = new TurnInTask();
+        mTurnInTask.execute();
     }
 
     private void initTabHost() {
@@ -198,6 +217,65 @@ public class MainActivity extends TabActivity implements View.OnClickListener{
             } else {
                 Toast.makeText(mContext, "退出登陆失败，请稍后再试!", Toast.LENGTH_SHORT)
                         .show();
+            }
+        }
+    }
+
+    private class TurnInTask extends AsyncTask<String, Void, String> {
+        private Dialog dialog;
+
+        protected void onPreExecute() {
+            // TODO Auto-generated method stub
+            super.onPreExecute();
+
+            try {
+                dialog = ProgressDialog.show(mContext, "请稍后",
+                        "正在加载...");
+                dialog.setCancelable(true);
+            } catch (Exception e) {
+                // TODO: handle exception
+            }
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            String url  = CommTools.getRequestUrl(mContext, R.string.trun_in_url);
+            HashMap<String, String> hashParams = new HashMap<String, String>();
+            Log.e("e", PreferencesUtils.getString(mContext, Constant.SP_USER_REGKEY));
+            hashParams.put("regkey", PreferencesUtils.getString(mContext, Constant.SP_USER_REGKEY));
+            String result = null;
+            try {
+                result = HttpHelper.doRequestForString(mContext, url,
+                        HttpHelper.HTTP_GET, hashParams);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            if (dialog != null)
+                dialog.dismiss();
+            if (result != null) {
+                ResultInfo<TurnItemInfo> Item = new Gson().fromJson(result, new TypeToken<ResultInfo<TurnItemInfo>>() {
+                }.getType());
+                if (Item != null && Item.getResult() != null
+                        && Item.getResult().equals("0")) {
+                    TurnItemInfo mTurnItemInfo = ((TurnItemInfo) Item.getBean());
+                    String undeal=mTurnItemInfo.getUndeal();
+                    if(TextUtils.isEmpty(undeal)){
+                        return;
+                    }
+                    int int_undel=Integer.parseInt(undeal);
+                    if(int_undel>0){
+                        TurnInTagImageView.setVisibility(View.VISIBLE);
+                    }else{
+                        TurnInTagImageView.setVisibility(View.GONE);
+                    }
+                }
             }
         }
     }

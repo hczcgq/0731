@@ -12,6 +12,7 @@ import android.view.Window;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
 import com.chen.insurre.R;
 import com.chen.insurre.bean.LoginInfo;
 import com.chen.insurre.bean.ResultInfo;
@@ -30,7 +31,6 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import org.apache.http.Header;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -130,6 +130,10 @@ public class LoginActivity extends Activity {
 //        }
 
 
+        if (!NetworkUtil.networkIsAvailable(mContext)) {
+            ToastUtil.showToastShort(this,"请检查网络连接状态。");
+            return ;
+        }
 
         if (mLoginTask != null
                 && mLoginTask.getStatus() != AsyncTask.Status.FINISHED)
@@ -161,9 +165,7 @@ public class LoginActivity extends Activity {
 
         @Override
         protected ResultInfo doInBackground(String... params) {
-            if (!NetworkUtil.networkIsAvailable(mContext)) {
-                return null;
-            }
+
             userName = params[0];
             String pwd = params[1];
             String url = CommTools.getRequestUrl(mContext, R.string.login_url);

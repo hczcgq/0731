@@ -11,5 +11,5 @@
         android:textSize="@dimen/login_text_size"
         android:layout_gravity="center|left"
         android:text="ddd"
-        android:gravity="center"/>
+        android:gravity="center|left"/>
 </LinearLayout>

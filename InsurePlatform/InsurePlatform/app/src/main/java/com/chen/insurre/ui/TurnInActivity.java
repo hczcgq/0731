@@ -30,6 +30,7 @@ import com.chen.insurre.util.CommTools;
 import com.chen.insurre.util.Constant;
 import com.chen.insurre.util.NetworkUtil;
 import com.chen.insurre.util.PreferencesUtils;
+import com.chen.insurre.util.ToastUtil;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -165,7 +166,21 @@ public class TurnInActivity extends Activity implements View.OnClickListener {
 
     }
 
+    private void showPrevious(){
+        if (viewFlipper.getDisplayedChild() != 0) {
+            viewFlipper.showPrevious();
+        }
+    }
+
+    private void showNext(){
+        viewFlipper.showNext();
+    }
+
     private void loadDate(int requestType) {
+        if (!NetworkUtil.networkIsAvailable(mContext)) {
+            ToastUtil.showToastShort(this,"请检查网络连接状态。");
+            return ;
+        }
         if (mTurnInTask != null
                 && mTurnInTask.getStatus() != AsyncTask.Status.FINISHED)
             mTurnInTask.cancel(true);
@@ -177,35 +192,23 @@ public class TurnInActivity extends Activity implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ReceiveTextview:
-                if (viewFlipper.getDisplayedChild() == 0) {
-                    viewFlipper.showNext();
                     loadDate(TRUN_IN_RECEIVE);
                     Tag = TRUN_IN_RECEIVE;
-                }
                 break;
             case R.id.RejectTextview:
-                if (viewFlipper.getDisplayedChild() == 0) {
-                    viewFlipper.showNext();
                     loadDate(TRUN_IN_REJECT);
                     Tag = TRUN_IN_REJECT;
-                }
                 break;
             case R.id.UndealTextview:
-                if (viewFlipper.getDisplayedChild() == 0) {
-                    viewFlipper.showNext();
                     loadDate(TRUN_IN_UNDEAL);
                     Tag = TRUN_IN_UNDEAL;
-                }
+
                 break;
             case R.id.ListViewButton:
-                if (viewFlipper.getDisplayedChild() != 0) {
-                    viewFlipper.showPrevious();
-                }
+                showPrevious();
                 break;
             case R.id.DetailButton:
-                if (viewFlipper.getDisplayedChild() != 0) {
-                    viewFlipper.showPrevious();
-                }
+                showPrevious();
                 break;
         }
 
@@ -325,9 +328,7 @@ public class TurnInActivity extends Activity implements View.OnClickListener {
 
         @Override
         protected String doInBackground(String... params) {
-            if (!NetworkUtil.networkIsAvailable(mContext)) {
-                return null;
-            }
+
             String url = null;
             if (requestType == TRUN_IN) {
                 url = CommTools.getRequestUrl(mContext, R.string.trun_in_url);
@@ -370,7 +371,6 @@ public class TurnInActivity extends Activity implements View.OnClickListener {
                     }.getType());
                     if (Item != null && Item.getResult() != null
                             && Item.getResult().equals("0")) {
-                        Log.d("ccc", Item.getDescription() + "---" + Item.getBean());
                         mTurnItemInfo = ((TurnItemInfo) Item.getBean());
                         showItemDate(mTurnItemInfo);
                     } else {
@@ -384,6 +384,7 @@ public class TurnInActivity extends Activity implements View.OnClickListener {
                             && Item.getResult().equals("0")) {
                         List<TurnListItem> list = Item.getBean();
                         showList(list);
+                        showNext();
                     } else {
                         showFaik(Item);
                     }
@@ -396,6 +397,7 @@ public class TurnInActivity extends Activity implements View.OnClickListener {
                             && Item.getResult().equals("0")) {
                         List<TurnListItem> list = Item.getBean();
                         showList(list);
+                        showNext();
                     } else {
                         showFaik(Item);
                     }
@@ -407,6 +409,7 @@ public class TurnInActivity extends Activity implements View.OnClickListener {
                             && Item.getResult().equals("0")) {
                         List<TurnListItem> list = Item.getBean();
                         showList(list);
+                        showNext();
                     } else {
                         showFaik(Item);
                     }
@@ -415,7 +418,6 @@ public class TurnInActivity extends Activity implements View.OnClickListener {
                     ResultInfo<TurnInDetailInfo> Item = new Gson().fromJson(result, new TypeToken<ResultInfo<TurnInDetailInfo>>() {
                     }.getType());
                     if (viewFlipper.getDisplayedChild() != 0) {
-                        viewFlipper.showNext();
                         if (Item != null && Item.getResult() != null
                                 && Item.getResult().equals("0")) {
                             TurnInDetailInfo detailInfo = Item.getBean();
@@ -435,6 +437,7 @@ public class TurnInActivity extends Activity implements View.OnClickListener {
                                 DetailUndealView.setVisibility(View.VISIBLE);
                                 showUndealDetail(detailInfo);
                             }
+                            showNext();
                         } else {
                             showFaik(Item);
                         }
@@ -464,15 +467,14 @@ public class TurnInActivity extends Activity implements View.OnClickListener {
         RejectSexTextView.setText(personInfo.getSex());
         RejectBirthTextView.setText(personInfo.getBirthday());
         TurnInInfo turnInInfo = item.getInoutInfo();
-        RejectTurnInTimeTextView.setText(turnInInfo.getShDate());
+        RejectTurnInTimeTextView.setText(turnInInfo.getSqDate());
         RejectBeforeAreaTextView.setText(turnInInfo.getyArea());
-        RejectTimeTextView.setText("");
-        RejectReasonTextView.setText("");
+        RejectTimeTextView.setText(turnInInfo.getRejectDate());
+        RejectReasonTextView.setText(turnInInfo.getRejectReason());
     }
 
 
     private void showUndealDetail(TurnInDetailInfo item) {
-
         PersonInfo personInfo = item.getPersonInfo();
         UndealNameTextView.setText(personInfo.getName());
         UndealSexTextView.setText(personInfo.getSex());
@@ -495,6 +497,9 @@ public class TurnInActivity extends Activity implements View.OnClickListener {
 
 
     private void showFaik(ResultInfo<?> items) {
+        if (viewFlipper.getDisplayedChild() != 0) {
+            viewFlipper.showPrevious();
+        }
         if (items != null && items.getDescription() != null
                 && !items.getDescription().equals("")) {
             Toast.makeText(mContext, "请求失败，" + items.getDescription(),

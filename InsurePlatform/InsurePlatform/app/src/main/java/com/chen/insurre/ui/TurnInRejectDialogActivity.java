@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +19,7 @@ import com.chen.insurre.util.CommTools;
 import com.chen.insurre.util.Constant;
 import com.chen.insurre.util.NetworkUtil;
 import com.chen.insurre.util.PreferencesUtils;
+import com.chen.insurre.util.ToastUtil;
 import com.google.gson.Gson;
 
 import java.util.HashMap;
@@ -37,6 +39,8 @@ public class TurnInRejectDialogActivity extends Activity{
 
     private RadioGroup ReasonRadioGroup;
 
+    private EditText OtherEdittext;
+
     private String reason="0";
 
     private RejectTask mRejectTask;
@@ -52,6 +56,7 @@ public class TurnInRejectDialogActivity extends Activity{
         name=getIntent().getExtras().getString("name");
         cardno=getIntent().getExtras().getString("cardno");
 
+        OtherEdittext= (EditText) findViewById(R.id.OtherEdittext);
         decribeTextView= (TextView) findViewById(R.id.decribeTextView);
         decribeTextView.setText("您将拒绝"+name+"的转入，请选择或输入拒绝原因");
         ReasonRadioGroup= (RadioGroup) findViewById(R.id.ReasonRadioGroup);
@@ -59,17 +64,23 @@ public class TurnInRejectDialogActivity extends Activity{
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if(checkedId==R.id.RadioButton1){
-                    reason="0";
+                    reason="非本区人员";
                 }else if(checkedId==R.id.RadioButton2){
-                    reason="1";
+                    reason="查无此人";
                 }else if(checkedId==R.id.RadioButton3){
-                    reason="2";
+                    reason=OtherEdittext.getText().toString();
                 }
             }
         });
     }
 
     public void ComfirmClick(View view){
+
+        if (!NetworkUtil.networkIsAvailable(mContext)) {
+            ToastUtil.showToastShort(this, "请检查网络连接状态。");
+            return ;
+        }
+
         if (mRejectTask != null
                 && mRejectTask.getStatus() != AsyncTask.Status.FINISHED)
             mRejectTask.cancel(true);

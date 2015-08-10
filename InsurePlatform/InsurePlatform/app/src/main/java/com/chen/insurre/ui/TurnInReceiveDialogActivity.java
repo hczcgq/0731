@@ -17,6 +17,7 @@ import com.chen.insurre.util.CommTools;
 import com.chen.insurre.util.Constant;
 import com.chen.insurre.util.NetworkUtil;
 import com.chen.insurre.util.PreferencesUtils;
+import com.chen.insurre.util.ToastUtil;
 import com.google.gson.Gson;
 
 import java.util.HashMap;
@@ -52,6 +53,11 @@ public class TurnInReceiveDialogActivity extends Activity{
     }
 
     public void ComfirmClick(View view){
+        if (!NetworkUtil.networkIsAvailable(mContext)) {
+            ToastUtil.showToastShort(this, "请检查网络连接状态。");
+            return ;
+        }
+
         if (mReceiveTask != null
                 && mReceiveTask.getStatus() != AsyncTask.Status.FINISHED)
             mReceiveTask.cancel(true);

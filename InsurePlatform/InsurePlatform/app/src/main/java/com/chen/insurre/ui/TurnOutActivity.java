@@ -29,6 +29,7 @@ import com.chen.insurre.util.CommTools;
 import com.chen.insurre.util.Constant;
 import com.chen.insurre.util.NetworkUtil;
 import com.chen.insurre.util.PreferencesUtils;
+import com.chen.insurre.util.ToastUtil;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -39,26 +40,24 @@ import java.util.List;
 /**
  * Created by chenguoquan on 7/30/15.
  */
-public class TurnOutActivity extends Activity implements View.OnClickListener{
+public class TurnOutActivity extends Activity implements View.OnClickListener {
 
     private Activity mContext = this;
 
     private TextView UndealTextview, ReceiveTextview, RejectTextview;
 
-    private TextView TurnListNameTextView,TurnDetailNameTextView;
+    private TextView TurnListNameTextView, TurnDetailNameTextView;
 
     private ListView TurnListView;
 
-    private Button ListViewButton,DetailButton;
+    private Button ListViewButton, DetailButton;
 
-    private View DetailUndealView,DetailReceiveView,DetailRejectView;
+    private View DetailUndealView, DetailReceiveView, DetailRejectView;
 
     private ViewFlipper viewFlipper;
 
-    private TextView UndealNameTextView,UndealSexTextView,UndealBirthTextView,UndealAgeTextView
-            ,UndealRoonNoTextView,UndealContractTextView,UndealRegionTextView,UndealAreaTextView,
-            UndealPropTextView,UndealLocationTextView,UndealTurnOutTimeTextView,UndealTurnOutReasonTextView
-            ,UndealReceiveRoadTextView,UndealReveiveAreaTextView;
+    private TextView UndealNameTextView, UndealSexTextView, UndealBirthTextView, UndealAgeTextView, UndealRoonNoTextView, UndealContractTextView, UndealRegionTextView, UndealAreaTextView,
+            UndealPropTextView, UndealLocationTextView, UndealTurnOutTimeTextView, UndealTurnOutReasonTextView, UndealReceiveRoadTextView, UndealReveiveAreaTextView;
 
     private TextView ReceiveNameTextView, ReceiveSexTextView, ReceiveBirthTextView, ReceiveTimeTextView,
             ReceiveTurnInTimeTextView, ReceiveBeforeAreaTextView;
@@ -77,13 +76,13 @@ public class TurnOutActivity extends Activity implements View.OnClickListener{
 
     private String cardno;
 
-    private static final int TRUN_OUT=0;
-    private static final int TRUN_OUT_UNDEAL=1;
-    private static final int TRUN_OUT_RECEIVE=2;
-    private static final int TRUN_OUT_REJECT=3;
-    private static final int TRUN_OUT_DETAIL=4;
+    private static final int TRUN_OUT = 0;
+    private static final int TRUN_OUT_UNDEAL = 1;
+    private static final int TRUN_OUT_RECEIVE = 2;
+    private static final int TRUN_OUT_REJECT = 3;
+    private static final int TRUN_OUT_DETAIL = 4;
 
-    private int Tag=TRUN_OUT_UNDEAL;
+    private int Tag = TRUN_OUT_UNDEAL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,37 +97,37 @@ public class TurnOutActivity extends Activity implements View.OnClickListener{
     }
 
     private void initView() {
-        viewFlipper=(ViewFlipper)findViewById(R.id.viewFlipper);
+        viewFlipper = (ViewFlipper) findViewById(R.id.viewFlipper);
         ReceiveTextview = (TextView) findViewById(R.id.ReceiveTextview);
         UndealTextview = (TextView) findViewById(R.id.UndealTextview);
         RejectTextview = (TextView) findViewById(R.id.RejectTextview);
 
-        TurnListNameTextView= (TextView) findViewById(R.id.TurnListNameTextView);
-        TurnDetailNameTextView= (TextView) findViewById(R.id.TurnDetailNameTextView);
+        TurnListNameTextView = (TextView) findViewById(R.id.TurnListNameTextView);
+        TurnDetailNameTextView = (TextView) findViewById(R.id.TurnDetailNameTextView);
 
-        ListViewButton=(Button)findViewById(R.id.ListViewButton);
-        DetailButton=(Button)findViewById(R.id.DetailButton);
+        ListViewButton = (Button) findViewById(R.id.ListViewButton);
+        DetailButton = (Button) findViewById(R.id.DetailButton);
 
-        TurnListView= (ListView) findViewById(R.id.TurnListView);
+        TurnListView = (ListView) findViewById(R.id.TurnListView);
 
-        DetailUndealView=findViewById(R.id.DetailUndealView);
-        DetailReceiveView=findViewById(R.id.DetailReceiveView);
-        DetailRejectView=findViewById(R.id.DetailRejectView);
+        DetailUndealView = findViewById(R.id.DetailUndealView);
+        DetailReceiveView = findViewById(R.id.DetailReceiveView);
+        DetailRejectView = findViewById(R.id.DetailRejectView);
 
-        UndealNameTextView= (TextView) findViewById(R.id.UndealNameTextView);
-        UndealSexTextView= (TextView) findViewById(R.id.UndealSexTextView);
-        UndealBirthTextView= (TextView) findViewById(R.id.UndealBirthTextView);
-        UndealAgeTextView= (TextView) findViewById(R.id.UndealAgeTextView);
-        UndealRoonNoTextView= (TextView) findViewById(R.id.UndealRoonNoTextView);
-        UndealContractTextView= (TextView) findViewById(R.id.UndealContractTextView);
-        UndealRegionTextView= (TextView) findViewById(R.id.UndealRegionTextView);
-        UndealAreaTextView= (TextView) findViewById(R.id.UndealAreaTextView);
-        UndealPropTextView= (TextView) findViewById(R.id.UndealPropTextView);
-        UndealLocationTextView= (TextView) findViewById(R.id.UndealLocationTextView);
-        UndealTurnOutTimeTextView= (TextView) findViewById(R.id.UndealTurnOutTimeTextView);
-        UndealTurnOutReasonTextView= (TextView) findViewById(R.id.UndealTurnOutReasonTextView);
-        UndealReceiveRoadTextView= (TextView) findViewById(R.id.UndealReceiveRoadTextView);
-        UndealReveiveAreaTextView= (TextView) findViewById(R.id.UndealReveiveAreaTextView);
+        UndealNameTextView = (TextView) findViewById(R.id.UndealNameTextView);
+        UndealSexTextView = (TextView) findViewById(R.id.UndealSexTextView);
+        UndealBirthTextView = (TextView) findViewById(R.id.UndealBirthTextView);
+        UndealAgeTextView = (TextView) findViewById(R.id.UndealAgeTextView);
+        UndealRoonNoTextView = (TextView) findViewById(R.id.UndealRoonNoTextView);
+        UndealContractTextView = (TextView) findViewById(R.id.UndealContractTextView);
+        UndealRegionTextView = (TextView) findViewById(R.id.UndealRegionTextView);
+        UndealAreaTextView = (TextView) findViewById(R.id.UndealAreaTextView);
+        UndealPropTextView = (TextView) findViewById(R.id.UndealPropTextView);
+        UndealLocationTextView = (TextView) findViewById(R.id.UndealLocationTextView);
+        UndealTurnOutTimeTextView = (TextView) findViewById(R.id.UndealTurnOutTimeTextView);
+        UndealTurnOutReasonTextView = (TextView) findViewById(R.id.UndealTurnOutReasonTextView);
+        UndealReceiveRoadTextView = (TextView) findViewById(R.id.UndealReceiveRoadTextView);
+        UndealReveiveAreaTextView = (TextView) findViewById(R.id.UndealReveiveAreaTextView);
 
         ReceiveNameTextView = (TextView) findViewById(R.id.ReceiveNameTextView);
         ReceiveSexTextView = (TextView) findViewById(R.id.ReceiveSexTextView);
@@ -155,14 +154,29 @@ public class TurnOutActivity extends Activity implements View.OnClickListener{
         TurnListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                cardno=datas.get(position).getCardno();
+                cardno = datas.get(position).getCardno();
                 loadDate(TRUN_OUT_DETAIL);
             }
         });
 
     }
 
+    private void showPrevious() {
+        if (viewFlipper.getDisplayedChild() != 0) {
+            viewFlipper.showPrevious();
+        }
+    }
+
+    private void showNext() {
+        viewFlipper.showNext();
+    }
+
     private void loadDate(int requestType) {
+        if (!NetworkUtil.networkIsAvailable(mContext)) {
+            ToastUtil.showToastShort(this, "请检查网络连接状态。");
+            return;
+        }
+
         if (mTurnInTask != null
                 && mTurnInTask.getStatus() != AsyncTask.Status.FINISHED)
             mTurnInTask.cancel(true);
@@ -173,36 +187,23 @@ public class TurnOutActivity extends Activity implements View.OnClickListener{
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.ReceiveTextview :
-                if (viewFlipper.getDisplayedChild() == 0) {
-                    viewFlipper.showNext();
-                    loadDate(TRUN_OUT_RECEIVE);
-                    Tag=TRUN_OUT_RECEIVE;
-                }
+            case R.id.ReceiveTextview:
+                loadDate(TRUN_OUT_RECEIVE);
+                Tag = TRUN_OUT_RECEIVE;
                 break;
             case R.id.RejectTextview:
-                if (viewFlipper.getDisplayedChild() == 0) {
-                    viewFlipper.showNext();
-                    loadDate(TRUN_OUT_REJECT);
-                    Tag=TRUN_OUT_REJECT;
-                }
+                loadDate(TRUN_OUT_REJECT);
+                Tag = TRUN_OUT_REJECT;
                 break;
             case R.id.UndealTextview:
-                if (viewFlipper.getDisplayedChild() == 0) {
-                    viewFlipper.showNext();
-                    loadDate(TRUN_OUT_UNDEAL);
-                    Tag=TRUN_OUT_UNDEAL;
-                }
+                loadDate(TRUN_OUT_UNDEAL);
+                Tag = TRUN_OUT_UNDEAL;
                 break;
             case R.id.ListViewButton:
-                if(viewFlipper.getDisplayedChild()!=0){
-                    viewFlipper.showPrevious();
-                }
+                showPrevious();
                 break;
             case R.id.DetailButton:
-                if(viewFlipper.getDisplayedChild()!=0){
-                    viewFlipper.showPrevious();
-                }
+                showPrevious();
                 break;
         }
 
@@ -210,48 +211,53 @@ public class TurnOutActivity extends Activity implements View.OnClickListener{
 
     /**
      * 第一页面title
+     *
      * @param info
      */
-    private void showItemDate(TurnItemInfo info){
-        CharSequence receiceMsg= Html.fromHtml("转出人员<font color=\"#1026FB\">（已接收" + info.getReceive() + "人）</font>");
+    private void showItemDate(TurnItemInfo info) {
+        CharSequence receiceMsg = Html.fromHtml("转出人员<font color=\"#1026FB\">（已接收" + info.getReceive() + "人）</font>");
         ReceiveTextview.setText(receiceMsg);
 
-        CharSequence undealMsg= Html.fromHtml("转出人员<font color=\"#FB1E27\">（未处理" + info.getUndeal() + "人）</font>");
+        CharSequence undealMsg = Html.fromHtml("转出人员<font color=\"#FB1E27\">（未处理" + info.getUndeal() + "人）</font>");
         UndealTextview.setText(undealMsg);
 
-        CharSequence rejectMsg= Html.fromHtml("转出人员<font color=\"#D07D57\">（已拒绝" + info.getReject() + "人）</font>");
+        CharSequence rejectMsg = Html.fromHtml("转出人员<font color=\"#D07D57\">（已拒绝" + info.getReject() + "人）</font>");
         RejectTextview.setText(rejectMsg);
     }
+
     /**
      * 第二页面title
+     *
      * @param requestType
      */
-    private void showTurnListName(int requestType,String index){
-        if(requestType==TRUN_OUT_RECEIVE) {
-            CharSequence receiceMsg= Html.fromHtml("转出人员<font color=\"#1026FB\">（已接收" + index + "人）</font>");
+    private void showTurnListName(int requestType, String index) {
+        if (requestType == TRUN_OUT_RECEIVE) {
+            CharSequence receiceMsg = Html.fromHtml("转出人员<font color=\"#1026FB\">（已接收" + index + "人）</font>");
             TurnListNameTextView.setText(receiceMsg);
-        }else if(requestType==TRUN_OUT_REJECT) {
-            CharSequence receiceMsg= Html.fromHtml("转出人员<font color=\"#D07D57\">（已拒绝" +index + "人）</font>");
+        } else if (requestType == TRUN_OUT_REJECT) {
+            CharSequence receiceMsg = Html.fromHtml("转出人员<font color=\"#D07D57\">（已拒绝" + index + "人）</font>");
             TurnListNameTextView.setText(receiceMsg);
-        }else if(requestType==TRUN_OUT_UNDEAL) {
-            CharSequence receiceMsg= Html.fromHtml("转出人员<font color=\"#FB1E27\">（未处理" +index + "人）</font>");
+        } else if (requestType == TRUN_OUT_UNDEAL) {
+            CharSequence receiceMsg = Html.fromHtml("转出人员<font color=\"#FB1E27\">（未处理" + index + "人）</font>");
             TurnListNameTextView.setText(receiceMsg);
         }
 
     }
+
     /**
      * 第三页面title
+     *
      * @param requestType
      */
-    private void showTurnDetailName(int requestType){
-        if(requestType==TRUN_OUT_RECEIVE) {
-            CharSequence receiceMsg= Html.fromHtml("转出人员<font color=\"#1026FB\">（已接收）</font>");
+    private void showTurnDetailName(int requestType) {
+        if (requestType == TRUN_OUT_RECEIVE) {
+            CharSequence receiceMsg = Html.fromHtml("转出人员<font color=\"#1026FB\">（已接收）</font>");
             TurnDetailNameTextView.setText(receiceMsg);
-        }else if(requestType==TRUN_OUT_REJECT) {
-            CharSequence receiceMsg= Html.fromHtml("转出人员<font color=\"#D07D57\">（已拒绝）</font>");
+        } else if (requestType == TRUN_OUT_REJECT) {
+            CharSequence receiceMsg = Html.fromHtml("转出人员<font color=\"#D07D57\">（已拒绝）</font>");
             TurnDetailNameTextView.setText(receiceMsg);
-        }else if(requestType==TRUN_OUT_UNDEAL) {
-            CharSequence receiceMsg= Html.fromHtml("转出人员<font color=\"#FB1E27\">（未处理）</font>");
+        } else if (requestType == TRUN_OUT_UNDEAL) {
+            CharSequence receiceMsg = Html.fromHtml("转出人员<font color=\"#FB1E27\">（未处理）</font>");
             TurnDetailNameTextView.setText(receiceMsg);
         }
     }
@@ -259,21 +265,22 @@ public class TurnOutActivity extends Activity implements View.OnClickListener{
 
     /**
      * 显示列表
+     *
      * @param list
      */
-    private void showList(List<TurnListItem> list){
-        if(datas==null){
-            datas=new ArrayList<TurnListItem>();
+    private void showList(List<TurnListItem> list) {
+        if (datas == null) {
+            datas = new ArrayList<TurnListItem>();
         }
 
         datas.clear();
         datas.addAll(list);
 
 
-        if(adapter==null){
-            adapter=new TurnAdapter(this,datas);
+        if (adapter == null) {
+            adapter = new TurnAdapter(this, datas);
             TurnListView.setAdapter(adapter);
-        }else{
+        } else {
             adapter.notifyDataSetChanged();
         }
     }
@@ -296,8 +303,9 @@ public class TurnOutActivity extends Activity implements View.OnClickListener{
         }
 
         private int requestType;
-        public TurnInTask(int requestType){
-            this.requestType=requestType;
+
+        public TurnInTask(int requestType) {
+            this.requestType = requestType;
         }
 
         @Override
@@ -305,22 +313,22 @@ public class TurnOutActivity extends Activity implements View.OnClickListener{
             if (!NetworkUtil.networkIsAvailable(mContext)) {
                 return null;
             }
-            String url=null;
-            if(requestType==TRUN_OUT) {
+            String url = null;
+            if (requestType == TRUN_OUT) {
                 url = CommTools.getRequestUrl(mContext, R.string.trun_out_url);
-            }else if(requestType==TRUN_OUT_RECEIVE) {
+            } else if (requestType == TRUN_OUT_RECEIVE) {
                 url = CommTools.getRequestUrl(mContext, R.string.trun_out_receive_url);
-            }else if(requestType==TRUN_OUT_REJECT) {
+            } else if (requestType == TRUN_OUT_REJECT) {
                 url = CommTools.getRequestUrl(mContext, R.string.trun_out_reject_url);
-            }else if(requestType==TRUN_OUT_UNDEAL) {
+            } else if (requestType == TRUN_OUT_UNDEAL) {
                 url = CommTools.getRequestUrl(mContext, R.string.trun_out_undeal_url);
-            }else if(requestType==TRUN_OUT_DETAIL) {
+            } else if (requestType == TRUN_OUT_DETAIL) {
                 url = CommTools.getRequestUrl(mContext, R.string.trun_out_detail_url);
             }
             HashMap<String, String> hashParams = new HashMap<String, String>();
             Log.e("e", PreferencesUtils.getString(mContext, Constant.SP_USER_REGKEY));
             hashParams.put("regkey", PreferencesUtils.getString(mContext, Constant.SP_USER_REGKEY));
-            if(requestType==TRUN_OUT_DETAIL){
+            if (requestType == TRUN_OUT_DETAIL) {
                 hashParams.put("cardno", cardno);
             }
             String result = null;
@@ -340,77 +348,82 @@ public class TurnOutActivity extends Activity implements View.OnClickListener{
             super.onPostExecute(result);
             if (dialog != null)
                 dialog.dismiss();
-            if(result!=null){
-                System.out.println("result:"+result);
-                if(requestType==TRUN_OUT) {
-                    ResultInfo<TurnItemInfo> Item=new Gson().fromJson(result,new TypeToken<ResultInfo<TurnItemInfo>>(){}.getType());
+            if (result != null) {
+                System.out.println("result:" + result);
+                if (requestType == TRUN_OUT) {
+                    ResultInfo<TurnItemInfo> Item = new Gson().fromJson(result, new TypeToken<ResultInfo<TurnItemInfo>>() {
+                    }.getType());
                     if (Item != null && Item.getResult() != null
                             && Item.getResult().equals("0")) {
-                        Log.d("ccc",Item.getDescription()+"---"+Item.getBean());
-                        mTurnItemInfo=((TurnItemInfo) Item.getBean());
+                        Log.d("ccc", Item.getDescription() + "---" + Item.getBean());
+                        mTurnItemInfo = ((TurnItemInfo) Item.getBean());
                         showItemDate(mTurnItemInfo);
-                    } else{
+                    } else {
                         showFaik(Item);
                     }
-                }else if(requestType==TRUN_OUT_RECEIVE) {
-                    showTurnListName(TRUN_OUT_RECEIVE,mTurnItemInfo.getReceive());
+                } else if (requestType == TRUN_OUT_RECEIVE) {
+                    showTurnListName(TRUN_OUT_RECEIVE, mTurnItemInfo.getReceive());
 
-                    ResultInfo<List<TurnListItem>> Item=new Gson().fromJson(result,new TypeToken<ResultInfo<List<TurnListItem>>>(){}.getType());
+                    ResultInfo<List<TurnListItem>> Item = new Gson().fromJson(result, new TypeToken<ResultInfo<List<TurnListItem>>>() {
+                    }.getType());
                     if (Item != null && Item.getResult() != null
                             && Item.getResult().equals("0")) {
-                        List<TurnListItem> list=Item.getBean();
+                        List<TurnListItem> list = Item.getBean();
                         showList(list);
-                    } else{
+                        showNext();
+                    } else {
                         showFaik(Item);
                     }
-                }else if(requestType==TRUN_OUT_REJECT) {
-                    showTurnListName(TRUN_OUT_REJECT,mTurnItemInfo.getReject());
-                    ResultInfo<List<TurnListItem>> Item=new Gson().fromJson(result,new TypeToken<ResultInfo<List<TurnListItem>>>(){}.getType());
+                } else if (requestType == TRUN_OUT_REJECT) {
+                    showTurnListName(TRUN_OUT_REJECT, mTurnItemInfo.getReject());
+                    ResultInfo<List<TurnListItem>> Item = new Gson().fromJson(result, new TypeToken<ResultInfo<List<TurnListItem>>>() {
+                    }.getType());
                     if (Item != null && Item.getResult() != null
                             && Item.getResult().equals("0")) {
-                        List<TurnListItem> list=Item.getBean();
+                        List<TurnListItem> list = Item.getBean();
                         showList(list);
-                    } else{
+                        showNext();
+                    } else {
                         showFaik(Item);
                     }
-                }else if(requestType==TRUN_OUT_UNDEAL) {
-                    showTurnListName(TRUN_OUT_UNDEAL,mTurnItemInfo.getUndeal());
-                    ResultInfo<List<TurnListItem>> Item=new Gson().fromJson(result,new TypeToken<ResultInfo<List<TurnListItem>>>(){}.getType());
+                } else if (requestType == TRUN_OUT_UNDEAL) {
+                    showTurnListName(TRUN_OUT_UNDEAL, mTurnItemInfo.getUndeal());
+                    ResultInfo<List<TurnListItem>> Item = new Gson().fromJson(result, new TypeToken<ResultInfo<List<TurnListItem>>>() {
+                    }.getType());
                     if (Item != null && Item.getResult() != null
                             && Item.getResult().equals("0")) {
-                        List<TurnListItem> list=Item.getBean();
+                        List<TurnListItem> list = Item.getBean();
                         showList(list);
-                    } else{
+                        showNext();
+                    } else {
                         showFaik(Item);
                     }
-                }else if(requestType==TRUN_OUT_DETAIL) {
+                } else if (requestType == TRUN_OUT_DETAIL) {
                     showTurnDetailName(Tag);
-                    ResultInfo<TurnOutDetailInfo> Item=new Gson().fromJson(result,new TypeToken<ResultInfo<TurnOutDetailInfo>>(){}.getType());
-                    if (viewFlipper.getDisplayedChild() != 0) {
-                        viewFlipper.showNext();
-                        if (Item != null && Item.getResult() != null
-                                && Item.getResult().equals("0")) {
-                            TurnOutDetailInfo detailInfo=Item.getBean();
-                            if(Tag==TRUN_OUT_RECEIVE){
-                                DetailReceiveView.setVisibility(View.VISIBLE);
-                                DetailRejectView.setVisibility(View.GONE);
-                                DetailUndealView.setVisibility(View.GONE);
-                                showReceiveDetail(detailInfo);
-                            }else if(Tag==TRUN_OUT_REJECT){
-                                DetailReceiveView.setVisibility(View.GONE);
-                                DetailRejectView.setVisibility(View.VISIBLE);
-                                DetailUndealView.setVisibility(View.GONE);
-                                showRejectDetail(detailInfo);
-                            }else if(Tag==TRUN_OUT_UNDEAL){
-                                DetailReceiveView.setVisibility(View.GONE);
-                                DetailRejectView.setVisibility(View.GONE);
-                                DetailUndealView.setVisibility(View.VISIBLE);
-                                showUndealDetail(detailInfo);
-                            }
-                        } else{
-                            showFaik(Item);
+                    ResultInfo<TurnOutDetailInfo> Item = new Gson().fromJson(result, new TypeToken<ResultInfo<TurnOutDetailInfo>>() {
+                    }.getType());
+                    if (Item != null && Item.getResult() != null
+                            && Item.getResult().equals("0")) {
+                        TurnOutDetailInfo detailInfo = Item.getBean();
+                        if (Tag == TRUN_OUT_RECEIVE) {
+                            DetailReceiveView.setVisibility(View.VISIBLE);
+                            DetailRejectView.setVisibility(View.GONE);
+                            DetailUndealView.setVisibility(View.GONE);
+                            showReceiveDetail(detailInfo);
+                        } else if (Tag == TRUN_OUT_REJECT) {
+                            DetailReceiveView.setVisibility(View.GONE);
+                            DetailRejectView.setVisibility(View.VISIBLE);
+                            DetailUndealView.setVisibility(View.GONE);
+                            showRejectDetail(detailInfo);
+                        } else if (Tag == TRUN_OUT_UNDEAL) {
+                            DetailReceiveView.setVisibility(View.GONE);
+                            DetailRejectView.setVisibility(View.GONE);
+                            DetailUndealView.setVisibility(View.VISIBLE);
+                            showUndealDetail(detailInfo);
                         }
-
+                        viewFlipper.showNext();
+                    } else {
+                        showFaik(Item);
                     }
                 }
             }
@@ -423,28 +436,27 @@ public class TurnOutActivity extends Activity implements View.OnClickListener{
         ReceiveSexTextView.setText(personInfo.getSex());
         ReceiveBirthTextView.setText(personInfo.getBirthday());
         TurnOutInfo turnOutInfo = item.getInoutInfo();
-//        ReceiveTimeTextView.setText(turnOutInfo.getShDate());
-//        ReceiveTurnInTimeTextView.setText(turnOutInfo.getSqDate());
-//        ReceiveBeforeAreaTextView.setText(turnOutInfo.getyArea());
+        ReceiveTimeTextView.setText(turnOutInfo.getSqDate());
+        ReceiveTurnInTimeTextView.setText(turnOutInfo.getSqDate());
+        ReceiveBeforeAreaTextView.setText(personInfo.getArea());
 
     }
 
-    private void showRejectDetail(TurnOutDetailInfo item){
+    private void showRejectDetail(TurnOutDetailInfo item) {
         PersonInfo personInfo = item.getPersonInfo();
         RejectNameTextView.setText(personInfo.getName());
         RejectSexTextView.setText(personInfo.getSex());
         RejectBirthTextView.setText(personInfo.getBirthday());
         TurnOutInfo turnOutInfo = item.getInoutInfo();
-//        RejectTurnInTimeTextView.setText(turnInInfo.getShDate());
-//        RejectBeforeAreaTextView.setText(turnInInfo.getyArea());
+        RejectTurnInTimeTextView.setText(turnOutInfo.getSqDate());
+        RejectBeforeAreaTextView.setText(personInfo.getArea());
         RejectTimeTextView.setText(turnOutInfo.getRejectDate());
         RejectReasonTextView.setText(turnOutInfo.getRejectReason());
     }
 
 
-
     private void showUndealDetail(TurnOutDetailInfo item) {
-        PersonInfo personInfo=item.getPersonInfo();
+        PersonInfo personInfo = item.getPersonInfo();
         UndealNameTextView.setText(personInfo.getName());
         UndealSexTextView.setText(personInfo.getSex());
         UndealBirthTextView.setText(personInfo.getBirthday());
@@ -456,7 +468,7 @@ public class TurnOutActivity extends Activity implements View.OnClickListener{
         UndealPropTextView.setText(personInfo.getProp());
         UndealLocationTextView.setText(personInfo.getLocation());
 
-        TurnOutInfo turnOutInfo=item.getInoutInfo();
+        TurnOutInfo turnOutInfo = item.getInoutInfo();
         UndealTurnOutTimeTextView.setText(turnOutInfo.getSqDate());
         UndealReveiveAreaTextView.setText(turnOutInfo.getInArea());
         UndealReceiveRoadTextView.setText(turnOutInfo.getInStreet());
@@ -465,7 +477,7 @@ public class TurnOutActivity extends Activity implements View.OnClickListener{
     }
 
 
-    private void showFaik(ResultInfo<?> items){
+    private void showFaik(ResultInfo<?> items) {
         if (items != null && items.getDescription() != null
                 && !items.getDescription().equals("")) {
             Toast.makeText(mContext, "请求失败，" + items.getDescription(),

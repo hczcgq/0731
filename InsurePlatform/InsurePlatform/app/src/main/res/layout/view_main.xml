@@ -70,25 +70,41 @@
                     android:gravity="center"
                     android:layout_height="fill_parent"
                     android:layout_weight="1" />
-                <TextView
-                    android:layout_width="1px"
-                    android:layout_height="fill_parent"
-                    android:background="#aeaeae"/>
 
                 <TextView
-                    android:id="@+id/TurnInTextView"
-                    android:layout_width="match_parent"
-                    android:textSize="@dimen/login_text_size"
-                    android:text="走访对象转入"
-                    android:textColor="@android:color/black"
-                    android:layout_gravity="center"
-                    android:gravity="center"
+                    android:layout_width="1px"
                     android:layout_height="fill_parent"
-                    android:layout_weight="1" />
+                    android:background="#aeaeae" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/TurnInTextView"
+                        android:layout_width="match_parent"
+                        android:textSize="@dimen/login_text_size"
+                        android:text="走访对象转入"
+                        android:textColor="@android:color/black"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:layout_height="fill_parent" />
+                    <ImageView
+                        android:id="@+id/TurnInTagImageView"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:padding="3dp"
+                        android:visibility="gone"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:src="@mipmap/icon_badge"/>
+                </RelativeLayout>
+
                 <TextView
                     android:layout_width="1px"
                     android:layout_height="fill_parent"
-                    android:background="#aeaeae"/>
+                    android:background="#aeaeae" />
 
                 <TextView
                     android:id="@+id/TurnOutTextView"

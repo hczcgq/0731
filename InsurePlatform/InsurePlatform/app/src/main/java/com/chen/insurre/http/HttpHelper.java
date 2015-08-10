@@ -209,6 +209,7 @@ public class HttpHelper {
                                 + entry.getValue();
                 }
             }
+            Log.d("------",serverUrl);
             request = new HttpGet(serverUrl);
         }
         HttpParams httpParameters = new BasicHttpParams();

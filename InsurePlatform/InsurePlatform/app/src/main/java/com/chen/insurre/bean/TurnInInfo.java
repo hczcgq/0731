@@ -14,6 +14,8 @@ public class TurnInInfo {
     private String yStreet;
     private String yArea;
     private String archno;
+    private String rejectReason;
+    private String rejectDate;
 
     public String getInStreetCode() {
         return inStreetCode;
@@ -93,5 +95,21 @@ public class TurnInInfo {
 
     public void setArchno(String archno) {
         this.archno = archno;
+    }
+
+    public String getRejectReason() {
+        return rejectReason;
+    }
+
+    public void setRejectReason(String rejectReason) {
+        this.rejectReason = rejectReason;
+    }
+
+    public String getRejectDate() {
+        return rejectDate;
+    }
+
+    public void setRejectDate(String rejectDate) {
+        this.rejectDate = rejectDate;
     }
 }
