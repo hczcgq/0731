@@ -16,7 +16,7 @@
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_weight="1"
-            android:text=""
+            android:text="210922198803023322"
             android:background="@drawable/input_bg"
             android:layout_marginRight="5dp"
             android:padding="5dp"

@@ -12,9 +12,10 @@
         android:padding="10dp">
 
         <TextView
-            android:layout_width="110dp"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:text="姓名："
+            android:gravity="center|right"
             android:textColor="@android:color/black"
             android:textSize="@dimen/login_text_size" />
 
@@ -23,6 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="chenguoquan"
+            android:singleLine="true"
             android:textColor="@android:color/black"
             android:textSize="@dimen/login_text_size" />
 
@@ -35,9 +37,10 @@
         android:padding="10dp">
 
         <TextView
-            android:layout_width="110dp"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:text="身份证："
+            android:gravity="center|right"
             android:textColor="@android:color/black"
             android:textSize="@dimen/login_text_size" />
 
@@ -46,6 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="chenguoquan"
+            android:singleLine="true"
             android:textColor="@android:color/black"
             android:textSize="@dimen/login_text_size" />
 
@@ -58,9 +62,10 @@
         android:padding="10dp">
 
         <TextView
-            android:layout_width="110dp"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:text="转出时间："
+            android:gravity="center|right"
             android:textColor="@android:color/black"
             android:textSize="@dimen/login_text_size" />
 
@@ -69,6 +74,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="chenguoquan"
+            android:singleLine="true"
             android:textColor="@android:color/black"
             android:textSize="@dimen/login_text_size" />
 

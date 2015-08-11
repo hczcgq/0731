@@ -91,9 +91,16 @@ public class TurnInActivity extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.view_turn_in);
-
         initView();
-        loadDate(TRUN_IN);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (viewFlipper!=null&&viewFlipper.getDisplayedChild() == 0) {
+            loadDate(TRUN_IN);
+        }
     }
 
     private void initView() {
@@ -206,6 +213,7 @@ public class TurnInActivity extends Activity implements View.OnClickListener {
                 break;
             case R.id.ListViewButton:
                 showPrevious();
+                loadDate(TRUN_IN);
                 break;
             case R.id.DetailButton:
                 showPrevious();
@@ -282,6 +290,8 @@ public class TurnInActivity extends Activity implements View.OnClickListener {
             TurnDetailNameTextView.setText(receiceMsg);
         }
     }
+
+
 
 
     /**

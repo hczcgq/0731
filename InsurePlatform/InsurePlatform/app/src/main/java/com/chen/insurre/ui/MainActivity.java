@@ -7,6 +7,9 @@ import android.app.TabActivity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.os.StrictMode;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -15,11 +18,8 @@ import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.chen.insurre.MyApplication;
 import com.chen.insurre.R;
-import com.chen.insurre.adapter.ItemAdapter;
-import com.chen.insurre.adapter.ProvinceAdapter;
 import com.chen.insurre.bean.ItemInfo;
 import com.chen.insurre.bean.ParamInfo;
 import com.chen.insurre.bean.ProvinceInfo;
@@ -63,7 +63,13 @@ public class MainActivity extends TabActivity implements View.OnClickListener{
         setContentView(R.layout.view_main);
         undeal=getIntent().getIntExtra("undeal",0);
 
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+
         initView();
+        handler.postDelayed(GetTurinInRunnable,1000);
     }
 
     private void initView() {
@@ -89,7 +95,25 @@ public class MainActivity extends TabActivity implements View.OnClickListener{
         initTabHost();
         switchMode(mMode);
         loadParam();
+
     }
+
+    Handler handler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            if(msg.what==100) {
+                super.handleMessage(msg);
+                int index = (int) msg.obj;
+                if (index > 0) {
+                    TurnInTagImageView.setVisibility(View.VISIBLE);
+                } else {
+                    TurnInTagImageView.setVisibility(View.GONE);
+                }
+                Log.e("chen", "chenguoquan-------");
+                handler.postDelayed(GetTurinInRunnable, 1000 * 60);
+            }
+        }
+    };
 
 
     private void loadParam() {
@@ -287,5 +311,47 @@ public class MainActivity extends TabActivity implements View.OnClickListener{
             }
         }
     }
+
+
+    Runnable GetTurinInRunnable=new Runnable() {
+        @Override
+        public void run() {
+            Log.e("chen", "------------");
+            String url  = CommTools.getRequestUrl(mContext, R.string.trun_in_url);
+            HashMap<String, String> hashParams = new HashMap<String, String>();
+            Log.e("e", PreferencesUtils.getString(mContext, Constant.SP_USER_REGKEY));
+            hashParams.put("regkey", PreferencesUtils.getString(mContext, Constant.SP_USER_REGKEY));
+            String result = null;
+            try {
+                result = HttpHelper.doRequestForString(mContext, url,
+                        HttpHelper.HTTP_GET, hashParams);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            if (result != null) {
+                Log.e("chen",result);
+                int int_undel = 0;
+                ResultInfo<TurnItemInfo> Item = new Gson().fromJson(result, new TypeToken<ResultInfo<TurnItemInfo>>() {
+                }.getType());
+                if (Item != null && Item.getResult() != null
+                        && Item.getResult().equals("0")) {
+                    TurnItemInfo mTurnItemInfo = ((TurnItemInfo) Item.getBean());
+                    String undeal=mTurnItemInfo.getUndeal();
+                    if(TextUtils.isEmpty(undeal)){
+                        int_undel=0;
+                    }else{
+                        int_undel=Integer.parseInt(undeal);
+                    }
+                }
+                Message message=new Message();
+                message.obj=int_undel;
+                message.what=100;
+                handler.sendMessage(message);
+            }
+        }
+    };
+
+
+
 
 }

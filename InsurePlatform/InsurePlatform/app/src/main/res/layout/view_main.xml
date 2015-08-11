@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="退出登陆"
+            android:text="退出登录"
             android:onClick="LogOut"
             android:textColor="@android:color/black"
             android:textSize="@dimen/login_text_size"

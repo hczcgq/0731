@@ -6,7 +6,6 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
@@ -15,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.chen.insurre.MyApplication;
 import com.chen.insurre.R;
 import com.chen.insurre.adapter.CityAdapter;
@@ -57,6 +57,11 @@ public class CollectionActivity extends Activity {
     private List<TownInfo> townList;
     private List<ItemInfo> stateList;
     private List<ItemInfo> canbaoList;
+    private List<ProvinceInfo> OrgprovsList;
+    private List<CityInfo> OrgcityList;
+    private List<TownInfo> OrgtownList;
+    private List<ProvinceInfo> WdcbprovsList;
+    private List<CityInfo> WdcbcityList;
 
     private Activity mContext = this;
 
@@ -95,6 +100,8 @@ public class CollectionActivity extends Activity {
     //未参保
     private String prov, city, town, status, reason, orgProv, orgCity, orgTown;
 
+
+    private CollectionInfo tempCollectionInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,11 +160,11 @@ public class CollectionActivity extends Activity {
         WDCBjnYbCheckBox = (CheckBox) findViewById(R.id.WDCBjnYbCheckBox);
         WDCBqtYbCheckBox = (CheckBox) findViewById(R.id.WDCBqtYbCheckBox);
 
-        canbaoView=findViewById(R.id.canbaoView);
+        canbaoView = findViewById(R.id.canbaoView);
         weicanboaView = findViewById(R.id.weicanboaView);
         waidicanbaoView = findViewById(R.id.waidicanbaoView);
 
-        canbaoLinearLayout= (LinearLayout) canbaoView.findViewById(R.id.canbaoLinearLayout);
+        canbaoLinearLayout = (LinearLayout) canbaoView.findViewById(R.id.canbaoLinearLayout);
 
     }
 
@@ -167,6 +174,19 @@ public class CollectionActivity extends Activity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 cbstatus = caijiList.get(position).getId();
+                if (cbstatus.equals("1")) {
+                    if (cbstate.equals("3")) {
+                        weicanboaView.setVisibility(View.GONE);
+                        waidicanbaoView.setVisibility(View.VISIBLE);
+                    } else {
+                        weicanboaView.setVisibility(View.VISIBLE);
+                        waidicanbaoView.setVisibility(View.GONE);
+                    }
+
+                } else {
+                    weicanboaView.setVisibility(View.GONE);
+                    waidicanbaoView.setVisibility(View.GONE);
+                }
             }
 
             @Override
@@ -179,10 +199,10 @@ public class CollectionActivity extends Activity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 cbstate = canbaoList.get(position).getId();
-                if(canbaoList.get(position).getName().contains("在外地参保")){
+                if (canbaoList.get(position).getName().contains("在外地参保")) {
                     weicanboaView.setVisibility(View.GONE);
                     waidicanbaoView.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     weicanboaView.setVisibility(View.VISIBLE);
                     waidicanbaoView.setVisibility(View.GONE);
                 }
@@ -200,8 +220,12 @@ public class CollectionActivity extends Activity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 cityList = provsList.get(position).getChild();
-                if(cityList==null) {
-                    cityList=new ArrayList<CityInfo>();
+                if (cityList == null) {
+                    cityList = new ArrayList<CityInfo>();
+                    city="";
+                    townList=new ArrayList<TownInfo>();
+                    WCBtownSpinner.setAdapter(new TownAdapter(mContext, townList));
+                    town="";
                 }
                 WCBcitySpinner.setAdapter(new CityAdapter(mContext, cityList));
                 prov = provsList.get(position).getId();
@@ -216,8 +240,11 @@ public class CollectionActivity extends Activity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 townList = cityList.get(position).getChild();
-                if(townList==null) {
-                    townList=new ArrayList<TownInfo>();
+
+
+                if (townList == null) {
+                    townList = new ArrayList<TownInfo>();
+                    town="";
                 }
                 WCBtownSpinner.setAdapter(new TownAdapter(mContext, townList));
                 city = cityList.get(position).getId();
@@ -270,12 +297,16 @@ public class CollectionActivity extends Activity {
         WCBorgProvSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                cityList = provsList.get(position).getChild();
-                if(cityList==null) {
-                    cityList=new ArrayList<CityInfo>();
+                OrgcityList = OrgprovsList.get(position).getChild();
+                if (OrgcityList == null) {
+                    OrgcityList = new ArrayList<CityInfo>();
+                    orgCity="";
+                    OrgtownList=new ArrayList<TownInfo>();
+                    WCBorgTownSpinner.setAdapter(new TownAdapter(mContext, OrgtownList));
+                    orgTown="";
                 }
-                WCBorgCitySpinner.setAdapter(new CityAdapter(mContext, cityList));
-                orgProv = provsList.get(position).getId();
+                WCBorgCitySpinner.setAdapter(new CityAdapter(mContext, OrgcityList));
+                orgProv = OrgprovsList.get(position).getId();
             }
 
             @Override
@@ -286,12 +317,13 @@ public class CollectionActivity extends Activity {
         WCBorgCitySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                townList = cityList.get(position).getChild();
-                if(townList==null) {
-                    townList=new ArrayList<TownInfo>();
+                OrgtownList = OrgcityList.get(position).getChild();
+                if (OrgtownList == null) {
+                    OrgtownList = new ArrayList<TownInfo>();
+                    orgTown="";
                 }
-                WCBorgTownSpinner.setAdapter(new TownAdapter(mContext, townList));
-                orgCity = cityList.get(position).getId();
+                WCBorgTownSpinner.setAdapter(new TownAdapter(mContext, OrgtownList));
+                orgCity = OrgcityList.get(position).getId();
             }
 
             @Override
@@ -303,7 +335,7 @@ public class CollectionActivity extends Activity {
         WCBorgTownSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                orgTown = townList.get(position).getId();
+                orgTown = OrgtownList.get(position).getId();
             }
 
             @Override
@@ -317,12 +349,13 @@ public class CollectionActivity extends Activity {
         WDCBprovSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                cityList = provsList.get(position).getChild();
-                if(cityList==null) {
-                    cityList=new ArrayList<CityInfo>();
+                WdcbcityList = WdcbprovsList.get(position).getChild();
+                if (WdcbcityList == null) {
+                    WdcbcityList = new ArrayList<CityInfo>();
+                    city="";
                 }
-                WDCBcitySpinner.setAdapter(new CityAdapter(mContext, cityList));
-                prov = provsList.get(position).getId();
+                WDCBcitySpinner.setAdapter(new CityAdapter(mContext, WdcbcityList));
+                prov = WdcbprovsList.get(position).getId();
             }
 
             @Override
@@ -333,7 +366,7 @@ public class CollectionActivity extends Activity {
         WDCBcitySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                city = cityList.get(position).getId();
+                city = WdcbcityList.get(position).getId();
             }
 
             @Override
@@ -360,8 +393,8 @@ public class CollectionActivity extends Activity {
 
     private void loadData(int requestCode, HashMap<String, String> hashParams) {
         if (!NetworkUtil.networkIsAvailable(mContext)) {
-            ToastUtil.showToastShort(this,"请检查网络连接状态。");
-            return ;
+            ToastUtil.showToastShort(this, "请检查网络连接状态。");
+            return;
         }
 
         if (mCollectionTask != null
@@ -479,19 +512,15 @@ public class CollectionActivity extends Activity {
         }
 
         if (!NetworkUtil.networkIsAvailable(mContext)) {
-            ToastUtil.showToastShort(this,"请检查网络连接状态。");
-            return ;
+            ToastUtil.showToastShort(this, "请检查网络连接状态。");
+            return;
         }
 
         loadData(REQUEST_SAVE, hashParams);
     }
 
     public void ResetClick(View view) {
-        if (cbstate.equals("3")) {
-
-        }else {
-
-        }
+        ShowContentInfo(tempCollectionInfo);
     }
 
     private class CollectionTask extends AsyncTask<String, Void, ResultInfo> {
@@ -524,21 +553,6 @@ public class CollectionActivity extends Activity {
             if (!NetworkUtil.networkIsAvailable(mContext)) {
                 return null;
             }
-            if (requestCode == REQUEST_SEARCH) {
-                caijiList = MyApplication.getInstance().getCaijiList();
-                reasonList = MyApplication.getInstance().getReasonList();
-                provsList = MyApplication.getInstance().getProvsList();
-                stateList = MyApplication.getInstance().getStateList();
-                canbaoList = MyApplication.getInstance().getCanbaoList();
-                CJSpinner.setAdapter(new ItemAdapter(mContext, caijiList));
-                CBSpinner.setAdapter(new ItemAdapter(mContext, canbaoList));
-                WCBprovSpinner.setAdapter(new ProvinceAdapter(mContext, provsList));
-                WCBStatusSpinner.setAdapter(new ItemAdapter(mContext, stateList));
-                WCBReasonSpinner.setAdapter(new ItemAdapter(mContext, reasonList));
-                WCBorgProvSpinner.setAdapter(new ProvinceAdapter(mContext, provsList));
-                WDCBprovSpinner.setAdapter(new ProvinceAdapter(mContext, provsList));
-            }
-
             String url = CommTools.getRequestUrl(mContext, R.string.conllection_url);
             hashParams.put("regkey", PreferencesUtils.getString(mContext, Constant.SP_USER_REGKEY));
             ResultInfo resultInfo = null;
@@ -563,6 +577,33 @@ public class CollectionActivity extends Activity {
         @Override
         protected void onPostExecute(ResultInfo result) {
             super.onPostExecute(result);
+            if (requestCode == REQUEST_SEARCH) {
+                caijiList = MyApplication.getInstance().getCaijiList();
+                reasonList = MyApplication.getInstance().getReasonList();
+                provsList = MyApplication.getInstance().getProvsList();
+                stateList = MyApplication.getInstance().getStateList();
+                canbaoList = MyApplication.getInstance().getCanbaoList();
+                OrgprovsList=provsList;
+                WdcbprovsList=provsList;
+                if (caijiList != null) {
+                    CJSpinner.setAdapter(new ItemAdapter(mContext, caijiList));
+                }
+                if (canbaoList != null) {
+                    CBSpinner.setAdapter(new ItemAdapter(mContext, canbaoList));
+                }
+                if (stateList != null) {
+                    WCBStatusSpinner.setAdapter(new ItemAdapter(mContext, stateList));
+                }
+                if (reasonList != null) {
+                    WCBReasonSpinner.setAdapter(new ItemAdapter(mContext, reasonList));
+                }
+                if (provsList != null) {
+                    WCBprovSpinner.setAdapter(new ProvinceAdapter(mContext, provsList));
+                    WCBorgProvSpinner.setAdapter(new ProvinceAdapter(mContext, OrgprovsList));
+                    WDCBprovSpinner.setAdapter(new ProvinceAdapter(mContext, WdcbprovsList));
+                }
+            }
+
             if (dialog != null)
                 dialog.dismiss();
             if (result != null && result.getResult() != null
@@ -571,6 +612,7 @@ public class CollectionActivity extends Activity {
                     CollectionInfo info = (CollectionInfo) result.getBean();
                     if (info != null) {
                         ContentLayout.setVisibility(View.VISIBLE);
+                        tempCollectionInfo = info;
                         ShowContentInfo(info);
                     }
                 } else {
@@ -590,12 +632,12 @@ public class CollectionActivity extends Activity {
 
 
     private void ShowContentInfo(CollectionInfo info) {
-        if(cityList!=null){
-            cityList.clear();
-        }
-        if(townList!=null){
-            townList.clear();
-        }
+//        if (cityList != null) {
+//            cityList.clear();
+//        }
+//        if (townList != null) {
+//            townList.clear();
+//        }
 
         //户籍信息
         PersonInfo personInfo = info.getPersonInfo();
@@ -623,104 +665,106 @@ public class CollectionActivity extends Activity {
         MobileEditText.setText(canbaoInfo.getTelephone());
 
         cbstate = canbaoInfo.getCbstate();
+        cbstatus = canbaoInfo.getCbstatus();
+
+        //外地参保
+        WaidiCanbaoInfo waidiCanbaoInfo = info.getWaidiCanbaoInfo();
+        showWaidiCanbao(waidiCanbaoInfo);
+
+        //未参保
+        WeiCanbaoInfo weiCanbaoInfo = info.getWeiCanbaoInfo();
+        showWeicanbao(weiCanbaoInfo);
 
 
-        if (cbstate.equals("3")) {//外地参保
+        if (cbstatus.equals("1")) {
+            if (cbstate.equals("3")) {
+                weicanboaView.setVisibility(View.GONE);
+                waidicanbaoView.setVisibility(View.VISIBLE);
+            } else {
+                weicanboaView.setVisibility(View.VISIBLE);
+                waidicanbaoView.setVisibility(View.GONE);
+            }
+
+        } else {
             weicanboaView.setVisibility(View.GONE);
-            waidicanbaoView.setVisibility(View.VISIBLE);
-            WaidiCanbaoInfo waidiCanbaoInfo = info.getWaidiCanbaoInfo();
-            showWaidiCanbao(waidiCanbaoInfo);
-
-        } else {  //未参保
-            weicanboaView.setVisibility(View.VISIBLE);
             waidicanbaoView.setVisibility(View.GONE);
-            WeiCanbaoInfo weiCanbaoInfo = info.getWeiCanbaoInfo();
-            showWeicanbao(weiCanbaoInfo);
         }
 
-        if(info.getCanEdit().equals("0")){
-            JHRNameEditText.setEnabled(false);
-            JHRNameEditText.setEnabled(false);
-            JHRIDCardEditText.setEnabled(false);
-            JHRMobileEditText.setEnabled(false);
-            CJSpinner.setEnabled(false);
-            CBSpinner.setEnabled(false);
-            MobileEditText.setEnabled(false);
 
-            WCBorgNameEditText.setEnabled(false);
-            WCBaddressEditText.setEnabled(false);
-            WCBorgAddrEditText.setEnabled(false);
-            WCBCheckBox.setEnabled(false);
-            WCBprovSpinner.setEnabled(false);
-            WCBcitySpinner.setEnabled(false);
-            WCBtownSpinner.setEnabled(false);
-            WCBStatusSpinner.setEnabled(false);
-            WCBReasonSpinner.setEnabled(false);
-            WCBorgProvSpinner.setEnabled(false);
-            WCBorgCitySpinner.setEnabled(false);
-            WCBorgTownSpinner.setEnabled(false);
-
-            WDCBprovSpinner.setEnabled(false);
-            WDCBcitySpinner.setEnabled(false);
-            WDCBzzJfCheckBox.setEnabled(false);
-            WDCBltDyCheckBox.setEnabled(false);
-            WDCBjnJfCheckBox.setEnabled(false);
-            WDCBjnDyCheckBox.setEnabled(false);
-            WDCBqtJfCheckBox.setEnabled(false);
-            WDCBqtDyCheckBox.setEnabled(false);
-            WDCBzgYbCheckBox.setEnabled(false);
-            WDCBjnYbCheckBox.setEnabled(false);
-            WDCBqtYbCheckBox.setEnabled(false);
-        }else{
-            JHRNameEditText.setEnabled(true);
-            JHRNameEditText.setEnabled(true);
-            JHRIDCardEditText.setEnabled(true);
-            JHRMobileEditText.setEnabled(true);
-            CJSpinner.setEnabled(true);
-            CBSpinner.setEnabled(true);
-            MobileEditText.setEnabled(true);
-
-            WCBorgNameEditText.setEnabled(true);
-            WCBaddressEditText.setEnabled(true);
-            WCBorgAddrEditText.setEnabled(true);
-            WCBCheckBox.setEnabled(true);
-            WCBprovSpinner.setEnabled(true);
-            WCBcitySpinner.setEnabled(true);
-            WCBtownSpinner.setEnabled(true);
-            WCBStatusSpinner.setEnabled(true);
-            WCBReasonSpinner.setEnabled(true);
-            WCBorgProvSpinner.setEnabled(true);
-            WCBorgCitySpinner.setEnabled(true);
-            WCBorgTownSpinner.setEnabled(true);
-
-            WDCBprovSpinner.setEnabled(true);
-            WDCBcitySpinner.setEnabled(true);
-            WDCBzzJfCheckBox.setEnabled(true);
-            WDCBltDyCheckBox.setEnabled(true);
-            WDCBjnJfCheckBox.setEnabled(true);
-            WDCBjnDyCheckBox.setEnabled(true);
-            WDCBqtJfCheckBox.setEnabled(true);
-            WDCBqtDyCheckBox.setEnabled(true);
-            WDCBzgYbCheckBox.setEnabled(true);
-            WDCBjnYbCheckBox.setEnabled(true);
-            WDCBqtYbCheckBox.setEnabled(true);
-        }
+//        if(info.getCanEdit().equals("0")){
+//            JHRNameEditText.setEnabled(false);
+//            JHRNameEditText.setEnabled(false);
+//            JHRIDCardEditText.setEnabled(false);
+//            JHRMobileEditText.setEnabled(false);
+//            CJSpinner.setEnabled(false);
+//            CBSpinner.setEnabled(false);
+//            MobileEditText.setEnabled(false);
+//
+//            WCBorgNameEditText.setEnabled(false);
+//            WCBaddressEditText.setEnabled(false);
+//            WCBorgAddrEditText.setEnabled(false);
+//            WCBCheckBox.setEnabled(false);
+//            WCBprovSpinner.setEnabled(false);
+//            WCBcitySpinner.setEnabled(false);
+//            WCBtownSpinner.setEnabled(false);
+//            WCBStatusSpinner.setEnabled(false);
+//            WCBReasonSpinner.setEnabled(false);
+//            WCBorgProvSpinner.setEnabled(false);
+//            WCBorgCitySpinner.setEnabled(false);
+//            WCBorgTownSpinner.setEnabled(false);
+//
+//            WDCBprovSpinner.setEnabled(false);
+//            WDCBcitySpinner.setEnabled(false);
+//            WDCBzzJfCheckBox.setEnabled(false);
+//            WDCBltDyCheckBox.setEnabled(false);
+//            WDCBjnJfCheckBox.setEnabled(false);
+//            WDCBjnDyCheckBox.setEnabled(false);
+//            WDCBqtJfCheckBox.setEnabled(false);
+//            WDCBqtDyCheckBox.setEnabled(false);
+//            WDCBzgYbCheckBox.setEnabled(false);
+//            WDCBjnYbCheckBox.setEnabled(false);
+//            WDCBqtYbCheckBox.setEnabled(false);
+//        }else{
+//            JHRNameEditText.setEnabled(true);
+//            JHRNameEditText.setEnabled(true);
+//            JHRIDCardEditText.setEnabled(true);
+//            JHRMobileEditText.setEnabled(true);
+//            CJSpinner.setEnabled(true);
+//            CBSpinner.setEnabled(true);
+//            MobileEditText.setEnabled(true);
+//
+//            WCBorgNameEditText.setEnabled(true);
+//            WCBaddressEditText.setEnabled(true);
+//            WCBorgAddrEditText.setEnabled(true);
+//            WCBCheckBox.setEnabled(true);
+//            WCBprovSpinner.setEnabled(true);
+//            WCBcitySpinner.setEnabled(true);
+//            WCBtownSpinner.setEnabled(true);
+//            WCBStatusSpinner.setEnabled(true);
+//            WCBReasonSpinner.setEnabled(true);
+//            WCBorgProvSpinner.setEnabled(true);
+//            WCBorgCitySpinner.setEnabled(true);
+//            WCBorgTownSpinner.setEnabled(true);
+//
+//            WDCBprovSpinner.setEnabled(true);
+//            WDCBcitySpinner.setEnabled(true);
+//            WDCBzzJfCheckBox.setEnabled(true);
+//            WDCBltDyCheckBox.setEnabled(true);
+//            WDCBjnJfCheckBox.setEnabled(true);
+//            WDCBjnDyCheckBox.setEnabled(true);
+//            WDCBqtJfCheckBox.setEnabled(true);
+//            WDCBqtDyCheckBox.setEnabled(true);
+//            WDCBzgYbCheckBox.setEnabled(true);
+//            WDCBjnYbCheckBox.setEnabled(true);
+//            WDCBqtYbCheckBox.setEnabled(true);
+//        }
 
     }
 
 
     private void showWaidiCanbao(WaidiCanbaoInfo waidiCanbaoInfo) {
-        if (waidiCanbaoInfo.getProv() == null || waidiCanbaoInfo.getProv() == "") {
-            setSpinnerData(WDCBprovSpinner, "320000");
-        } else {
-            setSpinnerData(WDCBprovSpinner, waidiCanbaoInfo.getProv());
-        }
-
-        if (waidiCanbaoInfo.getCity() == null || waidiCanbaoInfo.getCity() == "") {
-            setSpinnerData(WDCBcitySpinner, "320500");
-        } else {
-            setSpinnerData(WDCBcitySpinner, waidiCanbaoInfo.getCity());
-        }
+        setSpinnerData(WDCBprovSpinner, waidiCanbaoInfo.getProv());
+        setSpinnerData(WDCBcitySpinner, waidiCanbaoInfo.getCity());
         setCheckBoxtDate(WDCBzzJfCheckBox, waidiCanbaoInfo.getZzJf());
         setCheckBoxtDate(WDCBltDyCheckBox, waidiCanbaoInfo.getLtDy());
         setCheckBoxtDate(WDCBjnJfCheckBox, waidiCanbaoInfo.getJnJf());
@@ -734,7 +778,7 @@ public class CollectionActivity extends Activity {
 
     private void showWeicanbao(WeiCanbaoInfo weiCanbaoInfo) {
         WCBorgNameEditText.setText(weiCanbaoInfo.getOrgName());
-        WCBaddressEditText.setText("");
+        WCBaddressEditText.setText(weiCanbaoInfo.getOrgAddr());
         WCBorgAddrEditText.setText(weiCanbaoInfo.getOrgAddr());
 
         if (weiCanbaoInfo.getCanbao().equals("Y")) {
@@ -743,46 +787,14 @@ public class CollectionActivity extends Activity {
             WCBCheckBox.setChecked(false);
         }
 
-        if (weiCanbaoInfo.getProv() == null || weiCanbaoInfo.getProv() == "") {
-            setSpinnerData(WCBprovSpinner, "320000");
-        } else {
-            setSpinnerData(WCBprovSpinner, weiCanbaoInfo.getProv());
-        }
-
-
-        if (weiCanbaoInfo.getCity() == null || weiCanbaoInfo.getCity() == "") {
-            setSpinnerData(WCBcitySpinner, "320500");
-        } else {
-            setSpinnerData(WCBcitySpinner, weiCanbaoInfo.getCity());
-        }
-
-        if(weiCanbaoInfo.getTown()==null||weiCanbaoInfo.getTown()==""){
-            setSpinnerData(WCBtownSpinner, "320540");
-        }else{
-            setSpinnerData(WCBtownSpinner   , weiCanbaoInfo.getTown());
-        }
-
-
+        setSpinnerData(WCBprovSpinner, weiCanbaoInfo.getProv());
+        setSpinnerData(WCBcitySpinner, weiCanbaoInfo.getCity());
+        setSpinnerData(WCBtownSpinner, weiCanbaoInfo.getTown());
         setSpinnerData(WCBStatusSpinner, weiCanbaoInfo.getStatus());
         setSpinnerData(WCBReasonSpinner, weiCanbaoInfo.getReason());
-
-        if (weiCanbaoInfo.getOrgProv() == null || weiCanbaoInfo.getOrgProv() == "") {
-            setSpinnerData(WCBorgProvSpinner, "320000");
-        } else {
-            setSpinnerData(WCBorgProvSpinner, weiCanbaoInfo.getOrgProv());
-        }
-
-        if(weiCanbaoInfo.getOrgCity()==null||weiCanbaoInfo.getOrgCity()==""){
-            setSpinnerData(WCBorgCitySpinner, "320500");
-        }else{
-            setSpinnerData(WCBorgCitySpinner, weiCanbaoInfo.getOrgCity());
-        }
-
-        if(weiCanbaoInfo.getOrgTown()==null||weiCanbaoInfo.getOrgTown()==""){
-            setSpinnerData(WCBorgTownSpinner, "320540");
-        }else{
-            setSpinnerData(WCBorgTownSpinner   , weiCanbaoInfo.getOrgTown());
-        }
+        setSpinnerData(WCBorgProvSpinner, weiCanbaoInfo.getOrgProv());
+        setSpinnerData(WCBorgCitySpinner, weiCanbaoInfo.getOrgCity());
+        setSpinnerData(WCBorgTownSpinner, weiCanbaoInfo.getOrgTown());
 
     }
 
@@ -813,54 +825,54 @@ public class CollectionActivity extends Activity {
                 }
             }
         } else if (spinner == WDCBprovSpinner) {
-            if(provsList==null||provsList.size()==0){
+            if (WdcbprovsList == null || WdcbprovsList.size() == 0) {
                 return;
             }
-            for (int i = 0; i < provsList.size(); i++) {
-                String item = provsList.get(i).getId();
+            for (int i = 0; i < WdcbprovsList.size(); i++) {
+                String item = WdcbprovsList.get(i).getId();
                 if (item.equals(text)) {
                     spinner.setSelection(i);
-                    cityList=provsList.get(i).getChild();
+                    WdcbcityList = WdcbprovsList.get(i).getChild();
                     break;
                 }
             }
         } else if (spinner == WDCBcitySpinner) {
-            if(cityList==null||cityList.size()==0){
+            if (WdcbcityList == null || WdcbcityList.size() == 0) {
                 return;
             }
-            for (int i = 0; i < cityList.size(); i++) {
-                String item = cityList.get(i).getId();
+            for (int i = 0; i < WdcbcityList.size(); i++) {
+                String item = WdcbcityList.get(i).getId();
                 if (item.equals(text)) {
                     spinner.setSelection(i);
                     break;
                 }
             }
         } else if (spinner == WCBprovSpinner) {
-            if(provsList==null||provsList.size()==0){
+            if (provsList == null || provsList.size() == 0) {
                 return;
             }
             for (int i = 0; i < provsList.size(); i++) {
                 String item = provsList.get(i).getId();
                 if (item.equals(text)) {
                     spinner.setSelection(i);
-                    cityList=provsList.get(i).getChild();
+                    cityList = provsList.get(i).getChild();
                     break;
                 }
             }
-        } else if (spinner == WCBcitySpinner) {
-            if(cityList==null||cityList.size()==0){
+        }else if (spinner == WCBcitySpinner) {
+            if (cityList == null || cityList.size() == 0) {
                 return;
             }
             for (int i = 0; i < cityList.size(); i++) {
                 String item = cityList.get(i).getId();
                 if (item.equals(text)) {
                     spinner.setSelection(i);
-                    townList=cityList.get(i).getChild();
+                    townList = cityList.get(i).getChild();
                     break;
                 }
             }
         } else if (spinner == WCBtownSpinner) {
-            if(townList==null||townList.size()==0){
+            if (townList == null || townList.size() == 0) {
                 return;
             }
             for (int i = 0; i < townList.size(); i++) {
@@ -871,35 +883,35 @@ public class CollectionActivity extends Activity {
                 }
             }
         } else if (spinner == WCBorgProvSpinner) {
-            if(provsList==null||provsList.size()==0){
+            if (OrgprovsList == null || OrgprovsList.size() == 0) {
                 return;
             }
-            for (int i = 0; i < provsList.size(); i++) {
-                String item = provsList.get(i).getId();
+            for (int i = 0; i < OrgprovsList.size(); i++) {
+                String item = OrgprovsList.get(i).getId();
                 if (item.equals(text)) {
                     spinner.setSelection(i);
-                    cityList=provsList.get(i).getChild();
+                    OrgcityList = OrgprovsList.get(i).getChild();
                     break;
                 }
             }
         } else if (spinner == WCBorgCitySpinner) {
-            if(cityList==null||cityList.size()==0){
+            if (OrgcityList == null || OrgcityList.size() == 0) {
                 return;
             }
-            for (int i = 0; i < cityList.size(); i++) {
-                String item = cityList.get(i).getId();
+            for (int i = 0; i < OrgcityList.size(); i++) {
+                String item = OrgcityList.get(i).getId();
                 if (item.equals(text)) {
                     spinner.setSelection(i);
-                    townList=cityList.get(i).getChild();
+                    OrgtownList = OrgcityList.get(i).getChild();
                     break;
                 }
             }
         } else if (spinner == WCBorgCitySpinner) {
-            if(townList==null||townList.size()==0){
+            if (OrgtownList == null || OrgtownList.size() == 0) {
                 return;
             }
-            for (int i = 0; i < townList.size(); i++) {
-                String item = townList.get(i).getId();
+            for (int i = 0; i < OrgtownList.size(); i++) {
+                String item = OrgtownList.get(i).getId();
                 if (item.equals(text)) {
                     spinner.setSelection(i);
                     break;

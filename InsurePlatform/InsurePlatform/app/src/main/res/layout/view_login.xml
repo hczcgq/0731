@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_centerInParent="true"
+        android:layout_marginTop="80dp"
         android:paddingBottom="20dp"
         android:background="@drawable/login_corners_bg"
         android:orientation="vertical"
@@ -23,7 +23,7 @@
             android:gravity="center"
             android:textSize="@dimen/header_size"
             android:textStyle="bold"
-            android:background="#377BB5"/>
+            android:background="@mipmap/u7"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -47,7 +47,7 @@
                 android:id="@+id/UsernameEditext"
                 android:layout_width="fill_parent"
                 android:textColor="#686868"
-                android:text=""
+                android:text="zkc"
                 android:inputType="text"
                 android:maxLength="8"
                 android:padding="5dp"
@@ -77,7 +77,7 @@
             <EditText
                 android:id="@+id/PasswordEditext"
                 android:layout_width="fill_parent"
-                android:text=""
+                android:text="1"
                 android:inputType="textPassword"
                 android:maxLength="6"
                 android:textColor="#686868"
