@@ -11,13 +11,13 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.StrictMode;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.chen.insurre.MyApplication;
 import com.chen.insurre.R;
 import com.chen.insurre.bean.ItemInfo;
@@ -109,7 +109,6 @@ public class MainActivity extends TabActivity implements View.OnClickListener{
                 } else {
                     TurnInTagImageView.setVisibility(View.GONE);
                 }
-                Log.e("chen", "chenguoquan-------");
                 handler.postDelayed(GetTurinInRunnable, 1000 * 60);
             }
         }
@@ -316,10 +315,8 @@ public class MainActivity extends TabActivity implements View.OnClickListener{
     Runnable GetTurinInRunnable=new Runnable() {
         @Override
         public void run() {
-            Log.e("chen", "------------");
             String url  = CommTools.getRequestUrl(mContext, R.string.trun_in_url);
             HashMap<String, String> hashParams = new HashMap<String, String>();
-            Log.e("e", PreferencesUtils.getString(mContext, Constant.SP_USER_REGKEY));
             hashParams.put("regkey", PreferencesUtils.getString(mContext, Constant.SP_USER_REGKEY));
             String result = null;
             try {
@@ -329,7 +326,6 @@ public class MainActivity extends TabActivity implements View.OnClickListener{
                 e.printStackTrace();
             }
             if (result != null) {
-                Log.e("chen",result);
                 int int_undel = 0;
                 ResultInfo<TurnItemInfo> Item = new Gson().fromJson(result, new TypeToken<ResultInfo<TurnItemInfo>>() {
                 }.getType());

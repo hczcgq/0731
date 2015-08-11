@@ -14,7 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.chen.insurre.MyApplication;
 import com.chen.insurre.R;
 import com.chen.insurre.adapter.CityAdapter;
@@ -40,7 +39,6 @@ import com.chen.insurre.util.StringUtil;
 import com.chen.insurre.util.ToastUtil;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -86,8 +84,6 @@ public class CollectionActivity extends Activity {
 
     private View canbaoView, weicanboaView, waidicanbaoView;
 
-    private LinearLayout canbaoLinearLayout;
-
     private String name, cardno;
 
     private static final int REQUEST_SEARCH = 0;
@@ -98,10 +94,11 @@ public class CollectionActivity extends Activity {
     private String cbstatus, cbstate;
 
     //未参保
-    private String prov, city, town, status, reason, orgProv, orgCity, orgTown;
+    private String prov, city, town, status, reason, orgProv, orgCity, orgTown,wdcbPro,WdcbCity;
 
 
     private CollectionInfo tempCollectionInfo;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -164,7 +161,6 @@ public class CollectionActivity extends Activity {
         weicanboaView = findViewById(R.id.weicanboaView);
         waidicanbaoView = findViewById(R.id.waidicanbaoView);
 
-        canbaoLinearLayout = (LinearLayout) canbaoView.findViewById(R.id.canbaoLinearLayout);
 
     }
 
@@ -228,6 +224,7 @@ public class CollectionActivity extends Activity {
                     town="";
                 }
                 WCBcitySpinner.setAdapter(new CityAdapter(mContext, cityList));
+                setSpinnerData(WCBcitySpinner,city);
                 prov = provsList.get(position).getId();
             }
 
@@ -247,6 +244,7 @@ public class CollectionActivity extends Activity {
                     town="";
                 }
                 WCBtownSpinner.setAdapter(new TownAdapter(mContext, townList));
+                setSpinnerData(WCBtownSpinner,town);
                 city = cityList.get(position).getId();
             }
 
@@ -306,6 +304,7 @@ public class CollectionActivity extends Activity {
                     orgTown="";
                 }
                 WCBorgCitySpinner.setAdapter(new CityAdapter(mContext, OrgcityList));
+                setSpinnerData(WCBorgCitySpinner,orgCity);
                 orgProv = OrgprovsList.get(position).getId();
             }
 
@@ -323,6 +322,7 @@ public class CollectionActivity extends Activity {
                     orgTown="";
                 }
                 WCBorgTownSpinner.setAdapter(new TownAdapter(mContext, OrgtownList));
+                setSpinnerData(WCBorgTownSpinner,orgTown);
                 orgCity = OrgcityList.get(position).getId();
             }
 
@@ -352,10 +352,11 @@ public class CollectionActivity extends Activity {
                 WdcbcityList = WdcbprovsList.get(position).getChild();
                 if (WdcbcityList == null) {
                     WdcbcityList = new ArrayList<CityInfo>();
-                    city="";
+                    WdcbCity="";
                 }
                 WDCBcitySpinner.setAdapter(new CityAdapter(mContext, WdcbcityList));
-                prov = WdcbprovsList.get(position).getId();
+                setSpinnerData(WDCBcitySpinner,WdcbCity);
+                wdcbPro = WdcbprovsList.get(position).getId();
             }
 
             @Override
@@ -366,7 +367,7 @@ public class CollectionActivity extends Activity {
         WDCBcitySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                city = WdcbcityList.get(position).getId();
+                WdcbCity = WdcbcityList.get(position).getId();
             }
 
             @Override
@@ -467,8 +468,8 @@ public class CollectionActivity extends Activity {
             hashParams.put("cbstatus", cbstatus);
             hashParams.put("cbstate", cbstate);
             hashParams.put("telephone", telephone);
-            hashParams.put("prov", prov);
-            hashParams.put("city", city);
+            hashParams.put("prov", wdcbPro);
+            hashParams.put("city", WdcbCity);
             hashParams.put("zzJf", zzJf);
             hashParams.put("ltDy", ltDy);
             hashParams.put("jnJf", jnJf);
@@ -765,6 +766,10 @@ public class CollectionActivity extends Activity {
     private void showWaidiCanbao(WaidiCanbaoInfo waidiCanbaoInfo) {
         setSpinnerData(WDCBprovSpinner, waidiCanbaoInfo.getProv());
         setSpinnerData(WDCBcitySpinner, waidiCanbaoInfo.getCity());
+
+        wdcbPro=waidiCanbaoInfo.getProv();
+        WdcbCity=waidiCanbaoInfo.getCity();
+
         setCheckBoxtDate(WDCBzzJfCheckBox, waidiCanbaoInfo.getZzJf());
         setCheckBoxtDate(WDCBltDyCheckBox, waidiCanbaoInfo.getLtDy());
         setCheckBoxtDate(WDCBjnJfCheckBox, waidiCanbaoInfo.getJnJf());
@@ -790,11 +795,21 @@ public class CollectionActivity extends Activity {
         setSpinnerData(WCBprovSpinner, weiCanbaoInfo.getProv());
         setSpinnerData(WCBcitySpinner, weiCanbaoInfo.getCity());
         setSpinnerData(WCBtownSpinner, weiCanbaoInfo.getTown());
+
+        prov=weiCanbaoInfo.getProv();
+        city=weiCanbaoInfo.getCity();
+        town=weiCanbaoInfo.getTown();
+
         setSpinnerData(WCBStatusSpinner, weiCanbaoInfo.getStatus());
         setSpinnerData(WCBReasonSpinner, weiCanbaoInfo.getReason());
+
         setSpinnerData(WCBorgProvSpinner, weiCanbaoInfo.getOrgProv());
         setSpinnerData(WCBorgCitySpinner, weiCanbaoInfo.getOrgCity());
         setSpinnerData(WCBorgTownSpinner, weiCanbaoInfo.getOrgTown());
+
+        orgProv=weiCanbaoInfo.getOrgProv();
+        orgCity=weiCanbaoInfo.getOrgCity();
+        orgTown=weiCanbaoInfo.getOrgTown();
 
     }
 
@@ -807,7 +822,6 @@ public class CollectionActivity extends Activity {
     }
 
     public void setSpinnerData(Spinner spinner, String text) {
-
         if (spinner == CJSpinner) {
             for (int i = 0; i < caijiList.size(); i++) {
                 String item = caijiList.get(i).getId();
