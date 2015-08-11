@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:background="#f2f2f2"
+        android:background="@drawable/content_corners_bg"
         android:orientation="vertical"
         android:padding="10dp"
         android:visibility="visible">
@@ -16,6 +16,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="未参保信息"
+            android:drawableLeft="@mipmap/u43"
+            android:drawablePadding="5dp"
+            android:gravity="center|left"
             android:textColor="@android:color/black"
             android:textSize="@dimen/login_text_size"
             android:textStyle="bold" />

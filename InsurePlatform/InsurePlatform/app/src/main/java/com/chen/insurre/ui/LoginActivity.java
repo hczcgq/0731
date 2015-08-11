@@ -122,15 +122,15 @@ public class LoginActivity extends Activity {
         }
 
 
-//        if(StringUtil.isEmpty(verify)){
-//            ToastUtil.showToastShort(this,"验证码不能为空");
-//            return;
-//        }
-//
-//        if(!verify.equals(randomCode)){
-//            ToastUtil.showToastShort(this,"验证码错误");
-//            return;
-//        }
+        if(StringUtil.isEmpty(verify)){
+            ToastUtil.showToastShort(this,"验证码不能为空");
+            return;
+        }
+
+        if(!verify.equals(randomCode)){
+            ToastUtil.showToastShort(this,"验证码错误");
+            return;
+        }
 
 
         if (!NetworkUtil.networkIsAvailable(mContext)) {

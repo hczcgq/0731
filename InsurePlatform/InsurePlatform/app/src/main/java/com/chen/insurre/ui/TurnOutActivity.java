@@ -215,13 +215,13 @@ public class TurnOutActivity extends Activity implements View.OnClickListener {
      * @param info
      */
     private void showItemDate(TurnItemInfo info) {
-        CharSequence receiceMsg = Html.fromHtml("转出人员<font color=\"#1026FB\">（已接收" + info.getReceive() + "人）</font>");
+        CharSequence receiceMsg = Html.fromHtml("转出人员<font color=\"#1026FB\">(已接收" + info.getReceive() + "人)</font>");
         ReceiveTextview.setText(receiceMsg);
 
-        CharSequence undealMsg = Html.fromHtml("转出人员<font color=\"#FB1E27\">（未处理" + info.getUndeal() + "人）</font>");
+        CharSequence undealMsg = Html.fromHtml("转出人员<font color=\"#FB1E27\">(未处理" + info.getUndeal() + "人)</font>");
         UndealTextview.setText(undealMsg);
 
-        CharSequence rejectMsg = Html.fromHtml("转出人员<font color=\"#D07D57\">（已拒绝" + info.getReject() + "人）</font>");
+        CharSequence rejectMsg = Html.fromHtml("转出人员<font color=\"#D07D57\">(已拒绝" + info.getReject() + "人)</font>");
         RejectTextview.setText(rejectMsg);
     }
 
@@ -232,13 +232,13 @@ public class TurnOutActivity extends Activity implements View.OnClickListener {
      */
     private void showTurnListName(int requestType, String index) {
         if (requestType == TRUN_OUT_RECEIVE) {
-            CharSequence receiceMsg = Html.fromHtml("转出人员<font color=\"#1026FB\">（已接收" + index + "人）</font>");
+            CharSequence receiceMsg = Html.fromHtml("转出人员<font color=\"#1026FB\">(已接收" + index + "人)</font>");
             TurnListNameTextView.setText(receiceMsg);
         } else if (requestType == TRUN_OUT_REJECT) {
-            CharSequence receiceMsg = Html.fromHtml("转出人员<font color=\"#D07D57\">（已拒绝" + index + "人）</font>");
+            CharSequence receiceMsg = Html.fromHtml("转出人员<font color=\"#D07D57\">(已拒绝" + index + "人)</font>");
             TurnListNameTextView.setText(receiceMsg);
         } else if (requestType == TRUN_OUT_UNDEAL) {
-            CharSequence receiceMsg = Html.fromHtml("转出人员<font color=\"#FB1E27\">（未处理" + index + "人）</font>");
+            CharSequence receiceMsg = Html.fromHtml("转出人员<font color=\"#FB1E27\">(未处理" + index + "人)</font>");
             TurnListNameTextView.setText(receiceMsg);
         }
 

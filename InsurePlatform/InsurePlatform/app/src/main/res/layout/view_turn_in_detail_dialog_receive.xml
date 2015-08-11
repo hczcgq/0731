@@ -19,8 +19,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center|left"
             android:text="接收转入"
+            android:drawableLeft="@mipmap/u43"
+            android:drawablePadding="5dp"
+            android:gravity="center|left"
             android:textStyle="bold"
             android:textColor="@android:color/black"
             android:textSize="@dimen/common_text_size" />

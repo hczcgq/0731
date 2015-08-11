@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
@@ -78,7 +79,9 @@ public class CollectionActivity extends Activity {
     private Spinner WDCBprovSpinner, WDCBcitySpinner;
     private CheckBox WDCBzzJfCheckBox, WDCBltDyCheckBox, WDCBjnJfCheckBox, WDCBjnDyCheckBox, WDCBqtJfCheckBox, WDCBqtDyCheckBox, WDCBzgYbCheckBox, WDCBjnYbCheckBox, WDCBqtYbCheckBox;
 
-    private View weicanboaView, waidicanbaoView;
+    private View canbaoView, weicanboaView, waidicanbaoView;
+
+    private LinearLayout canbaoLinearLayout;
 
     private String name, cardno;
 
@@ -150,8 +153,11 @@ public class CollectionActivity extends Activity {
         WDCBjnYbCheckBox = (CheckBox) findViewById(R.id.WDCBjnYbCheckBox);
         WDCBqtYbCheckBox = (CheckBox) findViewById(R.id.WDCBqtYbCheckBox);
 
+        canbaoView=findViewById(R.id.canbaoView);
         weicanboaView = findViewById(R.id.weicanboaView);
         waidicanbaoView = findViewById(R.id.waidicanbaoView);
+
+        canbaoLinearLayout= (LinearLayout) canbaoView.findViewById(R.id.canbaoLinearLayout);
 
     }
 
@@ -518,19 +524,20 @@ public class CollectionActivity extends Activity {
             if (!NetworkUtil.networkIsAvailable(mContext)) {
                 return null;
             }
-
-            caijiList= MyApplication.getInstance().getCaijiList();
-            reasonList=MyApplication.getInstance().getReasonList();
-            provsList=MyApplication.getInstance().getProvsList();
-            stateList=MyApplication.getInstance().getStateList();
-            canbaoList=MyApplication.getInstance().getCanbaoList();
-            CJSpinner.setAdapter(new ItemAdapter(mContext, caijiList));
-            CBSpinner.setAdapter(new ItemAdapter(mContext, canbaoList));
-            WCBprovSpinner.setAdapter(new ProvinceAdapter(mContext, provsList));
-            WCBStatusSpinner.setAdapter(new ItemAdapter(mContext, stateList));
-            WCBReasonSpinner.setAdapter(new ItemAdapter(mContext, reasonList));
-            WCBorgProvSpinner.setAdapter(new ProvinceAdapter(mContext, provsList));
-            WDCBprovSpinner.setAdapter(new ProvinceAdapter(mContext, provsList));
+            if (requestCode == REQUEST_SEARCH) {
+                caijiList = MyApplication.getInstance().getCaijiList();
+                reasonList = MyApplication.getInstance().getReasonList();
+                provsList = MyApplication.getInstance().getProvsList();
+                stateList = MyApplication.getInstance().getStateList();
+                canbaoList = MyApplication.getInstance().getCanbaoList();
+                CJSpinner.setAdapter(new ItemAdapter(mContext, caijiList));
+                CBSpinner.setAdapter(new ItemAdapter(mContext, canbaoList));
+                WCBprovSpinner.setAdapter(new ProvinceAdapter(mContext, provsList));
+                WCBStatusSpinner.setAdapter(new ItemAdapter(mContext, stateList));
+                WCBReasonSpinner.setAdapter(new ItemAdapter(mContext, reasonList));
+                WCBorgProvSpinner.setAdapter(new ProvinceAdapter(mContext, provsList));
+                WDCBprovSpinner.setAdapter(new ProvinceAdapter(mContext, provsList));
+            }
 
             String url = CommTools.getRequestUrl(mContext, R.string.conllection_url);
             hashParams.put("regkey", PreferencesUtils.getString(mContext, Constant.SP_USER_REGKEY));
@@ -629,6 +636,74 @@ public class CollectionActivity extends Activity {
             waidicanbaoView.setVisibility(View.GONE);
             WeiCanbaoInfo weiCanbaoInfo = info.getWeiCanbaoInfo();
             showWeicanbao(weiCanbaoInfo);
+        }
+
+        if(info.getCanEdit().equals("0")){
+            JHRNameEditText.setEnabled(false);
+            JHRNameEditText.setEnabled(false);
+            JHRIDCardEditText.setEnabled(false);
+            JHRMobileEditText.setEnabled(false);
+            CJSpinner.setEnabled(false);
+            CBSpinner.setEnabled(false);
+            MobileEditText.setEnabled(false);
+
+            WCBorgNameEditText.setEnabled(false);
+            WCBaddressEditText.setEnabled(false);
+            WCBorgAddrEditText.setEnabled(false);
+            WCBCheckBox.setEnabled(false);
+            WCBprovSpinner.setEnabled(false);
+            WCBcitySpinner.setEnabled(false);
+            WCBtownSpinner.setEnabled(false);
+            WCBStatusSpinner.setEnabled(false);
+            WCBReasonSpinner.setEnabled(false);
+            WCBorgProvSpinner.setEnabled(false);
+            WCBorgCitySpinner.setEnabled(false);
+            WCBorgTownSpinner.setEnabled(false);
+
+            WDCBprovSpinner.setEnabled(false);
+            WDCBcitySpinner.setEnabled(false);
+            WDCBzzJfCheckBox.setEnabled(false);
+            WDCBltDyCheckBox.setEnabled(false);
+            WDCBjnJfCheckBox.setEnabled(false);
+            WDCBjnDyCheckBox.setEnabled(false);
+            WDCBqtJfCheckBox.setEnabled(false);
+            WDCBqtDyCheckBox.setEnabled(false);
+            WDCBzgYbCheckBox.setEnabled(false);
+            WDCBjnYbCheckBox.setEnabled(false);
+            WDCBqtYbCheckBox.setEnabled(false);
+        }else{
+            JHRNameEditText.setEnabled(true);
+            JHRNameEditText.setEnabled(true);
+            JHRIDCardEditText.setEnabled(true);
+            JHRMobileEditText.setEnabled(true);
+            CJSpinner.setEnabled(true);
+            CBSpinner.setEnabled(true);
+            MobileEditText.setEnabled(true);
+
+            WCBorgNameEditText.setEnabled(true);
+            WCBaddressEditText.setEnabled(true);
+            WCBorgAddrEditText.setEnabled(true);
+            WCBCheckBox.setEnabled(true);
+            WCBprovSpinner.setEnabled(true);
+            WCBcitySpinner.setEnabled(true);
+            WCBtownSpinner.setEnabled(true);
+            WCBStatusSpinner.setEnabled(true);
+            WCBReasonSpinner.setEnabled(true);
+            WCBorgProvSpinner.setEnabled(true);
+            WCBorgCitySpinner.setEnabled(true);
+            WCBorgTownSpinner.setEnabled(true);
+
+            WDCBprovSpinner.setEnabled(true);
+            WDCBcitySpinner.setEnabled(true);
+            WDCBzzJfCheckBox.setEnabled(true);
+            WDCBltDyCheckBox.setEnabled(true);
+            WDCBjnJfCheckBox.setEnabled(true);
+            WDCBjnDyCheckBox.setEnabled(true);
+            WDCBqtJfCheckBox.setEnabled(true);
+            WDCBqtDyCheckBox.setEnabled(true);
+            WDCBzgYbCheckBox.setEnabled(true);
+            WDCBjnYbCheckBox.setEnabled(true);
+            WDCBqtYbCheckBox.setEnabled(true);
         }
 
     }

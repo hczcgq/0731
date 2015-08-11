@@ -6,10 +6,11 @@
 
 
     <LinearLayout
+        android:id="@+id/canbaoLinearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:background="#f2f2f2"
+        android:background="@drawable/content_corners_bg"
         android:orientation="vertical"
         android:padding="10dp"
         android:visibility="visible">
@@ -20,6 +21,9 @@
             android:text="社保采集信息"
             android:textColor="@android:color/black"
             android:textSize="@dimen/login_text_size"
+            android:drawableLeft="@mipmap/u43"
+            android:drawablePadding="5dp"
+            android:gravity="center|left"
             android:textStyle="bold" />
 
         <LinearLayout
@@ -86,6 +90,7 @@
                     android:layout_height="40dp"
                     android:background="@drawable/input_bg"
                     android:padding="5dp"
+                    android:maxLength="18"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/common_text_size" />
             </LinearLayout>
@@ -112,6 +117,8 @@
                     android:layout_height="40dp"
                     android:background="@drawable/input_bg"
                     android:padding="5dp"
+                    android:maxLength="11"
+                    android:inputType="number"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/common_text_size" />
             </LinearLayout>
@@ -197,6 +204,8 @@
                     android:background="@drawable/input_bg"
                     android:padding="5dp"
                     android:singleLine="true"
+                    android:maxLength="11"
+                    android:inputType="number"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/common_text_size" />
             </LinearLayout>

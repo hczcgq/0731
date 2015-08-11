@@ -10,16 +10,18 @@
         android:layout_height="60dp"
         android:layout_margin="10dp"
         android:orientation="horizontal">
-
+        <!--210922198803023322-->
         <EditText
             android:id="@+id/IDCardEdittext"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_weight="1"
-            android:text="210922198803023322"
+            android:text=""
             android:background="@drawable/input_bg"
             android:layout_marginRight="5dp"
             android:padding="5dp"
+            android:inputType="text"
+            android:maxLength="18"
             android:textColor="#686868" />
 
         <Button
@@ -50,6 +52,7 @@
                 android:layout_height="wrap_content" />
 
             <include
+                android:id="@+id/canbaoView"
                 layout="@layout/view_collection_canbao"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />

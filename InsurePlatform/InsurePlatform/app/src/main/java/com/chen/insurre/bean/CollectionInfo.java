@@ -4,11 +4,20 @@ package com.chen.insurre.bean;
  * Created by chenguoquan on 7/30/15.
  */
 public class CollectionInfo {
+    private String canEdit;
     private PersonInfo personInfo;
     private UserInfo user;
     private CanbaoInfo canbaoInfo;
     private WeiCanbaoInfo weiCanbaoInfo;
     private WaidiCanbaoInfo waidiCanbaoInfo;
+
+    public String getCanEdit() {
+        return canEdit;
+    }
+
+    public void setCanEdit(String canEdit) {
+        this.canEdit = canEdit;
+    }
 
     public PersonInfo getPersonInfo() {
         return personInfo;
