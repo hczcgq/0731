@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 import com.chen.insurre.R;
 import com.chen.insurre.bean.LoginInfo;
 import com.chen.insurre.bean.ResultInfo;
+import com.chen.insurre.bean.TurnItemInfo;
 import com.chen.insurre.http.HttpHelper;
 import com.chen.insurre.http.InsureClient;
 import com.chen.insurre.util.CommTools;
@@ -52,6 +54,7 @@ public class LoginActivity extends Activity {
 
     private Dialog dialog;
 
+    private TurnInTask mTurnInTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,10 +144,6 @@ public class LoginActivity extends Activity {
         mLoginTask = new LoginTask();
         mLoginTask.execute(username, password);
 
-
-
-//        loginServer(username,password);
-
     }
 
 
@@ -187,8 +186,6 @@ public class LoginActivity extends Activity {
         @Override
         protected void onPostExecute(ResultInfo result) {
             super.onPostExecute(result);
-            if (dialog != null)
-                dialog.dismiss();
             if (result != null && result.getResult() != null
                     && result.getResult().equals("0")) {
                 LoginInfo loginInfo=(LoginInfo)result.getBean();
@@ -199,9 +196,10 @@ public class LoginActivity extends Activity {
                     PreferencesUtils.putString(mContext,Constant.SP_USER_KEY,loginInfo.getKey());
                     PreferencesUtils.putString(mContext, Constant.SP_USER_REGKEY, loginInfo.getRegkey());
                 }
-                Intent intent=new Intent(mContext,MainActivity.class);
-                startActivity(intent);
-                finish();
+                loadDate();
+//                Intent intent=new Intent(mContext,MainActivity.class);
+//                startActivity(intent);
+//                finish();
             } else if (result != null && result.getDescription() != null
                     && !result.getDescription().equals("")) {
                 Toast.makeText(mContext, "登录失败，" + result.getDescription(),
@@ -247,6 +245,8 @@ public class LoginActivity extends Activity {
         });
     }
 
+
+
     private void processResult(String result){
         ResultInfo resultInfo=new Gson().fromJson(result ,new TypeToken<ResultInfo<LoginInfo>>(){}.getType());
         if (resultInfo != null && resultInfo.getResult() != null
@@ -259,6 +259,7 @@ public class LoginActivity extends Activity {
                 PreferencesUtils.putString(mContext,Constant.SP_USER_KEY,loginInfo.getKey());
                 PreferencesUtils.putString(mContext, Constant.SP_USER_REGKEY, loginInfo.getRegkey());
             }
+
             Intent intent=new Intent(mContext,MainActivity.class);
             startActivity(intent);
             finish();
@@ -269,6 +270,63 @@ public class LoginActivity extends Activity {
         } else {
             Toast.makeText(mContext, "登录失败，请稍后再试!", Toast.LENGTH_SHORT)
                     .show();
+        }
+    }
+
+
+
+    private void loadDate() {
+        if (mTurnInTask != null
+                && mTurnInTask.getStatus() != AsyncTask.Status.FINISHED)
+            mTurnInTask.cancel(true);
+        mTurnInTask = new TurnInTask();
+        mTurnInTask.execute();
+    }
+    private class TurnInTask extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... params) {
+            if (!NetworkUtil.networkIsAvailable(mContext)) {
+                return null;
+            }
+
+            String url  = CommTools.getRequestUrl(mContext, R.string.trun_in_url);
+            HashMap<String, String> hashParams = new HashMap<String, String>();
+            Log.e("e", PreferencesUtils.getString(mContext, Constant.SP_USER_REGKEY));
+            hashParams.put("regkey", PreferencesUtils.getString(mContext, Constant.SP_USER_REGKEY));
+            String result = null;
+            try {
+                result = HttpHelper.doRequestForString(mContext, url,
+                        HttpHelper.HTTP_GET, hashParams);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            int int_undel=0;
+            if (dialog != null)
+                dialog.dismiss();
+            if (result != null) {
+                ResultInfo<TurnItemInfo> Item = new Gson().fromJson(result, new TypeToken<ResultInfo<TurnItemInfo>>() {
+                }.getType());
+                if (Item != null && Item.getResult() != null
+                        && Item.getResult().equals("0")) {
+                    TurnItemInfo mTurnItemInfo = ((TurnItemInfo) Item.getBean());
+                    String undeal=mTurnItemInfo.getUndeal();
+                    if(TextUtils.isEmpty(undeal)){
+                        int_undel=0;
+                    }else{
+                        int_undel=Integer.parseInt(undeal);
+                    }
+                }
+            }
+            Intent intent=new Intent(mContext,MainActivity.class);
+            intent.putExtra("undeal",int_undel);
+            startActivity(intent);
+            finish();
         }
     }
 }

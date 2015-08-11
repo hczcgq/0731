@@ -15,7 +15,6 @@
             android:textSize="@dimen/login_text_size"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:padding="10dp"
             android:layout_marginLeft="10dp"
             android:textColor="@android:color/black"
             android:id="@+id/NameTextView" />

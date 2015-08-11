@@ -146,6 +146,7 @@
                     android:layout_height="wrap_content"
                     android:entries="@array/cbstatus_array"
                     android:textColor="@android:color/black"
+                    android:spinnerMode="dropdown"
                     android:textSize="@dimen/common_text_size" />
             </LinearLayout>
 
@@ -170,6 +171,7 @@
                     android:layout_height="wrap_content"
                     android:entries="@array/cbstate_array"
                     android:textColor="@android:color/black"
+                    android:spinnerMode="dropdown"
                     android:textSize="@dimen/common_text_size" />
             </LinearLayout>
 
@@ -194,6 +196,7 @@
                     android:layout_height="40dp"
                     android:background="@drawable/input_bg"
                     android:padding="5dp"
+                    android:singleLine="true"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/common_text_size" />
             </LinearLayout>

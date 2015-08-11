@@ -16,7 +16,13 @@ import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.chen.insurre.MyApplication;
 import com.chen.insurre.R;
+import com.chen.insurre.adapter.ItemAdapter;
+import com.chen.insurre.adapter.ProvinceAdapter;
+import com.chen.insurre.bean.ItemInfo;
+import com.chen.insurre.bean.ParamInfo;
+import com.chen.insurre.bean.ProvinceInfo;
 import com.chen.insurre.bean.ResultInfo;
 import com.chen.insurre.bean.TurnItemInfo;
 import com.chen.insurre.http.HttpHelper;
@@ -29,6 +35,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.HashMap;
+import java.util.List;
 
 
 public class MainActivity extends TabActivity implements View.OnClickListener{
@@ -45,17 +52,18 @@ public class MainActivity extends TabActivity implements View.OnClickListener{
     public static final int MODE_COLLECTION = 0;
     public static final int MODE_TRUNIN= 1;
     public static final int MODE_TRUNOUT= 2;
+    private  int undeal=0;
 
-    private TurnInTask mTurnInTask;
+    private ParamTask mParamTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.view_main);
+        undeal=getIntent().getIntExtra("undeal",0);
 
         initView();
-        loadDate();
     }
 
     private void initView() {
@@ -72,10 +80,26 @@ public class MainActivity extends TabActivity implements View.OnClickListener{
         TurnInTextView.setOnClickListener(this);
         TurnOutTextView.setOnClickListener(this);
 
+        if(undeal>0){
+            TurnInTagImageView.setVisibility(View.VISIBLE);
+        }else{
+            TurnInTagImageView.setVisibility(View.GONE);
+        }
+
         initTabHost();
         switchMode(mMode);
+        loadParam();
     }
 
+
+    private void loadParam() {
+
+        if (mParamTask != null
+                && mParamTask.getStatus() != AsyncTask.Status.FINISHED)
+            mParamTask.cancel(true);
+        mParamTask = new ParamTask();
+        mParamTask.execute();
+    }
 
     public void LogOut(View view) {
         if (!NetworkUtil.networkIsAvailable(mContext)) {
@@ -90,14 +114,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener{
 
     }
 
-    private void loadDate() {
 
-        if (mTurnInTask != null
-                && mTurnInTask.getStatus() != AsyncTask.Status.FINISHED)
-            mTurnInTask.cancel(true);
-        mTurnInTask = new TurnInTask();
-        mTurnInTask.execute();
-    }
 
     private void initTabHost() {
         if (mTabHost != null) {
@@ -221,67 +238,54 @@ public class MainActivity extends TabActivity implements View.OnClickListener{
         }
     }
 
-    private class TurnInTask extends AsyncTask<String, Void, String> {
-        private Dialog dialog;
+
+    private class ParamTask extends AsyncTask<String, Void, ResultInfo> {
+
 
         protected void onPreExecute() {
-            // TODO Auto-generated method stub
             super.onPreExecute();
-
-            try {
-                dialog = ProgressDialog.show(mContext, "请稍后",
-                        "正在加载...");
-                dialog.setCancelable(true);
-            } catch (Exception e) {
-                // TODO: handle exception
-            }
         }
 
         @Override
-        protected String doInBackground(String... params) {
-
-            String url  = CommTools.getRequestUrl(mContext, R.string.trun_in_url);
+        protected ResultInfo doInBackground(String... params) {
+            if (!NetworkUtil.networkIsAvailable(mContext)) {
+                return null;
+            }
             HashMap<String, String> hashParams = new HashMap<String, String>();
-            Log.e("e", PreferencesUtils.getString(mContext, Constant.SP_USER_REGKEY));
+            String url = CommTools.getRequestUrl(mContext, R.string.param_url);
             hashParams.put("regkey", PreferencesUtils.getString(mContext, Constant.SP_USER_REGKEY));
-            String result = null;
+            hashParams.put("r", "Y");
+            ResultInfo resultInfo = null;
             try {
-                result = HttpHelper.doRequestForString(mContext, url,
+                String result = HttpHelper.doRequestForString(mContext, url,
                         HttpHelper.HTTP_GET, hashParams);
+                MyApplication.getInstance().saveJsonDate(result);
+                resultInfo = new Gson().fromJson(result, new TypeToken<ResultInfo<ParamInfo>>() {
+                }.getType());
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            return result;
+            return resultInfo;
         }
 
         @Override
-        protected void onPostExecute(String result) {
+        protected void onPostExecute(ResultInfo result) {
             super.onPostExecute(result);
-            if (dialog != null)
-                dialog.dismiss();
-            if (result != null) {
-                ResultInfo<TurnItemInfo> Item = new Gson().fromJson(result, new TypeToken<ResultInfo<TurnItemInfo>>() {
-                }.getType());
-                if (Item != null && Item.getResult() != null
-                        && Item.getResult().equals("0")) {
-                    TurnItemInfo mTurnItemInfo = ((TurnItemInfo) Item.getBean());
-                    String undeal=mTurnItemInfo.getUndeal();
-                    if(TextUtils.isEmpty(undeal)){
-                        return;
-                    }
-                    int int_undel=Integer.parseInt(undeal);
-                    if(int_undel>0){
-                        TurnInTagImageView.setVisibility(View.VISIBLE);
-                    }else{
-                        TurnInTagImageView.setVisibility(View.GONE);
-                    }
-                }
+            if (result != null && result.getResult() != null
+                    && result.getResult().equals("0")) {
+                ParamInfo paramInfo = (ParamInfo) result.getBean();
+                List<ItemInfo> caijiList = paramInfo.getCaiji();
+                List<ItemInfo> reasonList = paramInfo.getReason();
+                List<ProvinceInfo> provsList = paramInfo.getProvs();
+                List<ItemInfo> stateList = paramInfo.getState();
+                List<ItemInfo> canbaoList = paramInfo.getCanbao();
+                MyApplication.getInstance().setCaijiList(caijiList);
+                MyApplication.getInstance().setReasonList(reasonList);
+                MyApplication.getInstance().setProvsList(provsList);
+                MyApplication.getInstance().setStateList(stateList);
+                MyApplication.getInstance().setCanbaoList(canbaoList);
             }
         }
     }
-
-
-
-
 
 }

@@ -50,6 +50,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginRight="5dp"
+                    android:spinnerMode="dropdown"
                     android:layout_weight="1"
                     android:gravity="center|left" />
 
@@ -57,6 +58,7 @@
                     android:id="@+id/WCBcitySpinner"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:spinnerMode="dropdown"
                     android:layout_weight="1"
                     android:gravity="center|left" />
 
@@ -64,6 +66,7 @@
                     android:id="@+id/WCBtownSpinner"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:spinnerMode="dropdown"
                     android:layout_weight="1"
                     android:gravity="center|left" />
             </LinearLayout>
@@ -108,6 +111,7 @@
                     android:gravity="center|left"
                     android:padding="10dp"
                     android:text="当前状态："
+                    android:spinnerMode="dropdown"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/common_text_size" />
 
@@ -116,6 +120,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:gravity="center|left"
+                    android:spinnerMode="dropdown"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp" />
             </LinearLayout>
@@ -206,6 +211,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginRight="5dp"
+                        android:spinnerMode="dropdown"
                         android:layout_weight="1"
                         android:gravity="center|left" />
 
@@ -213,6 +219,7 @@
                         android:id="@+id/WCBorgCitySpinner"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:spinnerMode="dropdown"
                         android:layout_weight="1"
                         android:gravity="center|left" />
 
@@ -220,6 +227,7 @@
                         android:id="@+id/WCBorgTownSpinner"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:spinnerMode="dropdown"
                         android:layout_weight="1"
                         android:gravity="center|left" />
                 </LinearLayout>

@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -15,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.chen.insurre.MyApplication;
 import com.chen.insurre.R;
 import com.chen.insurre.adapter.CityAdapter;
 import com.chen.insurre.adapter.ItemAdapter;
@@ -24,7 +24,6 @@ import com.chen.insurre.bean.CanbaoInfo;
 import com.chen.insurre.bean.CityInfo;
 import com.chen.insurre.bean.CollectionInfo;
 import com.chen.insurre.bean.ItemInfo;
-import com.chen.insurre.bean.ParamInfo;
 import com.chen.insurre.bean.PersonInfo;
 import com.chen.insurre.bean.ProvinceInfo;
 import com.chen.insurre.bean.ResultInfo;
@@ -40,6 +39,8 @@ import com.chen.insurre.util.StringUtil;
 import com.chen.insurre.util.ToastUtil;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -59,8 +60,6 @@ public class CollectionActivity extends Activity {
     private Activity mContext = this;
 
     private CollectionTask mCollectionTask;
-
-    private ParamTask mParamTask;
 
     private EditText IDCardEdittext;
 
@@ -101,7 +100,6 @@ public class CollectionActivity extends Activity {
         setContentView(R.layout.view_collection);
 
         initView();
-        loadParam();
         initEvent();
     }
 
@@ -154,6 +152,7 @@ public class CollectionActivity extends Activity {
 
         weicanboaView = findViewById(R.id.weicanboaView);
         waidicanbaoView = findViewById(R.id.waidicanbaoView);
+
     }
 
     private void initEvent() {
@@ -195,9 +194,10 @@ public class CollectionActivity extends Activity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 cityList = provsList.get(position).getChild();
-                if(cityList!=null) {
-                    WCBcitySpinner.setAdapter(new CityAdapter(mContext, cityList));
+                if(cityList==null) {
+                    cityList=new ArrayList<CityInfo>();
                 }
+                WCBcitySpinner.setAdapter(new CityAdapter(mContext, cityList));
                 prov = provsList.get(position).getId();
             }
 
@@ -210,9 +210,10 @@ public class CollectionActivity extends Activity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 townList = cityList.get(position).getChild();
-                if(townList!=null) {
-                    WCBtownSpinner.setAdapter(new TownAdapter(mContext, townList));
+                if(townList==null) {
+                    townList=new ArrayList<TownInfo>();
                 }
+                WCBtownSpinner.setAdapter(new TownAdapter(mContext, townList));
                 city = cityList.get(position).getId();
             }
 
@@ -264,9 +265,10 @@ public class CollectionActivity extends Activity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 cityList = provsList.get(position).getChild();
-                if(cityList!=null) {
-                    WCBorgCitySpinner.setAdapter(new CityAdapter(mContext, cityList));
+                if(cityList==null) {
+                    cityList=new ArrayList<CityInfo>();
                 }
+                WCBorgCitySpinner.setAdapter(new CityAdapter(mContext, cityList));
                 orgProv = provsList.get(position).getId();
             }
 
@@ -279,9 +281,10 @@ public class CollectionActivity extends Activity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 townList = cityList.get(position).getChild();
-                if(townList!=null) {
-                    WCBorgTownSpinner.setAdapter(new TownAdapter(mContext, townList));
+                if(townList==null) {
+                    townList=new ArrayList<TownInfo>();
                 }
+                WCBorgTownSpinner.setAdapter(new TownAdapter(mContext, townList));
                 orgCity = cityList.get(position).getId();
             }
 
@@ -309,9 +312,10 @@ public class CollectionActivity extends Activity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 cityList = provsList.get(position).getChild();
-                if(cityList!=null) {
-                    WDCBcitySpinner.setAdapter(new CityAdapter(mContext, cityList));
+                if(cityList==null) {
+                    cityList=new ArrayList<CityInfo>();
                 }
+                WDCBcitySpinner.setAdapter(new CityAdapter(mContext, cityList));
                 prov = provsList.get(position).getId();
             }
 
@@ -359,15 +363,6 @@ public class CollectionActivity extends Activity {
             mCollectionTask.cancel(true);
         mCollectionTask = new CollectionTask(requestCode, hashParams);
         mCollectionTask.execute();
-    }
-
-    private void loadParam() {
-
-        if (mParamTask != null
-                && mParamTask.getStatus() != AsyncTask.Status.FINISHED)
-            mParamTask.cancel(true);
-        mParamTask = new ParamTask();
-        mParamTask.execute();
     }
 
     public void SaveClick(View view) {
@@ -524,6 +519,19 @@ public class CollectionActivity extends Activity {
                 return null;
             }
 
+            caijiList= MyApplication.getInstance().getCaijiList();
+            reasonList=MyApplication.getInstance().getReasonList();
+            provsList=MyApplication.getInstance().getProvsList();
+            stateList=MyApplication.getInstance().getStateList();
+            canbaoList=MyApplication.getInstance().getCanbaoList();
+            CJSpinner.setAdapter(new ItemAdapter(mContext, caijiList));
+            CBSpinner.setAdapter(new ItemAdapter(mContext, canbaoList));
+            WCBprovSpinner.setAdapter(new ProvinceAdapter(mContext, provsList));
+            WCBStatusSpinner.setAdapter(new ItemAdapter(mContext, stateList));
+            WCBReasonSpinner.setAdapter(new ItemAdapter(mContext, reasonList));
+            WCBorgProvSpinner.setAdapter(new ProvinceAdapter(mContext, provsList));
+            WDCBprovSpinner.setAdapter(new ProvinceAdapter(mContext, provsList));
+
             String url = CommTools.getRequestUrl(mContext, R.string.conllection_url);
             hashParams.put("regkey", PreferencesUtils.getString(mContext, Constant.SP_USER_REGKEY));
             ResultInfo resultInfo = null;
@@ -574,64 +582,14 @@ public class CollectionActivity extends Activity {
     }
 
 
-    private class ParamTask extends AsyncTask<String, Void, ResultInfo> {
-
-
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected ResultInfo doInBackground(String... params) {
-            if (!NetworkUtil.networkIsAvailable(mContext)) {
-                return null;
-            }
-            HashMap<String, String> hashParams = new HashMap<String, String>();
-            String url = CommTools.getRequestUrl(mContext, R.string.param_url);
-            hashParams.put("regkey", PreferencesUtils.getString(mContext, Constant.SP_USER_REGKEY));
-            hashParams.put("r", "Y");
-            ResultInfo resultInfo = null;
-            try {
-                String result = HttpHelper.doRequestForString(mContext, url,
-                        HttpHelper.HTTP_GET, hashParams);
-                resultInfo = new Gson().fromJson(result, new TypeToken<ResultInfo<ParamInfo>>() {
-                }.getType());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return resultInfo;
-        }
-
-        @Override
-        protected void onPostExecute(ResultInfo result) {
-            super.onPostExecute(result);
-            if (result != null && result.getResult() != null
-                    && result.getResult().equals("0")) {
-                ParamInfo paramInfo = (ParamInfo) result.getBean();
-                caijiList = paramInfo.getCaiji();
-                reasonList = paramInfo.getReason();
-                provsList = paramInfo.getProvs();
-                stateList = paramInfo.getState();
-                canbaoList = paramInfo.getCanbao();
-
-                CJSpinner.setAdapter(new ItemAdapter(mContext, caijiList));
-                CBSpinner.setAdapter(new ItemAdapter(mContext, canbaoList));
-
-
-                WCBprovSpinner.setAdapter(new ProvinceAdapter(mContext, provsList));
-                WCBStatusSpinner.setAdapter(new ItemAdapter(mContext, stateList));
-                WCBReasonSpinner.setAdapter(new ItemAdapter(mContext, reasonList));
-
-                WCBorgProvSpinner.setAdapter(new ProvinceAdapter(mContext, provsList));
-
-                WDCBprovSpinner.setAdapter(new ProvinceAdapter(mContext, provsList));
-
-            }
-        }
-    }
-
     private void ShowContentInfo(CollectionInfo info) {
-        Log.e("33", info.getPersonInfo().getLocation());
+        if(cityList!=null){
+            cityList.clear();
+        }
+        if(townList!=null){
+            townList.clear();
+        }
+
         //户籍信息
         PersonInfo personInfo = info.getPersonInfo();
         NameTextView.setText(personInfo.getName());
