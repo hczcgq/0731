@@ -17,11 +17,13 @@
             android:layout_margin="10dp"
             android:padding="10dp"
             android:text="转出人员"
+            android:drawableLeft="@mipmap/u43"
+            android:drawablePadding="5dp"
             android:drawableRight="@mipmap/u32"
             android:textSize="@dimen/login_text_size"
             android:textColor="@android:color/black"
             android:gravity="center|left"
-            android:background="#f2f2f2"
+            android:background="@drawable/content_corners_bg"
             android:id="@+id/UndealTextview" />
 
         <TextView
@@ -31,10 +33,12 @@
             android:text="转出人员"
             android:drawableRight="@mipmap/u32"
             android:padding="10dp"
+            android:drawableLeft="@mipmap/u43"
+            android:drawablePadding="5dp"
             android:textSize="@dimen/login_text_size"
             android:textColor="@android:color/black"
             android:gravity="center|left"
-            android:background="#f2f2f2"
+            android:background="@drawable/content_corners_bg"
             android:id="@+id/ReceiveTextview" />
 
         <TextView
@@ -43,11 +47,13 @@
             android:layout_margin="10dp"
             android:text="转出人员"
             android:padding="10dp"
+            android:drawableLeft="@mipmap/u43"
+            android:drawablePadding="5dp"
             android:textSize="@dimen/login_text_size"
             android:drawableRight="@mipmap/u32"
             android:textColor="@android:color/black"
             android:gravity="center|left"
-            android:background="#f2f2f2"
+            android:background="@drawable/content_corners_bg"
             android:id="@+id/RejectTextview" />
     </LinearLayout>
 
@@ -55,7 +61,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:background="#f2f2f2"
+        android:background="@drawable/content_corners_bg"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -103,8 +109,8 @@
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:layout_margin="10dp"
-        android:background="#f2f2f2"
-        android:layout_height="match_parent">
+        android:background="@drawable/content_corners_bg"
+        android:layout_height="wrap_content">
 
         <RelativeLayout
             android:layout_width="match_parent"

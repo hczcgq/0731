@@ -17,7 +17,10 @@
             android:layout_marginTop="10dp"
             android:background="@android:color/white"
             android:orientation="vertical"
-            android:padding="10dp">
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingRight="5dp"
+            android:paddingLeft="5dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -26,7 +29,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="100dp"
+                    android:layout_width="90dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="5dp"
                     android:gravity="center|right"
@@ -47,10 +50,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center|left"
+                android:layout_marginTop="5dp"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="100dp"
+                    android:layout_width="90dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="5dp"
                     android:gravity="center|right"
@@ -71,10 +75,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center|left"
+                android:layout_marginTop="5dp"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="100dp"
+                    android:layout_width="90dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="5dp"
                     android:gravity="center|right"
@@ -87,6 +92,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="1990-10－12"
+                    android:singleLine="true"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/common_text_size" />
             </LinearLayout>
@@ -107,11 +113,12 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="100dp"
+                    android:layout_width="90dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="5dp"
                     android:gravity="center|right"
                     android:text="转入时间："
+                    android:singleLine="true"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/common_text_size" />
 
@@ -120,6 +127,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="25"
+                    android:singleLine="true"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/common_text_size" />
             </LinearLayout>
@@ -128,10 +136,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center|left"
+                android:layout_marginTop="5dp"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="100dp"
+                    android:layout_width="90dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="5dp"
                     android:gravity="center|right"
@@ -155,7 +164,10 @@
             android:layout_marginTop="10dp"
             android:background="@android:color/white"
             android:orientation="vertical"
-            android:padding="10dp">
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingRight="5dp"
+            android:paddingLeft="5dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -164,7 +176,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="100dp"
+                    android:layout_width="90dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="5dp"
                     android:gravity="center|right"
@@ -177,6 +189,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="chenguoquan"
+                    android:singleLine="true"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/common_text_size" />
             </LinearLayout>
@@ -185,10 +198,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center|left"
+                android:layout_marginTop="5dp"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="100dp"
+                    android:layout_width="90dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="5dp"
                     android:gravity="center|right"

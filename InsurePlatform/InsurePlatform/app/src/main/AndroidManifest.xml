@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.chen.insurre" >
+    package="com.chen.insurre">
 
 
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -21,30 +21,43 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <uses-permission android:name="android.permission.READ_LOGS" />
-    
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:name=".MyApplication"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
             android:name=".ui.LoginActivity"
-            android:label="@string/app_name" >
+            android:screenOrientation="portrait"
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.MainActivity"/>
-        <activity android:name=".ui.CollectionActivity"/>
-        <activity android:name=".ui.TurnInActivity"/>
-        <activity android:name=".ui.TurnOutActivity"/>
-        <activity android:name=".ui.TurnInReceiveDialogActivity"
-                  android:theme="@style/MyDialogStyle"/>
-        <activity android:name=".ui.TurnInRejectDialogActivity"
-                  android:theme="@style/MyDialogStyle"/>
+        <activity
+            android:name=".ui.MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.CollectionActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.TurnInActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.TurnOutActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.TurnInReceiveDialogActivity"
+            android:theme="@style/MyDialogStyle"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.TurnInRejectDialogActivity"
+            android:theme="@style/MyDialogStyle"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

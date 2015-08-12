@@ -90,9 +90,15 @@ public class TurnOutActivity extends Activity implements View.OnClickListener {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.view_turn_out);
 
-
         initView();
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(viewFlipper!=null) {
+            viewFlipper.setDisplayedChild(0);
+        }
         loadDate(TRUN_OUT);
     }
 

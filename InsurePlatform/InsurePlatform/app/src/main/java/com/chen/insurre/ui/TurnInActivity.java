@@ -98,9 +98,10 @@ public class TurnInActivity extends Activity implements View.OnClickListener {
     @Override
     protected void onResume() {
         super.onResume();
-        if (viewFlipper!=null&&viewFlipper.getDisplayedChild() == 0) {
-            loadDate(TRUN_IN);
+        if(viewFlipper!=null) {
+            viewFlipper.setDisplayedChild(0);
         }
+        loadDate(TRUN_IN);
     }
 
     private void initView() {
@@ -132,10 +133,10 @@ public class TurnInActivity extends Activity implements View.OnClickListener {
         UndealAreaTextView = (TextView) findViewById(R.id.UndealAreaTextView);
         UndealPropTextView = (TextView) findViewById(R.id.UndealPropTextView);
         UndealLocationTextView = (TextView) findViewById(R.id.UndealLocationTextView);
-        UndealTurnInTimeTextView = (TextView) findViewById(R.id.UndealTurnInTimeTextView);
-        UndealBeforeRoadTextView = (TextView) findViewById(R.id.UndealBeforeRoadTextView);
-        UndealBeforeAreaTextView = (TextView) findViewById(R.id.UndealBeforeAreaTextView);
-        UndealTurnReasonTextView = (TextView) findViewById(R.id.UndealTurnReasonTextView);
+        UndealTurnInTimeTextView = (TextView) findViewById(R.id.TurnInTimeTextView);
+        UndealBeforeRoadTextView = (TextView) findViewById(R.id.BeforeRoadTextView);
+        UndealBeforeAreaTextView = (TextView) findViewById(R.id.BeforeAreaTextView);
+        UndealTurnReasonTextView = (TextView) findViewById(R.id.TurnReasonTextView);
 
         ReceiveNameTextView = (TextView) findViewById(R.id.ReceiveNameTextView);
         ReceiveSexTextView = (TextView) findViewById(R.id.ReceiveSexTextView);

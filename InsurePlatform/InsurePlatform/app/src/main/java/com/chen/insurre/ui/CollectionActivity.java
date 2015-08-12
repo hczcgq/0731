@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -83,6 +84,8 @@ public class CollectionActivity extends Activity {
     private CheckBox WDCBzzJfCheckBox, WDCBltDyCheckBox, WDCBjnJfCheckBox, WDCBjnDyCheckBox, WDCBqtJfCheckBox, WDCBqtDyCheckBox, WDCBzgYbCheckBox, WDCBjnYbCheckBox, WDCBqtYbCheckBox;
 
     private View canbaoView, weicanboaView, waidicanbaoView;
+
+    private ScrollView myScrollView;
 
     private String name, cardno;
 
@@ -161,7 +164,7 @@ public class CollectionActivity extends Activity {
         weicanboaView = findViewById(R.id.weicanboaView);
         waidicanbaoView = findViewById(R.id.waidicanbaoView);
 
-
+        myScrollView= (ScrollView) findViewById(R.id.myScrollView);
     }
 
     private void initEvent() {
@@ -620,6 +623,7 @@ public class CollectionActivity extends Activity {
                     Toast.makeText(mContext, result.getDescription(),
                             Toast.LENGTH_SHORT).show();
                 }
+
             } else if (result != null && result.getDescription() != null
                     && !result.getDescription().equals("")) {
                 Toast.makeText(mContext, "请求失败，" + result.getDescription(),
@@ -628,6 +632,7 @@ public class CollectionActivity extends Activity {
                 Toast.makeText(mContext, "请求失败，请稍后再试!", Toast.LENGTH_SHORT)
                         .show();
             }
+            myScrollView.fullScroll(ScrollView.FOCUS_UP);
         }
     }
 
@@ -692,73 +697,73 @@ public class CollectionActivity extends Activity {
         }
 
 
-//        if(info.getCanEdit().equals("0")){
-//            JHRNameEditText.setEnabled(false);
-//            JHRNameEditText.setEnabled(false);
-//            JHRIDCardEditText.setEnabled(false);
-//            JHRMobileEditText.setEnabled(false);
-//            CJSpinner.setEnabled(false);
-//            CBSpinner.setEnabled(false);
-//            MobileEditText.setEnabled(false);
-//
-//            WCBorgNameEditText.setEnabled(false);
-//            WCBaddressEditText.setEnabled(false);
-//            WCBorgAddrEditText.setEnabled(false);
-//            WCBCheckBox.setEnabled(false);
-//            WCBprovSpinner.setEnabled(false);
-//            WCBcitySpinner.setEnabled(false);
-//            WCBtownSpinner.setEnabled(false);
-//            WCBStatusSpinner.setEnabled(false);
-//            WCBReasonSpinner.setEnabled(false);
-//            WCBorgProvSpinner.setEnabled(false);
-//            WCBorgCitySpinner.setEnabled(false);
-//            WCBorgTownSpinner.setEnabled(false);
-//
-//            WDCBprovSpinner.setEnabled(false);
-//            WDCBcitySpinner.setEnabled(false);
-//            WDCBzzJfCheckBox.setEnabled(false);
-//            WDCBltDyCheckBox.setEnabled(false);
-//            WDCBjnJfCheckBox.setEnabled(false);
-//            WDCBjnDyCheckBox.setEnabled(false);
-//            WDCBqtJfCheckBox.setEnabled(false);
-//            WDCBqtDyCheckBox.setEnabled(false);
-//            WDCBzgYbCheckBox.setEnabled(false);
-//            WDCBjnYbCheckBox.setEnabled(false);
-//            WDCBqtYbCheckBox.setEnabled(false);
-//        }else{
-//            JHRNameEditText.setEnabled(true);
-//            JHRNameEditText.setEnabled(true);
-//            JHRIDCardEditText.setEnabled(true);
-//            JHRMobileEditText.setEnabled(true);
-//            CJSpinner.setEnabled(true);
-//            CBSpinner.setEnabled(true);
-//            MobileEditText.setEnabled(true);
-//
-//            WCBorgNameEditText.setEnabled(true);
-//            WCBaddressEditText.setEnabled(true);
-//            WCBorgAddrEditText.setEnabled(true);
-//            WCBCheckBox.setEnabled(true);
-//            WCBprovSpinner.setEnabled(true);
-//            WCBcitySpinner.setEnabled(true);
-//            WCBtownSpinner.setEnabled(true);
-//            WCBStatusSpinner.setEnabled(true);
-//            WCBReasonSpinner.setEnabled(true);
-//            WCBorgProvSpinner.setEnabled(true);
-//            WCBorgCitySpinner.setEnabled(true);
-//            WCBorgTownSpinner.setEnabled(true);
-//
-//            WDCBprovSpinner.setEnabled(true);
-//            WDCBcitySpinner.setEnabled(true);
-//            WDCBzzJfCheckBox.setEnabled(true);
-//            WDCBltDyCheckBox.setEnabled(true);
-//            WDCBjnJfCheckBox.setEnabled(true);
-//            WDCBjnDyCheckBox.setEnabled(true);
-//            WDCBqtJfCheckBox.setEnabled(true);
-//            WDCBqtDyCheckBox.setEnabled(true);
-//            WDCBzgYbCheckBox.setEnabled(true);
-//            WDCBjnYbCheckBox.setEnabled(true);
-//            WDCBqtYbCheckBox.setEnabled(true);
-//        }
+        if(info.getCanEdit().equals("0")){
+            JHRNameEditText.setEnabled(false);
+            JHRNameEditText.setEnabled(false);
+            JHRIDCardEditText.setEnabled(false);
+            JHRMobileEditText.setEnabled(false);
+            CJSpinner.setEnabled(false);
+            CBSpinner.setEnabled(false);
+            MobileEditText.setEnabled(false);
+
+            WCBorgNameEditText.setEnabled(false);
+            WCBaddressEditText.setEnabled(false);
+            WCBorgAddrEditText.setEnabled(false);
+            WCBCheckBox.setEnabled(false);
+            WCBprovSpinner.setEnabled(false);
+            WCBcitySpinner.setEnabled(false);
+            WCBtownSpinner.setEnabled(false);
+            WCBStatusSpinner.setEnabled(false);
+            WCBReasonSpinner.setEnabled(false);
+            WCBorgProvSpinner.setEnabled(false);
+            WCBorgCitySpinner.setEnabled(false);
+            WCBorgTownSpinner.setEnabled(false);
+
+            WDCBprovSpinner.setEnabled(false);
+            WDCBcitySpinner.setEnabled(false);
+            WDCBzzJfCheckBox.setEnabled(false);
+            WDCBltDyCheckBox.setEnabled(false);
+            WDCBjnJfCheckBox.setEnabled(false);
+            WDCBjnDyCheckBox.setEnabled(false);
+            WDCBqtJfCheckBox.setEnabled(false);
+            WDCBqtDyCheckBox.setEnabled(false);
+            WDCBzgYbCheckBox.setEnabled(false);
+            WDCBjnYbCheckBox.setEnabled(false);
+            WDCBqtYbCheckBox.setEnabled(false);
+        }else{
+            JHRNameEditText.setEnabled(true);
+            JHRNameEditText.setEnabled(true);
+            JHRIDCardEditText.setEnabled(true);
+            JHRMobileEditText.setEnabled(true);
+            CJSpinner.setEnabled(true);
+            CBSpinner.setEnabled(true);
+            MobileEditText.setEnabled(true);
+
+            WCBorgNameEditText.setEnabled(true);
+            WCBaddressEditText.setEnabled(true);
+            WCBorgAddrEditText.setEnabled(true);
+            WCBCheckBox.setEnabled(true);
+            WCBprovSpinner.setEnabled(true);
+            WCBcitySpinner.setEnabled(true);
+            WCBtownSpinner.setEnabled(true);
+            WCBStatusSpinner.setEnabled(true);
+            WCBReasonSpinner.setEnabled(true);
+            WCBorgProvSpinner.setEnabled(true);
+            WCBorgCitySpinner.setEnabled(true);
+            WCBorgTownSpinner.setEnabled(true);
+
+            WDCBprovSpinner.setEnabled(true);
+            WDCBcitySpinner.setEnabled(true);
+            WDCBzzJfCheckBox.setEnabled(true);
+            WDCBltDyCheckBox.setEnabled(true);
+            WDCBjnJfCheckBox.setEnabled(true);
+            WDCBjnDyCheckBox.setEnabled(true);
+            WDCBqtJfCheckBox.setEnabled(true);
+            WDCBqtDyCheckBox.setEnabled(true);
+            WDCBzgYbCheckBox.setEnabled(true);
+            WDCBjnYbCheckBox.setEnabled(true);
+            WDCBqtYbCheckBox.setEnabled(true);
+        }
 
     }
 
