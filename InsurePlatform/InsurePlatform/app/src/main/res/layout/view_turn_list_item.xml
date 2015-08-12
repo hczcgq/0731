@@ -12,7 +12,7 @@
         android:padding="10dp">
 
         <TextView
-            android:layout_width="80dp"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:text="姓名："
             android:gravity="center|right"
@@ -37,7 +37,7 @@
         android:padding="10dp">
 
         <TextView
-            android:layout_width="80dp"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:text="身份证："
             android:gravity="center|right"
@@ -62,7 +62,7 @@
         android:padding="10dp">
 
         <TextView
-            android:layout_width="80dp"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:text="转出时间："
             android:gravity="center|right"

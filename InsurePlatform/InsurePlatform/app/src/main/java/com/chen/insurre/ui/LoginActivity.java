@@ -202,9 +202,13 @@ public class LoginActivity extends Activity {
 //                finish();
             } else if (result != null && result.getDescription() != null
                     && !result.getDescription().equals("")) {
+                if (dialog != null)
+                    dialog.dismiss();
                 Toast.makeText(mContext, "登录失败，" + result.getDescription(),
                         Toast.LENGTH_SHORT).show();
             } else {
+                if (dialog != null)
+                    dialog.dismiss();
                 Toast.makeText(mContext, "登录失败，请稍后再试!", Toast.LENGTH_SHORT)
                         .show();
             }
