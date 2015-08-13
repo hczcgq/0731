@@ -47,7 +47,7 @@
                 android:id="@+id/UsernameEditext"
                 android:layout_width="fill_parent"
                 android:textColor="#686868"
-                android:text="zkc"
+                android:text="lfzkc"
                 android:inputType="text"
                 android:maxLength="8"
                 android:padding="5dp"

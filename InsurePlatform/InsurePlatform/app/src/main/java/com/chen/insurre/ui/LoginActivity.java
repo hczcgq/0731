@@ -14,8 +14,10 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.chen.insurre.MyApplication;
 import com.chen.insurre.R;
 import com.chen.insurre.bean.LoginInfo;
+import com.chen.insurre.bean.ParamInfo;
 import com.chen.insurre.bean.ResultInfo;
 import com.chen.insurre.bean.TurnItemInfo;
 import com.chen.insurre.http.HttpHelper;
@@ -35,6 +37,9 @@ import com.loopj.android.http.RequestParams;
 import org.apache.http.Header;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 
 /**
@@ -56,14 +61,68 @@ public class LoginActivity extends Activity {
 
     private TurnInTask mTurnInTask;
 
+    private MyApplication application;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.view_login);
         PreferencesUtils.PREFERENCE_NAME = "InsureInfo";
+        application=MyApplication.getInstance();
 
         initView();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                readJsonDate();
+            }
+        }).start();
+    }
+
+
+    private String readInputStream(InputStream is) throws Exception {
+        InputStreamReader reader = new InputStreamReader(is);
+        BufferedReader bufferedReader = new BufferedReader(reader);
+        StringBuffer buffer = new StringBuffer("");
+        String str;
+        while ((str = bufferedReader.readLine()) != null) {
+            buffer.append(str);
+            buffer.append("\n");
+        }
+        return buffer.toString();
+    }
+
+    private String readFromAssets() {
+        String result = null;
+        try {
+            InputStream is = getAssets().open("json.txt");
+            result = readInputStream(is);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
+
+    private void readJsonDate() {
+        String result=readFromAssets();
+        Log.d("chen",result);
+        ResultInfo resultInfo = new Gson().fromJson(result, new TypeToken<ResultInfo<ParamInfo>>() {
+        }.getType());
+        if (resultInfo != null && resultInfo.getResult() != null
+                && resultInfo.getResult().equals("0")) {
+            ParamInfo paramInfo = (ParamInfo) resultInfo.getBean();
+            application.setCaijiList(paramInfo.getCaiji());
+            application.setReasonList(paramInfo.getReason());
+            application.setProvsList(paramInfo.getProvs());
+            application.setStateList(paramInfo.getState());
+            application.setCanbaoList(paramInfo.getCanbao());
+        }
+
+
     }
 
     private void initView() {

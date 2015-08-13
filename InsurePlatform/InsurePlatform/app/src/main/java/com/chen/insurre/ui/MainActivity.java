@@ -23,9 +23,7 @@ import android.widget.Toast;
 
 import com.chen.insurre.MyApplication;
 import com.chen.insurre.R;
-import com.chen.insurre.bean.ItemInfo;
 import com.chen.insurre.bean.ParamInfo;
-import com.chen.insurre.bean.ProvinceInfo;
 import com.chen.insurre.bean.ResultInfo;
 import com.chen.insurre.bean.TurnItemInfo;
 import com.chen.insurre.http.HttpHelper;
@@ -38,7 +36,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.HashMap;
-import java.util.List;
 
 
 public class MainActivity extends TabActivity implements View.OnClickListener{
@@ -56,6 +53,8 @@ public class MainActivity extends TabActivity implements View.OnClickListener{
     public static final int MODE_TRUNIN= 1;
     public static final int MODE_TRUNOUT= 2;
     private  int undeal=0;
+
+    private MyApplication application;
 
     private MainBroadCast receiver;
     public static final String BRAODCAST_MAIN = "com.chen.insurre.ui.BroadCast";
@@ -81,6 +80,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.view_main);
+        application=MyApplication.getInstance();
         // 注册广播
         receiver = new MainBroadCast();
         IntentFilter filter = new IntentFilter();
@@ -125,10 +125,8 @@ public class MainActivity extends TabActivity implements View.OnClickListener{
 
         initTabHost();
         switchMode(mMode);
-//        handler.postDelayed(GetParamRunnable,1000);
-//        handler.postDelayed(GetTurinInRunnable,2000);
 
-        new Thread(GetParamRunnable).start();
+//        new Thread(GetParamRunnable).start();
         new Thread(GetTurinInRunnable).start();
 
     }
@@ -301,7 +299,6 @@ public class MainActivity extends TabActivity implements View.OnClickListener{
             try {
                 String result = HttpHelper.doRequestForString(mContext, url,
                         HttpHelper.HTTP_GET, hashParams);
-                MyApplication.getInstance().saveJsonDate(result);
                 resultInfo = new Gson().fromJson(result, new TypeToken<ResultInfo<ParamInfo>>() {
                 }.getType());
             } catch (Exception e) {
@@ -310,16 +307,11 @@ public class MainActivity extends TabActivity implements View.OnClickListener{
             if (resultInfo != null && resultInfo.getResult() != null
                     && resultInfo.getResult().equals("0")) {
                 ParamInfo paramInfo = (ParamInfo) resultInfo.getBean();
-                List<ItemInfo> caijiList = paramInfo.getCaiji();
-                List<ItemInfo> reasonList = paramInfo.getReason();
-                List<ProvinceInfo> provsList = paramInfo.getProvs();
-                List<ItemInfo> stateList = paramInfo.getState();
-                List<ItemInfo> canbaoList = paramInfo.getCanbao();
-                MyApplication.getInstance().setCaijiList(caijiList);
-                MyApplication.getInstance().setReasonList(reasonList);
-                MyApplication.getInstance().setProvsList(provsList);
-                MyApplication.getInstance().setStateList(stateList);
-                MyApplication.getInstance().setCanbaoList(canbaoList);
+                application.setCaijiList(paramInfo.getCaiji());
+                application.setReasonList(paramInfo.getReason());
+                application.setProvsList(paramInfo.getProvs());
+                application.setStateList(paramInfo.getState());
+                application.setCanbaoList(paramInfo.getCanbao());
             }
         }
     };
