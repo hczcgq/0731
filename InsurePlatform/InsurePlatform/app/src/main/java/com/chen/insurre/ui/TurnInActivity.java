@@ -16,7 +16,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
-
 import com.chen.insurre.R;
 import com.chen.insurre.adapter.TurnAdapter;
 import com.chen.insurre.bean.PersonInfo;
@@ -33,7 +32,6 @@ import com.chen.insurre.util.PreferencesUtils;
 import com.chen.insurre.util.ToastUtil;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -53,18 +51,17 @@ public class TurnInActivity extends Activity implements View.OnClickListener {
 
     private Button ListViewButton, DetailButton;
 
-    private View DetailUndealView, DetailReceiveView, DetailRejectView;
+    private View DetailUndealView, DetailReceiveView, DetailRejectView,DetailDialogView;
 
     private ViewFlipper viewFlipper;
 
-    private TextView UndealNameTextView, UndealSexTextView, UndealBirthTextView, UndealAgeTextView, UndealRoonNoTextView, UndealContractTextView, UndealRegionTextView, UndealAreaTextView,
-            UndealPropTextView, UndealLocationTextView, UndealTurnInTimeTextView, UndealBeforeRoadTextView, UndealBeforeAreaTextView, UndealTurnReasonTextView;
+    private TextView TurnNameTextView,TurnSexTextView,TurnBirthTextView,TurnAgeTextView,TurnRoonNoTextView,TurnContractTextView,TurnRegionTextView,
+            TurnAreaTextView,TurnPropTextView,TurnLocationTextView;
 
-    private TextView ReceiveNameTextView, ReceiveSexTextView, ReceiveBirthTextView, ReceiveTimeTextView,
-            ReceiveTurnInTimeTextView, ReceiveBeforeAreaTextView;
+    private TextView TurnInRoadTextView,TurnInAreaTextView,TurnInReasonTextView,TurnInApplyTimeTextView,TurnInVerifyTimeTextView
+            ,TurnInBeforeRoadTextView,TurnInBeforeAreaTextView;
 
-    private TextView RejectNameTextView, RejectSexTextView, RejectBirthTextView, RejectTurnInTimeTextView,
-            RejectBeforeAreaTextView, RejectTimeTextView, RejectReasonTextView;
+    private TextView TurnInRejectTimeTextView,TurnInRejectReasonTextView;
 
     private TurnInTask mTurnInTask;
 
@@ -86,11 +83,14 @@ public class TurnInActivity extends Activity implements View.OnClickListener {
 
     private int Tag = TRUN_IN_UNDEAL;
 
+    public static boolean fromDialog=false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.view_turn_in);
+        fromDialog=false;
         initView();
 
     }
@@ -98,10 +98,11 @@ public class TurnInActivity extends Activity implements View.OnClickListener {
     @Override
     protected void onResume() {
         super.onResume();
-        if(viewFlipper!=null) {
+        if(viewFlipper!=null&&!fromDialog) {
+            fromDialog=false;
             viewFlipper.setDisplayedChild(0);
+            loadDate(TRUN_IN);
         }
-        loadDate(TRUN_IN);
     }
 
     private void initView() {
@@ -121,39 +122,32 @@ public class TurnInActivity extends Activity implements View.OnClickListener {
         DetailUndealView = findViewById(R.id.DetailUndealView);
         DetailReceiveView = findViewById(R.id.DetailReceiveView);
         DetailRejectView = findViewById(R.id.DetailRejectView);
+        DetailDialogView=findViewById(R.id.DetailDialogView);
 
 
-        UndealNameTextView = (TextView) findViewById(R.id.UndealNameTextView);
-        UndealSexTextView = (TextView) findViewById(R.id.UndealSexTextView);
-        UndealBirthTextView = (TextView) findViewById(R.id.UndealBirthTextView);
-        UndealAgeTextView = (TextView) findViewById(R.id.UndealAgeTextView);
-        UndealRoonNoTextView = (TextView) findViewById(R.id.UndealRoonNoTextView);
-        UndealContractTextView = (TextView) findViewById(R.id.UndealContractTextView);
-        UndealRegionTextView = (TextView) findViewById(R.id.UndealRegionTextView);
-        UndealAreaTextView = (TextView) findViewById(R.id.UndealAreaTextView);
-        UndealPropTextView = (TextView) findViewById(R.id.UndealPropTextView);
-        UndealLocationTextView = (TextView) findViewById(R.id.UndealLocationTextView);
-        UndealTurnInTimeTextView = (TextView) findViewById(R.id.TurnInTimeTextView);
-        UndealBeforeRoadTextView = (TextView) findViewById(R.id.BeforeRoadTextView);
-        UndealBeforeAreaTextView = (TextView) findViewById(R.id.BeforeAreaTextView);
-        UndealTurnReasonTextView = (TextView) findViewById(R.id.TurnReasonTextView);
+        //转入转入详情公共部分
+        TurnNameTextView= (TextView) findViewById(R.id.TurnNameTextView);
+        TurnSexTextView= (TextView) findViewById(R.id.TurnSexTextView);
+        TurnBirthTextView= (TextView) findViewById(R.id.TurnBirthTextView);
+        TurnAgeTextView= (TextView) findViewById(R.id.TurnAgeTextView);
+        TurnRoonNoTextView= (TextView) findViewById(R.id.TurnRoonNoTextView);
+        TurnContractTextView= (TextView) findViewById(R.id.TurnContractTextView);
+        TurnRegionTextView= (TextView) findViewById(R.id.TurnRegionTextView);
+        TurnAreaTextView= (TextView) findViewById(R.id.TurnAreaTextView);
+        TurnPropTextView= (TextView) findViewById(R.id.TurnPropTextView);
+        TurnLocationTextView= (TextView) findViewById(R.id.TurnLocationTextView);
 
-        ReceiveNameTextView = (TextView) findViewById(R.id.ReceiveNameTextView);
-        ReceiveSexTextView = (TextView) findViewById(R.id.ReceiveSexTextView);
-        ReceiveBirthTextView = (TextView) findViewById(R.id.ReceiveBirthTextView);
-        ReceiveTimeTextView = (TextView) findViewById(R.id.ReceiveTimeTextView);
-        ReceiveTurnInTimeTextView = (TextView) findViewById(R.id.ReceiveTurnInTimeTextView);
-        ReceiveBeforeAreaTextView = (TextView) findViewById(R.id.ReceiveBeforeAreaTextView);
+        //未处理,已接收
+        TurnInRoadTextView= (TextView) findViewById(R.id.TurnInRoadTextView);
+        TurnInAreaTextView= (TextView) findViewById(R.id.TurnInAreaTextView);
+        TurnInReasonTextView= (TextView) findViewById(R.id.TurnInReasonTextView);
+        TurnInApplyTimeTextView= (TextView) findViewById(R.id.TurnInApplyTimeTextView);
+        TurnInVerifyTimeTextView= (TextView) findViewById(R.id.TurnInVerifyTimeTextView);
+        TurnInBeforeRoadTextView= (TextView) findViewById(R.id.TurnInBeforeRoadTextView);
+        TurnInBeforeAreaTextView= (TextView) findViewById(R.id.TurnInBeforeAreaTextView);
 
-        RejectNameTextView = (TextView) findViewById(R.id.RejectNameTextView);
-        RejectSexTextView = (TextView) findViewById(R.id.RejectSexTextView);
-        RejectBirthTextView = (TextView) findViewById(R.id.RejectBirthTextView);
-        RejectTurnInTimeTextView = (TextView) findViewById(R.id.RejectTurnInTimeTextView);
-        RejectBeforeAreaTextView = (TextView) findViewById(R.id.RejectBeforeAreaTextView);
-        RejectTimeTextView = (TextView) findViewById(R.id.RejectTimeTextView);
-        RejectReasonTextView = (TextView) findViewById(R.id.RejectReasonTextView);
-
-
+        TurnInRejectTimeTextView= (TextView) findViewById(R.id.TurnInRejectTimeTextView);
+        TurnInRejectReasonTextView=(TextView)findViewById(R.id.TurnInRejectReasonTextView);
 
 
         ReceiveTextview.setOnClickListener(this);
@@ -384,6 +378,9 @@ public class TurnInActivity extends Activity implements View.OnClickListener {
                             && Item.getResult().equals("0")) {
                         mTurnItemInfo = ((TurnItemInfo) Item.getBean());
                         showItemDate(mTurnItemInfo);
+                        Intent intent = new Intent(MainActivity.BRAODCAST_MAIN);
+                        intent.putExtra("undeal",mTurnItemInfo.getUndeal());
+                        sendBroadcast(intent);
                     } else {
                         showFaik(Item);
                     }
@@ -435,19 +432,20 @@ public class TurnInActivity extends Activity implements View.OnClickListener {
                             if (Tag == TRUN_IN_RECEIVE) {
                                 DetailReceiveView.setVisibility(View.VISIBLE);
                                 DetailRejectView.setVisibility(View.GONE);
-                                DetailUndealView.setVisibility(View.GONE);
-                                showReceiveDetail(detailInfo);
+                                DetailUndealView.setVisibility(View.VISIBLE);
+                                DetailDialogView.setVisibility(View.GONE);
                             } else if (Tag == TRUN_IN_REJECT) {
-                                DetailReceiveView.setVisibility(View.GONE);
+                                DetailReceiveView.setVisibility(View.VISIBLE);
                                 DetailRejectView.setVisibility(View.VISIBLE);
-                                DetailUndealView.setVisibility(View.GONE);
-                                showRejectDetail(detailInfo);
+                                DetailUndealView.setVisibility(View.VISIBLE);
+                                DetailDialogView.setVisibility(View.GONE);
                             } else if (Tag == TRUN_IN_UNDEAL) {
-                                DetailReceiveView.setVisibility(View.GONE);
+                                DetailReceiveView.setVisibility(View.VISIBLE);
                                 DetailRejectView.setVisibility(View.GONE);
                                 DetailUndealView.setVisibility(View.VISIBLE);
-                                showUndealDetail(detailInfo);
+                                DetailDialogView.setVisibility(View.VISIBLE);
                             }
+                            showGlobalDetail(detailInfo,Tag);
                             showNext();
                         } else {
                             showFaik(Item);
@@ -459,53 +457,33 @@ public class TurnInActivity extends Activity implements View.OnClickListener {
         }
     }
 
-
-    private void showReceiveDetail(TurnInDetailInfo item) {
+    private void showGlobalDetail(TurnInDetailInfo item,int index){
         PersonInfo personInfo = item.getPersonInfo();
-        ReceiveNameTextView.setText(personInfo.getName());
-        ReceiveSexTextView.setText(personInfo.getSex());
-        ReceiveBirthTextView.setText(personInfo.getBirthday());
-        TurnInInfo turnInInfo = item.getInoutInfo();
-        ReceiveTimeTextView.setText(turnInInfo.getShDate());
-        ReceiveTurnInTimeTextView.setText(turnInInfo.getSqDate());
-        ReceiveBeforeAreaTextView.setText(turnInInfo.getyArea());
-
-    }
-
-    private void showRejectDetail(TurnInDetailInfo item){
-        PersonInfo personInfo = item.getPersonInfo();
-        RejectNameTextView.setText(personInfo.getName());
-        RejectSexTextView.setText(personInfo.getSex());
-        RejectBirthTextView.setText(personInfo.getBirthday());
-        TurnInInfo turnInInfo = item.getInoutInfo();
-        RejectTurnInTimeTextView.setText(turnInInfo.getSqDate());
-        RejectBeforeAreaTextView.setText(turnInInfo.getyArea());
-        RejectTimeTextView.setText(turnInInfo.getRejectDate());
-        RejectReasonTextView.setText(turnInInfo.getRejectReason());
-    }
-
-
-    private void showUndealDetail(TurnInDetailInfo item) {
-        PersonInfo personInfo = item.getPersonInfo();
-        UndealNameTextView.setText(personInfo.getName());
-        UndealSexTextView.setText(personInfo.getSex());
-        UndealBirthTextView.setText(personInfo.getBirthday());
-        UndealAgeTextView.setText(personInfo.getAge());
-        UndealRoonNoTextView.setText(personInfo.getRoomno());
-        UndealContractTextView.setText(personInfo.getContract());
-        UndealRegionTextView.setText(personInfo.getRegion());
-        UndealAreaTextView.setText(personInfo.getArea());
-        UndealPropTextView.setText(personInfo.getProp());
-        UndealLocationTextView.setText(personInfo.getLocation());
+        TurnNameTextView.setText(personInfo.getName());
+        TurnSexTextView.setText(personInfo.getSex());
+        TurnBirthTextView.setText(personInfo.getBirthday());
+        TurnAgeTextView.setText(personInfo.getAge());
+        TurnRoonNoTextView.setText(personInfo.getRoomno());
+        TurnContractTextView.setText(personInfo.getContract());
+        TurnRegionTextView.setText(personInfo.getRegion());
+        TurnAreaTextView.setText(personInfo.getArea());
+        TurnPropTextView.setText(personInfo.getProp());
+        TurnLocationTextView.setText(personInfo.getLocation());
 
         TurnInInfo turnInInfo = item.getInoutInfo();
-        UndealTurnInTimeTextView.setText(turnInInfo.getSqDate());
-        UndealBeforeAreaTextView.setText(turnInInfo.getyArea());
-        UndealBeforeRoadTextView.setText(turnInInfo.getyStreet());
-        UndealTurnReasonTextView.setText(turnInInfo.getReason());
+        TurnInRoadTextView.setText(turnInInfo.getInStreet());
+        TurnInAreaTextView.setText(turnInInfo.getInArea());
+        TurnInReasonTextView.setText(turnInInfo.getReason());
+        TurnInApplyTimeTextView.setText(turnInInfo.getSqDate());
+        TurnInVerifyTimeTextView.setText(turnInInfo.getShDate());
+        TurnInBeforeRoadTextView.setText(turnInInfo.getyStreet());
+        TurnInBeforeAreaTextView.setText(turnInInfo.getyArea());
 
+        if(index==TRUN_IN_REJECT) {
+            TurnInRejectTimeTextView.setText(turnInInfo.getRejectDate());
+            TurnInRejectReasonTextView.setText(turnInInfo.getRejectReason());
+        }
     }
-
 
     private void showFaik(ResultInfo<?> items) {
         if (viewFlipper.getDisplayedChild() != 0) {

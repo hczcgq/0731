@@ -74,6 +74,8 @@ public class TurnInRejectDialogActivity extends Activity{
         });
     }
 
+
+
     public void ComfirmClick(View view){
 
         if (!NetworkUtil.networkIsAvailable(mContext)) {
@@ -89,6 +91,7 @@ public class TurnInRejectDialogActivity extends Activity{
     }
 
     public void CancelClick(View view){
+        TurnInActivity.fromDialog=true;
         finish();
     }
 
@@ -140,6 +143,7 @@ public class TurnInRejectDialogActivity extends Activity{
                     && result.getResult().equals("0")) {
                 Toast.makeText(mContext,result.getDescription(),
                         Toast.LENGTH_SHORT).show();
+                TurnInActivity.fromDialog=false;
                 finish();
             } else if (result != null && result.getDescription() != null
                     && !result.getDescription().equals("")) {

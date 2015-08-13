@@ -4,7 +4,10 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.app.TabActivity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -54,13 +57,35 @@ public class MainActivity extends TabActivity implements View.OnClickListener{
     public static final int MODE_TRUNOUT= 2;
     private  int undeal=0;
 
-    private ParamTask mParamTask;
+    private MainBroadCast receiver;
+    public static final String BRAODCAST_MAIN = "com.chen.insurre.ui.BroadCast";
+    private class MainBroadCast extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String undeal_count=intent.getStringExtra("undeal");
+            int int_undel;
+            if(TextUtils.isEmpty(undeal_count)){
+                int_undel=0;
+            }else{
+                int_undel=Integer.parseInt(undeal_count);
+            }
+            Message message=new Message();
+            message.obj=int_undel;
+            message.what=100;
+            handler.sendMessage(message);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.view_main);
+        // 注册广播
+        receiver = new MainBroadCast();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(BRAODCAST_MAIN);
+        registerReceiver(receiver, filter);
         undeal=getIntent().getIntExtra("undeal",0);
 
         if (android.os.Build.VERSION.SDK_INT > 9) {
@@ -69,7 +94,13 @@ public class MainActivity extends TabActivity implements View.OnClickListener{
         }
 
         initView();
-        handler.postDelayed(GetTurinInRunnable,1000);
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(receiver);
     }
 
     private void initView() {
@@ -94,7 +125,11 @@ public class MainActivity extends TabActivity implements View.OnClickListener{
 
         initTabHost();
         switchMode(mMode);
-        loadParam();
+//        handler.postDelayed(GetParamRunnable,1000);
+//        handler.postDelayed(GetTurinInRunnable,2000);
+
+        new Thread(GetParamRunnable).start();
+        new Thread(GetTurinInRunnable).start();
 
     }
 
@@ -114,15 +149,6 @@ public class MainActivity extends TabActivity implements View.OnClickListener{
         }
     };
 
-
-    private void loadParam() {
-
-        if (mParamTask != null
-                && mParamTask.getStatus() != AsyncTask.Status.FINISHED)
-            mParamTask.cancel(true);
-        mParamTask = new ParamTask();
-        mParamTask.execute();
-    }
 
     public void LogOut(View view) {
         if (!NetworkUtil.networkIsAvailable(mContext)) {
@@ -262,18 +288,11 @@ public class MainActivity extends TabActivity implements View.OnClickListener{
     }
 
 
-    private class ParamTask extends AsyncTask<String, Void, ResultInfo> {
 
 
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
+    Runnable GetParamRunnable=new Runnable() {
         @Override
-        protected ResultInfo doInBackground(String... params) {
-            if (!NetworkUtil.networkIsAvailable(mContext)) {
-                return null;
-            }
+        public void run() {
             HashMap<String, String> hashParams = new HashMap<String, String>();
             String url = CommTools.getRequestUrl(mContext, R.string.param_url);
             hashParams.put("regkey", PreferencesUtils.getString(mContext, Constant.SP_USER_REGKEY));
@@ -288,15 +307,9 @@ public class MainActivity extends TabActivity implements View.OnClickListener{
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            return resultInfo;
-        }
-
-        @Override
-        protected void onPostExecute(ResultInfo result) {
-            super.onPostExecute(result);
-            if (result != null && result.getResult() != null
-                    && result.getResult().equals("0")) {
-                ParamInfo paramInfo = (ParamInfo) result.getBean();
+            if (resultInfo != null && resultInfo.getResult() != null
+                    && resultInfo.getResult().equals("0")) {
+                ParamInfo paramInfo = (ParamInfo) resultInfo.getBean();
                 List<ItemInfo> caijiList = paramInfo.getCaiji();
                 List<ItemInfo> reasonList = paramInfo.getReason();
                 List<ProvinceInfo> provsList = paramInfo.getProvs();
@@ -309,7 +322,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener{
                 MyApplication.getInstance().setCanbaoList(canbaoList);
             }
         }
-    }
+    };
 
 
     Runnable GetTurinInRunnable=new Runnable() {

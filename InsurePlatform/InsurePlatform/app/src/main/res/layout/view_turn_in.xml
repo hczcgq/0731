@@ -1,60 +1,60 @@
 <ViewFlipper xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/viewFlipper"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:flipInterval="1000"
-    android:id="@+id/viewFlipper"
     android:persistentDrawingCache="animation">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="vertical"
+        android:layout_height="match_parent"
         android:background="@android:color/white"
-        android:layout_height="match_parent">
+        android:orientation="vertical">
 
         <TextView
+            android:id="@+id/UndealTextview"
             android:layout_width="fill_parent"
             android:layout_height="60dp"
             android:layout_margin="10dp"
-            android:padding="10dp"
-            android:text="转入人员"
-            android:textSize="@dimen/login_text_size"
-            android:textColor="@android:color/black"
-            android:gravity="center|left"
+            android:background="@drawable/content_corners_bg"
             android:drawableLeft="@mipmap/u43"
             android:drawablePadding="5dp"
             android:drawableRight="@mipmap/u32"
-            android:background="@drawable/content_corners_bg"
-            android:id="@+id/UndealTextview" />
+            android:gravity="center|left"
+            android:padding="10dp"
+            android:text="转入人员"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/login_text_size" />
 
         <TextView
+            android:id="@+id/ReceiveTextview"
             android:layout_width="fill_parent"
             android:layout_height="60dp"
             android:layout_margin="10dp"
-            android:text="转入人员"
-            android:padding="10dp"
+            android:background="@drawable/content_corners_bg"
             android:drawableLeft="@mipmap/u43"
             android:drawablePadding="5dp"
             android:drawableRight="@mipmap/u32"
-            android:textSize="@dimen/login_text_size"
-            android:textColor="@android:color/black"
             android:gravity="center|left"
-            android:background="@drawable/content_corners_bg"
-            android:id="@+id/ReceiveTextview" />
+            android:padding="10dp"
+            android:text="转入人员"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/login_text_size" />
 
         <TextView
+            android:id="@+id/RejectTextview"
             android:layout_width="fill_parent"
             android:layout_height="60dp"
             android:layout_margin="10dp"
-            android:text="转入人员"
-            android:padding="10dp"
-            android:textSize="@dimen/login_text_size"
+            android:background="@drawable/content_corners_bg"
             android:drawableLeft="@mipmap/u43"
             android:drawablePadding="5dp"
             android:drawableRight="@mipmap/u32"
-            android:textColor="@android:color/black"
             android:gravity="center|left"
-            android:background="@drawable/content_corners_bg"
-            android:id="@+id/RejectTextview" />
+            android:padding="10dp"
+            android:text="转入人员"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/login_text_size" />
     </LinearLayout>
 
     <LinearLayout
@@ -74,14 +74,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
                 android:drawableLeft="@mipmap/u43"
                 android:drawablePadding="5dp"
                 android:gravity="center|left"
-                android:layout_centerVertical="true"
+                android:text="转出人员"
                 android:textColor="@android:color/black"
-                android:textSize="@dimen/login_text_size"
-                android:text="转出人员" />
+                android:textSize="@dimen/login_text_size" />
 
             <Button
                 android:id="@+id/ListViewButton"
@@ -89,28 +89,28 @@
                 android:layout_height="48dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
                 android:text="返回"
                 android:textColor="@android:color/black"
-                android:layout_marginRight="10dp"
                 android:textSize="@dimen/button_text_size" />
         </RelativeLayout>
 
         <ListView
             android:id="@+id/TurnListView"
             android:layout_width="match_parent"
-            android:dividerHeight="10dp"
+            android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:scrollbars="none"
             android:divider="@android:color/transparent"
-            android:layout_height="wrap_content" />
+            android:dividerHeight="10dp"
+            android:scrollbars="none" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="vertical"
+        android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:background="@drawable/content_corners_bg"
-        android:layout_height="wrap_content">
+        android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -122,14 +122,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
                 android:drawableLeft="@mipmap/u43"
                 android:drawablePadding="5dp"
                 android:gravity="center|left"
-                android:layout_centerVertical="true"
+                android:text="转出人员"
                 android:textColor="@android:color/black"
-                android:textSize="@dimen/login_text_size"
-                android:text="转出人员" />
+                android:textSize="@dimen/login_text_size" />
 
             <Button
                 android:id="@+id/DetailButton"
@@ -137,35 +137,48 @@
                 android:layout_height="48dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
                 android:text="返回"
                 android:textColor="@android:color/black"
-                android:layout_marginRight="10dp"
                 android:textSize="@dimen/button_text_size" />
         </RelativeLayout>
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
             android:scrollbars="none">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="#f2f2f2"
                 android:orientation="vertical">
-            <include
-                android:id="@+id/DetailUndealView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                layout="@layout/view_turn_in_detail_undeal" />
-            <include
-                android:id="@+id/DetailReceiveView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                layout="@layout/view_turn_in_detail_receive"/>
-            <include
-                android:id="@+id/DetailRejectView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                layout="@layout/view_turn_in_detail_reject"/>
+
+                <include
+                    android:id="@+id/DetailUndealView"
+                    layout="@layout/view_turn_in_detail_global_person"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <include
+                    android:id="@+id/DetailReceiveView"
+                    layout="@layout/view_turn_in_detail_global_turnin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <include
+                    android:id="@+id/DetailDialogView"
+                    layout="@layout/view_turn_in_detail_global_receive"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <include
+                    android:id="@+id/DetailRejectView"
+                    layout="@layout/view_turn_in_detail_global_reject"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
             </LinearLayout>
         </ScrollView>
     </LinearLayout>

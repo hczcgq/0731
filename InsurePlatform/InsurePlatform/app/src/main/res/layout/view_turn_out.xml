@@ -146,26 +146,29 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
             android:scrollbars="none">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="#f2f2f2"
                 android:orientation="vertical">
             <include
                 android:id="@+id/DetailUndealView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                layout="@layout/view_turn_out_detail_undeal" />
+                layout="@layout/view_turn_out_detail_global_person" />
             <include
                 android:id="@+id/DetailReceiveView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                layout="@layout/view_turn_in_detail_receive"/>
+                layout="@layout/view_turn_out_detail_global_turnout"/>
             <include
                 android:id="@+id/DetailRejectView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                layout="@layout/view_turn_in_detail_reject"/>
+                layout="@layout/view_turn_out_detail_global_reject"/>
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
