@@ -8,7 +8,7 @@ import java.util.List;
  * Created by chenguoquan on 7/29/15.
  */
 public class Constant {
-
+    public static final String SP_PVERSION="SP_PVERSION";
     public static final String SP_USER_ID="SP_USER_ID";
     public static final String SP_USER_PASSWD="SP_USER_ID";
     public static final String SP_USER_NAME="SP_USER_NAME";

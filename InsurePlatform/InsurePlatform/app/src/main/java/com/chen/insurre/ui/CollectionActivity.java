@@ -117,6 +117,11 @@ public class CollectionActivity extends Activity {
         initEvent();
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        hidenKeyboard();
+    }
 
     private void initView() {
         IDCardEdittext = (EditText) findViewById(R.id.IDCardEdittext);
@@ -169,6 +174,8 @@ public class CollectionActivity extends Activity {
         waidicanbaoView = findViewById(R.id.waidicanbaoView);
 
         myScrollView = (ScrollView) findViewById(R.id.myScrollView);
+
+        hidenKeyboard();
     }
 
     private void initEvent() {
@@ -642,6 +649,9 @@ public class CollectionActivity extends Activity {
                         .show();
             }
             myScrollView.fullScroll(ScrollView.FOCUS_UP);
+            NameTextView.setFocusable(true);
+            NameTextView.setFocusableInTouchMode(true);
+            NameTextView.requestFocus();
         }
     }
 

@@ -63,6 +63,8 @@ public class LoginActivity extends Activity {
 
     private MyApplication application;
 
+    private String pversion;  //参数文件参数
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +72,7 @@ public class LoginActivity extends Activity {
         setContentView(R.layout.view_login);
         PreferencesUtils.PREFERENCE_NAME = "InsureInfo";
         application=MyApplication.getInstance();
+        pversion= PreferencesUtils.getString(this,Constant.SP_PVERSION,"2");
 
         initView();
 
@@ -109,7 +112,7 @@ public class LoginActivity extends Activity {
 
     private void readJsonDate() {
         String result=readFromAssets();
-        Log.d("chen",result);
+        Log.d("chen--",result);
         ResultInfo resultInfo = new Gson().fromJson(result, new TypeToken<ResultInfo<ParamInfo>>() {
         }.getType());
         if (resultInfo != null && resultInfo.getResult() != null
@@ -230,11 +233,12 @@ public class LoginActivity extends Activity {
             HashMap<String, String> hashParams = new HashMap<String, String>();
             hashParams.put("uname", userName);
             hashParams.put("upass", pwd);
+            hashParams.put("pversion", "1");
             ResultInfo resultInfo = null;
             try {
                 String result = HttpHelper.doRequestForString(mContext, url,
                         HttpHelper.HTTP_GET, hashParams);
-
+                Log.e("chen",result);
                 resultInfo = new Gson().fromJson(result ,new TypeToken<ResultInfo<LoginInfo>>(){}.getType());
             } catch (Exception e) {
                 e.printStackTrace();
@@ -275,14 +279,12 @@ public class LoginActivity extends Activity {
     }
 
 
-
-
-
     private void loginServer(String username,String password){
         String url = CommTools.getRequestUrl(mContext, R.string.login_url);
         HashMap<String, String> hashParams = new HashMap<String, String>();
         hashParams.put("uname", username);
         hashParams.put("upass", password);
+        hashParams.put("pversion", "1");
         RequestParams params = new RequestParams(hashParams);
         InsureClient.get(url,params,new JsonHttpResponseHandler(){
             @Override
