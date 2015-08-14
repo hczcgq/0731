@@ -47,7 +47,7 @@
                 android:id="@+id/UsernameEditext"
                 android:layout_width="fill_parent"
                 android:textColor="#686868"
-                android:text="lfzkc"
+                android:text=""
                 android:inputType="text"
                 android:maxLength="8"
                 android:padding="5dp"
@@ -77,7 +77,7 @@
             <EditText
                 android:id="@+id/PasswordEditext"
                 android:layout_width="fill_parent"
-                android:text="1"
+                android:text=""
                 android:inputType="textPassword"
                 android:maxLength="6"
                 android:textColor="#686868"

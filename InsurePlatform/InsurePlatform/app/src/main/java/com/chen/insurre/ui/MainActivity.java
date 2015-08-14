@@ -126,7 +126,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener{
         initTabHost();
         switchMode(mMode);
 
-        new Thread(GetParamRunnable).start();
+//        new Thread(GetParamRunnable).start();
         new Thread(GetTurinInRunnable).start();
 
     }

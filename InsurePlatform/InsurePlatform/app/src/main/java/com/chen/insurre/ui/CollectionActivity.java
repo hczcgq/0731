@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -88,6 +89,8 @@ public class CollectionActivity extends Activity {
     private CheckBox WDCBzzJfCheckBox, WDCBltDyCheckBox, WDCBjnJfCheckBox, WDCBjnDyCheckBox, WDCBqtJfCheckBox, WDCBqtDyCheckBox, WDCBzgYbCheckBox, WDCBjnYbCheckBox, WDCBqtYbCheckBox;
 
     private View canbaoView, weicanboaView, waidicanbaoView;
+
+    private Button saveButton,resetButton;
 
     private ScrollView myScrollView;
 
@@ -175,6 +178,9 @@ public class CollectionActivity extends Activity {
 
         myScrollView = (ScrollView) findViewById(R.id.myScrollView);
 
+        saveButton= (Button) findViewById(R.id.saveButton);
+        resetButton= (Button) findViewById(R.id.resetButton);
+
         hidenKeyboard();
     }
 
@@ -183,6 +189,9 @@ public class CollectionActivity extends Activity {
         CJSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(caijiList==null||caijiList.size()==0){
+                    return;
+                }
                 cbstatus = caijiList.get(position).getId();
                 if (cbstatus.equals("1")) {
                     if (cbstate.equals("3")) {
@@ -208,6 +217,9 @@ public class CollectionActivity extends Activity {
         CBSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(canbaoList==null||canbaoList.size()==0){
+                    return;
+                }
                 cbstate = canbaoList.get(position).getId();
                 if (canbaoList.get(position).getName().contains("在外地参保")) {
                     weicanboaView.setVisibility(View.GONE);
@@ -229,6 +241,9 @@ public class CollectionActivity extends Activity {
         WCBprovSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(provsList==null||provsList.size()==0){
+                    return;
+                }
                 cityList = provsList.get(position).getChild();
                 if (cityList == null) {
                     cityList = new ArrayList<CityInfo>();
@@ -250,9 +265,10 @@ public class CollectionActivity extends Activity {
         WCBcitySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(cityList==null||cityList.size()==0){
+                    return;
+                }
                 townList = cityList.get(position).getChild();
-
-
                 if (townList == null) {
                     townList = new ArrayList<TownInfo>();
                     town = "";
@@ -271,6 +287,9 @@ public class CollectionActivity extends Activity {
         WCBtownSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(townList==null||townList.size()==0){
+                    return;
+                }
                 town = townList.get(position).getId();
             }
 
@@ -283,6 +302,9 @@ public class CollectionActivity extends Activity {
         WCBStatusSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(stateList==null||stateList.size()==0){
+                    return;
+                }
                 status = stateList.get(position).getId();
             }
 
@@ -295,6 +317,9 @@ public class CollectionActivity extends Activity {
         WCBReasonSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(reasonList==null||reasonList.size()==0){
+                    return;
+                }
                 reason = reasonList.get(position).getId();
             }
 
@@ -304,11 +329,13 @@ public class CollectionActivity extends Activity {
             }
         });
 
-
         //学校省
         WCBorgProvSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(OrgprovsList==null||OrgprovsList.size()==0){
+                    return;
+                }
                 OrgcityList = OrgprovsList.get(position).getChild();
                 if (OrgcityList == null) {
                     OrgcityList = new ArrayList<CityInfo>();
@@ -330,6 +357,9 @@ public class CollectionActivity extends Activity {
         WCBorgCitySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(OrgcityList==null||OrgcityList.size()==0){
+                    return;
+                }
                 OrgtownList = OrgcityList.get(position).getChild();
                 if (OrgtownList == null) {
                     OrgtownList = new ArrayList<TownInfo>();
@@ -349,6 +379,9 @@ public class CollectionActivity extends Activity {
         WCBorgTownSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(OrgtownList==null||OrgtownList.size()==0){
+                    return;
+                }
                 orgTown = OrgtownList.get(position).getId();
             }
 
@@ -358,11 +391,13 @@ public class CollectionActivity extends Activity {
             }
         });
 
-
         //外地参保
         WDCBprovSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(WdcbprovsList==null||WdcbprovsList.size()==0){
+                    return;
+                }
                 WdcbcityList = WdcbprovsList.get(position).getChild();
                 if (WdcbcityList == null) {
                     WdcbcityList = new ArrayList<CityInfo>();
@@ -381,6 +416,9 @@ public class CollectionActivity extends Activity {
         WDCBcitySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(WdcbcityList==null||WdcbcityList.size()==0){
+                    return;
+                }
                 WdcbCity = WdcbcityList.get(position).getId();
             }
 
@@ -749,6 +787,9 @@ public class CollectionActivity extends Activity {
             WDCBzgYbCheckBox.setEnabled(false);
             WDCBjnYbCheckBox.setEnabled(false);
             WDCBqtYbCheckBox.setEnabled(false);
+
+            saveButton.setEnabled(false);
+            resetButton.setEnabled(false);
         } else {
             JHRNameEditText.setEnabled(true);
             JHRNameEditText.setEnabled(true);
@@ -782,6 +823,9 @@ public class CollectionActivity extends Activity {
             WDCBzgYbCheckBox.setEnabled(true);
             WDCBjnYbCheckBox.setEnabled(true);
             WDCBqtYbCheckBox.setEnabled(true);
+
+            saveButton.setEnabled(true);
+            resetButton.setEnabled(true);
         }
 
     }
@@ -847,6 +891,9 @@ public class CollectionActivity extends Activity {
 
     public void setSpinnerData(Spinner spinner, String text) {
         if (spinner == CJSpinner) {
+            if(caijiList==null||caijiList.size()==0){
+                return;
+            }
             for (int i = 0; i < caijiList.size(); i++) {
                 String item = caijiList.get(i).getId();
                 if (item.equals(text)) {
@@ -855,6 +902,9 @@ public class CollectionActivity extends Activity {
                 }
             }
         } else if (spinner == CBSpinner) {
+            if(canbaoList==null||canbaoList.size()==0){
+                return;
+            }
             for (int i = 0; i < canbaoList.size(); i++) {
                 String item = canbaoList.get(i).getId();
                 if (item.equals(text)) {
@@ -956,6 +1006,9 @@ public class CollectionActivity extends Activity {
                 }
             }
         } else if (spinner == WCBStatusSpinner) {
+            if(stateList==null||stateList.size()==0){
+               return;
+            }
             for (int i = 0; i < stateList.size(); i++) {
                 String item = stateList.get(i).getId();
                 if (item.equals(text)) {
@@ -964,6 +1017,9 @@ public class CollectionActivity extends Activity {
                 }
             }
         } else if (spinner == WCBReasonSpinner) {
+            if(reasonList==null||reasonList.size()==0){
+                return;
+            }
             for (int i = 0; i < reasonList.size(); i++) {
                 String item = reasonList.get(i).getId();
                 if (item.equals(text)) {

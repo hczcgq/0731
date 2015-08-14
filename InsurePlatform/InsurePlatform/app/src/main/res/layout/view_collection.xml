@@ -16,7 +16,7 @@
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_weight="1"
-            android:text="210922198803023322"
+            android:text=""
             android:background="@drawable/input_bg"
             android:layout_marginRight="5dp"
             android:padding="5dp"
@@ -79,6 +79,7 @@
                 android:orientation="horizontal">
 
                 <Button
+                    android:id="@+id/saveButton"
                     android:onClick="SaveClick"
                     android:layout_width="130dp"
                     android:layout_height="40dp"
@@ -88,6 +89,7 @@
                     android:textSize="@dimen/button_text_size" />
 
                 <Button
+                    android:id="@+id/resetButton"
                     android:onClick="ResetClick"
                     android:layout_width="130dp"
                     android:layout_height="40dp"

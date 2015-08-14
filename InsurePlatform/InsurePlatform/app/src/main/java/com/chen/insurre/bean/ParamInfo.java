@@ -12,6 +12,7 @@ public class ParamInfo {
     private List<ProvinceInfo> provs;
     private List<ItemInfo> state;
     private List<ItemInfo> canbao;
+    private String pversion;
 
     public List<ItemInfo> getCaiji() {
         return caiji;
@@ -51,5 +52,13 @@ public class ParamInfo {
 
     public void setCanbao(List<ItemInfo> canbao) {
         this.canbao = canbao;
+    }
+
+    public String getPversion() {
+        return pversion;
+    }
+
+    public void setPversion(String pversion) {
+        this.pversion = pversion;
     }
 }

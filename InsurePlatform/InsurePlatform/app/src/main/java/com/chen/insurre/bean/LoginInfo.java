@@ -13,8 +13,11 @@ public class LoginInfo implements Serializable {
     private String key;
     private String name;
     private String regkey;
+    private String archno;
     private String msg;
     private String state;
+    private ParamInfo params;
+
 
     public String getId() {
         return id;
@@ -64,6 +67,14 @@ public class LoginInfo implements Serializable {
         this.regkey = regkey;
     }
 
+    public String getArchno() {
+        return archno;
+    }
+
+    public void setArchno(String archno) {
+        this.archno = archno;
+    }
+
     public String getMsg() {
         return msg;
     }
@@ -78,5 +89,13 @@ public class LoginInfo implements Serializable {
 
     public void setState(String state) {
         this.state = state;
+    }
+
+    public ParamInfo getParams() {
+        return params;
+    }
+
+    public void setParams(ParamInfo params) {
+        this.params = params;
     }
 }

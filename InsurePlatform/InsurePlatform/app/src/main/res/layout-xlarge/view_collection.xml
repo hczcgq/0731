@@ -20,7 +20,7 @@
             android:padding="5dp"
             android:layout_marginRight="10dp"
             android:layout_weight="1"
-            android:text="210922198803023322"
+            android:text=""
             android:textColor="#686868" />
 
         <Button

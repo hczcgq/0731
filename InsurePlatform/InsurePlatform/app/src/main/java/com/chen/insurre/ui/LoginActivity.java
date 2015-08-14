@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -13,7 +14,6 @@ import android.view.Window;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-
 import com.chen.insurre.MyApplication;
 import com.chen.insurre.R;
 import com.chen.insurre.bean.LoginInfo;
@@ -21,7 +21,6 @@ import com.chen.insurre.bean.ParamInfo;
 import com.chen.insurre.bean.ResultInfo;
 import com.chen.insurre.bean.TurnItemInfo;
 import com.chen.insurre.http.HttpHelper;
-import com.chen.insurre.http.InsureClient;
 import com.chen.insurre.util.CommTools;
 import com.chen.insurre.util.Constant;
 import com.chen.insurre.util.NetworkUtil;
@@ -31,15 +30,15 @@ import com.chen.insurre.util.ToastUtil;
 import com.chen.insurre.view.ValidateImageView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
-
-import org.apache.http.Header;
-import org.json.JSONObject;
-
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.PrintStream;
 import java.util.HashMap;
 
 /**
@@ -97,35 +96,46 @@ public class LoginActivity extends Activity {
         return buffer.toString();
     }
 
-    private String readFromAssets() {
-        String result = null;
-        try {
-            InputStream is = getAssets().open("json.txt");
-            result = readInputStream(is);
-        } catch (Exception e) {
-            e.printStackTrace();
+    /**
+     * 读取本地文件
+     * @return
+     */
+    private String readFromFile() {
+        if(!Environment.getExternalStorageState().equals(
+                Environment.MEDIA_MOUNTED)){//SD卡不存在则不操作
+            return null;//返回到程序的被调用处
         }
-
+        String result=null;
+        File fileDir=new File(getExternalFilesDir(null)+"/json");
+        File file=new File(fileDir,"json.txt");
+        if(file.exists()){
+            try {
+                result=readInputStream(new FileInputStream(file));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         return result;
     }
 
 
+    /**
+     * 转换为Object数据
+     */
     private void readJsonDate() {
-        String result=readFromAssets();
-        Log.d("chen--",result);
-        ResultInfo resultInfo = new Gson().fromJson(result, new TypeToken<ResultInfo<ParamInfo>>() {
+        String result=readFromFile();
+        if(result==null){
+            return;
+        }
+        ParamInfo paramInfo = new Gson().fromJson(result, new TypeToken<ParamInfo>() {
         }.getType());
-        if (resultInfo != null && resultInfo.getResult() != null
-                && resultInfo.getResult().equals("0")) {
-            ParamInfo paramInfo = (ParamInfo) resultInfo.getBean();
+        if (paramInfo != null) {
             application.setCaijiList(paramInfo.getCaiji());
             application.setReasonList(paramInfo.getReason());
             application.setProvsList(paramInfo.getProvs());
             application.setStateList(paramInfo.getState());
             application.setCanbaoList(paramInfo.getCanbao());
         }
-
-
     }
 
     private void initView() {
@@ -209,6 +219,54 @@ public class LoginActivity extends Activity {
     }
 
 
+    /**
+     * 保存数据到文件
+     * @param paramInfo
+     */
+    private void saveParams(final ParamInfo paramInfo){
+        if(paramInfo==null){
+            return;
+        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                application.setCaijiList(paramInfo.getCaiji());
+                application.setReasonList(paramInfo.getReason());
+                application.setProvsList(paramInfo.getProvs());
+                application.setStateList(paramInfo.getState());
+                application.setCanbaoList(paramInfo.getCanbao());
+                String result=new Gson().toJson(paramInfo);
+                if(!Environment.getExternalStorageState().equals(
+                        Environment.MEDIA_MOUNTED)){//SD卡不存在则不操作
+                    return;//返回到程序的被调用处
+                }
+                File fileDir=new File(getExternalFilesDir(null)+"/json");
+                Log.e("chen",fileDir.getAbsolutePath());
+                fileDir.mkdirs();
+                File file=new File(fileDir,"json.txt");
+                if(!file.exists()){
+                    try {
+                        file.createNewFile();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                PrintStream out = null;
+                try {
+                    out = new PrintStream(new FileOutputStream(file));
+                    out.print(result);//将数据变为字符串后保存
+                }catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }finally{
+                    if(out!=null){
+                        out.close();//关闭输出
+                    }
+                }
+            }
+        }).start();
+    }
+
+
     private class LoginTask extends AsyncTask<String, Void, ResultInfo> {
         private String userName;
 
@@ -233,12 +291,11 @@ public class LoginActivity extends Activity {
             HashMap<String, String> hashParams = new HashMap<String, String>();
             hashParams.put("uname", userName);
             hashParams.put("upass", pwd);
-            hashParams.put("pversion", "1");
+            hashParams.put("pversion", pversion);
             ResultInfo resultInfo = null;
             try {
                 String result = HttpHelper.doRequestForString(mContext, url,
                         HttpHelper.HTTP_GET, hashParams);
-                Log.e("chen",result);
                 resultInfo = new Gson().fromJson(result ,new TypeToken<ResultInfo<LoginInfo>>(){}.getType());
             } catch (Exception e) {
                 e.printStackTrace();
@@ -258,11 +315,12 @@ public class LoginActivity extends Activity {
                     PreferencesUtils.putString(mContext,Constant.SP_USER_NAME,loginInfo.getName());
                     PreferencesUtils.putString(mContext,Constant.SP_USER_KEY,loginInfo.getKey());
                     PreferencesUtils.putString(mContext, Constant.SP_USER_REGKEY, loginInfo.getRegkey());
+                    if(loginInfo.getParams()!=null) {
+                        PreferencesUtils.putString(mContext,Constant.SP_PVERSION,loginInfo.getParams().getPversion());
+                        saveParams(loginInfo.getParams());
+                    }
                 }
                 loadDate();
-//                Intent intent=new Intent(mContext,MainActivity.class);
-//                startActivity(intent);
-//                finish();
             } else if (result != null && result.getDescription() != null
                     && !result.getDescription().equals("")) {
                 if (dialog != null)
@@ -277,68 +335,6 @@ public class LoginActivity extends Activity {
             }
         }
     }
-
-
-    private void loginServer(String username,String password){
-        String url = CommTools.getRequestUrl(mContext, R.string.login_url);
-        HashMap<String, String> hashParams = new HashMap<String, String>();
-        hashParams.put("uname", username);
-        hashParams.put("upass", password);
-        hashParams.put("pversion", "1");
-        RequestParams params = new RequestParams(hashParams);
-        InsureClient.get(url,params,new JsonHttpResponseHandler(){
-            @Override
-            public void onStart() {
-                super.onStart();
-                try {
-                    dialog = ProgressDialog.show(LoginActivity.this, "请稍后",
-                            "登录中...");
-                    dialog.setCancelable(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                super.onSuccess(statusCode, headers, response);
-                if (dialog != null)
-                    dialog.dismiss();
-                Log.d("chen1",response.toString());
-                processResult(response.toString());
-            }
-        });
-    }
-
-
-
-    private void processResult(String result){
-        ResultInfo resultInfo=new Gson().fromJson(result ,new TypeToken<ResultInfo<LoginInfo>>(){}.getType());
-        if (resultInfo != null && resultInfo.getResult() != null
-                && resultInfo.getResult().equals("0")) {
-            LoginInfo loginInfo=(LoginInfo)resultInfo.getBean();
-            if(loginInfo!=null){
-                PreferencesUtils.putString(mContext, Constant.SP_USER_ID,loginInfo.getId());
-                PreferencesUtils.putString(mContext,Constant.SP_USER_PASSWD,loginInfo.getPasswd());
-                PreferencesUtils.putString(mContext,Constant.SP_USER_NAME,loginInfo.getName());
-                PreferencesUtils.putString(mContext,Constant.SP_USER_KEY,loginInfo.getKey());
-                PreferencesUtils.putString(mContext, Constant.SP_USER_REGKEY, loginInfo.getRegkey());
-            }
-
-            Intent intent=new Intent(mContext,MainActivity.class);
-            startActivity(intent);
-            finish();
-        } else if (resultInfo != null && resultInfo.getDescription() != null
-                && !resultInfo.getDescription().equals("")) {
-            Toast.makeText(mContext, "登录失败，" + resultInfo.getDescription(),
-                    Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(mContext, "登录失败，请稍后再试!", Toast.LENGTH_SHORT)
-                    .show();
-        }
-    }
-
-
 
     private void loadDate() {
         if (mTurnInTask != null
