@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
@@ -20,8 +19,6 @@ import com.chen.insurre.R;
 import com.chen.insurre.adapter.TurnAdapter;
 import com.chen.insurre.bean.PersonInfo;
 import com.chen.insurre.bean.ResultInfo;
-import com.chen.insurre.bean.TurnInDetailInfo;
-import com.chen.insurre.bean.TurnInInfo;
 import com.chen.insurre.bean.TurnItemInfo;
 import com.chen.insurre.bean.TurnListItem;
 import com.chen.insurre.bean.TurnOutDetailInfo;
@@ -32,6 +29,8 @@ import com.chen.insurre.util.Constant;
 import com.chen.insurre.util.NetworkUtil;
 import com.chen.insurre.util.PreferencesUtils;
 import com.chen.insurre.util.ToastUtil;
+import com.chen.listview.library.PullToRefreshLayout;
+import com.chen.listview.library.PullableListView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -50,7 +49,11 @@ public class TurnOutActivity extends Activity implements View.OnClickListener {
 
     private TextView TurnListNameTextView, TurnDetailNameTextView;
 
-    private ListView TurnListView;
+//    private ListView TurnListView;
+
+    private PullableListView mListView;
+
+    private PullToRefreshLayout mPullToRefreshLayout;
 
     private Button ListViewButton, DetailButton;
 
@@ -58,12 +61,12 @@ public class TurnOutActivity extends Activity implements View.OnClickListener {
 
     private ViewFlipper viewFlipper;
 
-    private TextView TurnNameTextView,TurnSexTextView,TurnBirthTextView,TurnAgeTextView,TurnRoonNoTextView,TurnContractTextView,TurnRegionTextView,
-            TurnAreaTextView,TurnPropTextView,TurnLocationTextView;
+    private TextView TurnNameTextView, TurnSexTextView, TurnBirthTextView, TurnAgeTextView, TurnRoonNoTextView, TurnContractTextView, TurnRegionTextView,
+            TurnAreaTextView, TurnPropTextView, TurnLocationTextView;
 
-    private TextView TurnOutApplyTimeTextView,TurnOutRoadTextView,TurnOutAreaTextView,TurnOutReasonTextView;
+    private TextView TurnOutApplyTimeTextView, TurnOutRoadTextView, TurnOutAreaTextView, TurnOutReasonTextView;
 
-    private TextView TurnOutRejectTimeTextView,TurnOutRejectReasonTextView;
+    private TextView TurnOutRejectTimeTextView, TurnOutRejectReasonTextView;
 
     private TurnInTask mTurnInTask;
 
@@ -83,6 +86,15 @@ public class TurnOutActivity extends Activity implements View.OnClickListener {
 
     private int Tag = TRUN_OUT_UNDEAL;
 
+
+    private boolean isLoadMore = false; //是否下啦刷新
+
+    private int pagesize = 10;
+
+    private int offset = 1;
+
+    private View viewLoadMore;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,7 +107,7 @@ public class TurnOutActivity extends Activity implements View.OnClickListener {
     @Override
     protected void onResume() {
         super.onResume();
-        if(viewFlipper!=null) {
+        if (viewFlipper != null) {
             viewFlipper.setDisplayedChild(0);
         }
         loadDate(TRUN_OUT);
@@ -114,7 +126,7 @@ public class TurnOutActivity extends Activity implements View.OnClickListener {
         ListViewButton = (Button) findViewById(R.id.ListViewButton);
         DetailButton = (Button) findViewById(R.id.DetailButton);
 
-        TurnListView = (ListView) findViewById(R.id.TurnListView);
+//        TurnListView = (ListView) findViewById(R.id.TurnListView);
 
         DetailUndealView = findViewById(R.id.DetailUndealView);
         DetailReceiveView = findViewById(R.id.DetailReceiveView);
@@ -122,24 +134,24 @@ public class TurnOutActivity extends Activity implements View.OnClickListener {
 
 
         //转入转入详情公共部分
-        TurnNameTextView= (TextView) findViewById(R.id.TurnNameTextView);
-        TurnSexTextView= (TextView) findViewById(R.id.TurnSexTextView);
-        TurnBirthTextView= (TextView) findViewById(R.id.TurnBirthTextView);
-        TurnAgeTextView= (TextView) findViewById(R.id.TurnAgeTextView);
-        TurnRoonNoTextView= (TextView) findViewById(R.id.TurnRoonNoTextView);
-        TurnContractTextView= (TextView) findViewById(R.id.TurnContractTextView);
-        TurnRegionTextView= (TextView) findViewById(R.id.TurnRegionTextView);
-        TurnAreaTextView= (TextView) findViewById(R.id.TurnAreaTextView);
-        TurnPropTextView= (TextView) findViewById(R.id.TurnPropTextView);
-        TurnLocationTextView= (TextView) findViewById(R.id.TurnLocationTextView);
+        TurnNameTextView = (TextView) findViewById(R.id.TurnNameTextView);
+        TurnSexTextView = (TextView) findViewById(R.id.TurnSexTextView);
+        TurnBirthTextView = (TextView) findViewById(R.id.TurnBirthTextView);
+        TurnAgeTextView = (TextView) findViewById(R.id.TurnAgeTextView);
+        TurnRoonNoTextView = (TextView) findViewById(R.id.TurnRoonNoTextView);
+        TurnContractTextView = (TextView) findViewById(R.id.TurnContractTextView);
+        TurnRegionTextView = (TextView) findViewById(R.id.TurnRegionTextView);
+        TurnAreaTextView = (TextView) findViewById(R.id.TurnAreaTextView);
+        TurnPropTextView = (TextView) findViewById(R.id.TurnPropTextView);
+        TurnLocationTextView = (TextView) findViewById(R.id.TurnLocationTextView);
 
-        TurnOutApplyTimeTextView=(TextView)findViewById(R.id.TurnOutApplyTimeTextView);
-        TurnOutRoadTextView=(TextView)findViewById(R.id.TurnOutRoadTextView);
-        TurnOutAreaTextView=(TextView)findViewById(R.id.TurnOutAreaTextView);
-        TurnOutReasonTextView=(TextView)findViewById(R.id.TurnOutReasonTextView);
+        TurnOutApplyTimeTextView = (TextView) findViewById(R.id.TurnOutApplyTimeTextView);
+        TurnOutRoadTextView = (TextView) findViewById(R.id.TurnOutRoadTextView);
+        TurnOutAreaTextView = (TextView) findViewById(R.id.TurnOutAreaTextView);
+        TurnOutReasonTextView = (TextView) findViewById(R.id.TurnOutReasonTextView);
 
-        TurnOutRejectTimeTextView=(TextView)findViewById(R.id.TurnOutRejectTimeTextView);
-        TurnOutRejectReasonTextView=(TextView)findViewById(R.id.TurnOutRejectReasonTextView);
+        TurnOutRejectTimeTextView = (TextView) findViewById(R.id.TurnOutRejectTimeTextView);
+        TurnOutRejectReasonTextView = (TextView) findViewById(R.id.TurnOutRejectReasonTextView);
 
         ReceiveTextview.setOnClickListener(this);
         UndealTextview.setOnClickListener(this);
@@ -148,7 +160,27 @@ public class TurnOutActivity extends Activity implements View.OnClickListener {
         ListViewButton.setOnClickListener(this);
         DetailButton.setOnClickListener(this);
 
-        TurnListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+        viewLoadMore=findViewById(R.id.viewLoadMore);
+
+        mPullToRefreshLayout = (PullToRefreshLayout) findViewById(R.id.pull_refresh_layout);
+        mPullToRefreshLayout
+                .setRefreshMode(PullToRefreshLayout.PULL_DOWN);
+        mPullToRefreshLayout.setOnRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
+
+            @Override
+            public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
+            }
+
+            @Override
+            public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
+                viewLoadMore.setVisibility(View.VISIBLE);
+                isLoadMore = true;
+                loadDate(Tag);
+            }
+        });
+        mListView = (PullableListView) findViewById(R.id.list);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 cardno = datas.get(position).getCardno();
@@ -158,6 +190,33 @@ public class TurnOutActivity extends Activity implements View.OnClickListener {
 
     }
 
+    /**
+     * 显示列表
+     *
+     * @param list
+     */
+    private void showList(List<TurnListItem> list) {
+        if (list.size() < pagesize) {
+            viewLoadMore.setVisibility(View.GONE);
+            mPullToRefreshLayout
+                    .setRefreshMode(PullToRefreshLayout.PULL_NONE);
+        }
+        if (datas == null) {
+            datas = new ArrayList<TurnListItem>();
+        }
+        if (!isLoadMore) {
+            datas.clear();
+        }
+        datas.addAll(list);
+
+        if (adapter == null) {
+            adapter = new TurnAdapter(this, datas);
+            mListView.setAdapter(adapter);
+        } else {
+            adapter.notifyDataSetChanged();
+        }
+    }
+
     private void showPrevious() {
         if (viewFlipper.getDisplayedChild() != 0) {
             viewFlipper.showPrevious();
@@ -165,6 +224,9 @@ public class TurnOutActivity extends Activity implements View.OnClickListener {
     }
 
     private void showNext() {
+        if (isLoadMore) {
+            return;
+        }
         viewFlipper.showNext();
     }
 
@@ -173,6 +235,13 @@ public class TurnOutActivity extends Activity implements View.OnClickListener {
             ToastUtil.showToastShort(this, "请检查网络连接状态。");
             return;
         }
+
+        if (isLoadMore) {
+            offset += 1;
+        } else {
+            offset = 1;
+        }
+
 
         if (mTurnInTask != null
                 && mTurnInTask.getStatus() != AsyncTask.Status.FINISHED)
@@ -185,16 +254,19 @@ public class TurnOutActivity extends Activity implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ReceiveTextview:
-                loadDate(TRUN_OUT_RECEIVE);
                 Tag = TRUN_OUT_RECEIVE;
+                isLoadMore = false;
+                loadDate(TRUN_OUT_RECEIVE);
                 break;
             case R.id.RejectTextview:
-                loadDate(TRUN_OUT_REJECT);
                 Tag = TRUN_OUT_REJECT;
+                isLoadMore = false;
+                loadDate(TRUN_OUT_REJECT);
                 break;
             case R.id.UndealTextview:
-                loadDate(TRUN_OUT_UNDEAL);
                 Tag = TRUN_OUT_UNDEAL;
+                isLoadMore = false;
+                loadDate(TRUN_OUT_UNDEAL);
                 break;
             case R.id.ListViewButton:
                 showPrevious();
@@ -260,29 +332,6 @@ public class TurnOutActivity extends Activity implements View.OnClickListener {
     }
 
 
-    /**
-     * 显示列表
-     *
-     * @param list
-     */
-    private void showList(List<TurnListItem> list) {
-        if (datas == null) {
-            datas = new ArrayList<TurnListItem>();
-        }
-
-        datas.clear();
-        datas.addAll(list);
-
-
-        if (adapter == null) {
-            adapter = new TurnAdapter(this, datas);
-            TurnListView.setAdapter(adapter);
-        } else {
-            adapter.notifyDataSetChanged();
-        }
-    }
-
-
     private class TurnInTask extends AsyncTask<String, Void, String> {
         private Dialog dialog;
 
@@ -328,6 +377,10 @@ public class TurnOutActivity extends Activity implements View.OnClickListener {
             if (requestType == TRUN_OUT_DETAIL) {
                 hashParams.put("cardno", cardno);
             }
+            if (requestType == TRUN_OUT_RECEIVE || requestType == TRUN_OUT_REJECT || requestType == TRUN_OUT_UNDEAL) {
+                hashParams.put("page", String.valueOf(offset));
+                hashParams.put("pagesize", String.valueOf(pagesize));
+            }
             String result = null;
             try {
                 result = HttpHelper.doRequestForString(mContext, url,
@@ -345,6 +398,10 @@ public class TurnOutActivity extends Activity implements View.OnClickListener {
             super.onPostExecute(result);
             if (dialog != null)
                 dialog.dismiss();
+            if(isLoadMore){
+                mPullToRefreshLayout
+                        .loadmoreFinish(PullToRefreshLayout.SUCCEED);
+            }
             if (result != null) {
                 System.out.println("result:" + result);
                 if (requestType == TRUN_OUT) {
@@ -415,7 +472,7 @@ public class TurnOutActivity extends Activity implements View.OnClickListener {
                             DetailRejectView.setVisibility(View.GONE);
                             DetailUndealView.setVisibility(View.VISIBLE);
                         }
-                        showGlobalDetail(detailInfo,Tag);
+                        showGlobalDetail(detailInfo, Tag);
                         viewFlipper.showNext();
                     } else {
                         showFaik(Item);
@@ -425,7 +482,7 @@ public class TurnOutActivity extends Activity implements View.OnClickListener {
         }
     }
 
-    private void showGlobalDetail(TurnOutDetailInfo item,int index){
+    private void showGlobalDetail(TurnOutDetailInfo item, int index) {
         PersonInfo personInfo = item.getPersonInfo();
         TurnNameTextView.setText(personInfo.getName());
         TurnSexTextView.setText(personInfo.getSex());
@@ -444,12 +501,16 @@ public class TurnOutActivity extends Activity implements View.OnClickListener {
         TurnOutRoadTextView.setText(turnOutInfo.getInStreet());
         TurnOutAreaTextView.setText(turnOutInfo.getInArea());
         TurnOutReasonTextView.setText(turnOutInfo.getReason());
-        if(index==TRUN_OUT_REJECT) {
+        if (index == TRUN_OUT_REJECT) {
             TurnOutRejectTimeTextView.setText(turnOutInfo.getRejectDate());
             TurnOutRejectReasonTextView.setText(turnOutInfo.getRejectReason());
         }
     }
 
+    /**
+     * 加载失败
+     * @param items
+     */
     private void showFaik(ResultInfo<?> items) {
         if (items != null && items.getDescription() != null
                 && !items.getDescription().equals("")) {

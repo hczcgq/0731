@@ -12,10 +12,10 @@ import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
+
 import com.chen.insurre.R;
 import com.chen.insurre.adapter.TurnAdapter;
 import com.chen.insurre.bean.PersonInfo;
@@ -30,8 +30,11 @@ import com.chen.insurre.util.Constant;
 import com.chen.insurre.util.NetworkUtil;
 import com.chen.insurre.util.PreferencesUtils;
 import com.chen.insurre.util.ToastUtil;
+import com.chen.listview.library.PullToRefreshLayout;
+import com.chen.listview.library.PullableListView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -47,7 +50,11 @@ public class TurnInActivity extends Activity implements View.OnClickListener {
 
     private TextView TurnListNameTextView, TurnDetailNameTextView;
 
-    private ListView TurnListView;
+//    private ListView TurnListView;
+
+    private PullableListView mListView;
+
+    private PullToRefreshLayout mPullToRefreshLayout;
 
     private Button ListViewButton, DetailButton;
 
@@ -85,6 +92,13 @@ public class TurnInActivity extends Activity implements View.OnClickListener {
 
     public static boolean fromDialog=false;
 
+    private boolean isLoadMore=false;
+
+    private int pagesize=10;
+
+    private int offset=1;
+
+    private View viewLoadMore;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,7 +131,8 @@ public class TurnInActivity extends Activity implements View.OnClickListener {
         ListViewButton = (Button) findViewById(R.id.ListViewButton);
         DetailButton = (Button) findViewById(R.id.DetailButton);
 
-        TurnListView = (ListView) findViewById(R.id.TurnListView);
+//        TurnListView = (ListView) findViewById(R.id.TurnListView);
+
 
         DetailUndealView = findViewById(R.id.DetailUndealView);
         DetailReceiveView = findViewById(R.id.DetailReceiveView);
@@ -157,7 +172,27 @@ public class TurnInActivity extends Activity implements View.OnClickListener {
         ListViewButton.setOnClickListener(this);
         DetailButton.setOnClickListener(this);
 
-        TurnListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+
+        viewLoadMore=findViewById(R.id.viewLoadMore);
+        mPullToRefreshLayout = (PullToRefreshLayout) findViewById(R.id.pull_refresh_layout);
+        mPullToRefreshLayout
+                .setRefreshMode(PullToRefreshLayout.PULL_DOWN);
+        mPullToRefreshLayout.setOnRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
+
+            @Override
+            public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
+            }
+
+            @Override
+            public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
+                viewLoadMore.setVisibility(View.VISIBLE);
+                isLoadMore=true;
+                loadDate(Tag);
+            }
+        });
+        mListView = (PullableListView) findViewById(R.id.list);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 cardno = datas.get(position).getCardno();
@@ -165,7 +200,34 @@ public class TurnInActivity extends Activity implements View.OnClickListener {
                 loadDate(TRUN_IN_DETAIL);
             }
         });
+    }
 
+
+    /**
+     * 显示列表
+     *
+     * @param list
+     */
+    private void showList(List<TurnListItem> list) {
+        if(list.size()<pagesize){
+            viewLoadMore.setVisibility(View.GONE);
+            mPullToRefreshLayout
+                    .setRefreshMode(PullToRefreshLayout.PULL_NONE);
+        }
+        if (datas == null) {
+            datas = new ArrayList<TurnListItem>();
+        }
+
+        if(!isLoadMore) {
+            datas.clear();
+        }
+        datas.addAll(list);
+        if (adapter == null) {
+            adapter = new TurnAdapter(this, datas);
+            mListView.setAdapter(adapter);
+        } else {
+            adapter.notifyDataSetChanged();
+        }
     }
 
     private void showPrevious(){
@@ -183,6 +245,13 @@ public class TurnInActivity extends Activity implements View.OnClickListener {
             ToastUtil.showToastShort(this,"请检查网络连接状态。");
             return ;
         }
+
+        if (isLoadMore) {
+            offset += 1;
+        } else {
+            offset = 1;
+        }
+
         if (mTurnInTask != null
                 && mTurnInTask.getStatus() != AsyncTask.Status.FINISHED)
             mTurnInTask.cancel(true);
@@ -194,17 +263,20 @@ public class TurnInActivity extends Activity implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ReceiveTextview:
-                    loadDate(TRUN_IN_RECEIVE);
+                    isLoadMore=false;
                     Tag = TRUN_IN_RECEIVE;
+                    loadDate(TRUN_IN_RECEIVE);
                 break;
             case R.id.RejectTextview:
-                    loadDate(TRUN_IN_REJECT);
+                    isLoadMore=false;
                     Tag = TRUN_IN_REJECT;
+                    loadDate(TRUN_IN_REJECT);
+
                 break;
             case R.id.UndealTextview:
-                    loadDate(TRUN_IN_UNDEAL);
+                    isLoadMore=false;
                     Tag = TRUN_IN_UNDEAL;
-
+                    loadDate(TRUN_IN_UNDEAL);
                 break;
             case R.id.ListViewButton:
                 showPrevious();
@@ -289,24 +361,7 @@ public class TurnInActivity extends Activity implements View.OnClickListener {
 
 
 
-    /**
-     * 显示列表
-     *
-     * @param list
-     */
-    private void showList(List<TurnListItem> list) {
-        if (datas == null) {
-            datas = new ArrayList<TurnListItem>();
-        }
-        datas.clear();
-        datas.addAll(list);
-        if (adapter == null) {
-            adapter = new TurnAdapter(this, datas);
-            TurnListView.setAdapter(adapter);
-        } else {
-            adapter.notifyDataSetChanged();
-        }
-    }
+
 
 
     private class TurnInTask extends AsyncTask<String, Void, String> {
@@ -352,6 +407,10 @@ public class TurnInActivity extends Activity implements View.OnClickListener {
             if (requestType == TRUN_IN_DETAIL) {
                 hashParams.put("cardno", cardno);
             }
+            if(requestType==TRUN_IN_RECEIVE||requestType==TRUN_IN_REJECT||requestType==TRUN_IN_UNDEAL){
+                hashParams.put("page", String.valueOf(offset));
+                hashParams.put("pagesize", String.valueOf(pagesize));
+            }
             String result = null;
             try {
                 result = HttpHelper.doRequestForString(mContext, url,
@@ -369,6 +428,10 @@ public class TurnInActivity extends Activity implements View.OnClickListener {
             super.onPostExecute(result);
             if (dialog != null)
                 dialog.dismiss();
+            if(isLoadMore){
+                mPullToRefreshLayout
+                        .loadmoreFinish(PullToRefreshLayout.SUCCEED);
+            }
             if (result != null) {
                 System.out.println("result:" + result);
                 if (requestType == TRUN_IN) {

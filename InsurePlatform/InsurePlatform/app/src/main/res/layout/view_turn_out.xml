@@ -95,14 +95,29 @@
                 android:textSize="@dimen/button_text_size" />
         </RelativeLayout>
 
-        <ListView
-            android:id="@+id/TurnListView"
+        <com.chen.listview.library.PullToRefreshLayout
+            android:id="@+id/pull_refresh_layout"
             android:layout_width="match_parent"
-            android:dividerHeight="10dp"
+            android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:scrollbars="none"
-            android:divider="@android:color/transparent"
-            android:layout_height="wrap_content" />
+            android:background="@android:color/transparent"
+            android:orientation="vertical">
+
+            <include layout="@layout/refresh_head" />
+            <!-- 支持所有实现Pullable接口的View -->
+
+            <com.chen.listview.library.PullableListView
+                android:id="@+id/list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="10dp"
+                android:scrollbars="none"/>
+
+            <include
+                android:id="@+id/viewLoadMore"
+                layout="@layout/load_more" />
+        </com.chen.listview.library.PullToRefreshLayout>
     </LinearLayout>
 
     <LinearLayout

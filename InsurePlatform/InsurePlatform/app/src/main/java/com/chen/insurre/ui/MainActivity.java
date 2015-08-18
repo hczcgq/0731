@@ -23,7 +23,6 @@ import android.widget.Toast;
 
 import com.chen.insurre.MyApplication;
 import com.chen.insurre.R;
-import com.chen.insurre.bean.ParamInfo;
 import com.chen.insurre.bean.ResultInfo;
 import com.chen.insurre.bean.TurnItemInfo;
 import com.chen.insurre.http.HttpHelper;
@@ -36,11 +35,13 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
-public class MainActivity extends TabActivity implements View.OnClickListener{
+public class MainActivity extends TabActivity implements View.OnClickListener {
 
-    private TextView NameTextView,CollectionTextView,TurnInTextView,TurnOutTextView;
+    private TextView NameTextView, CollectionTextView, TurnInTextView, TurnOutTextView;
     private ImageView TurnInTagImageView;
     private Activity mContext = this;
 
@@ -50,27 +51,31 @@ public class MainActivity extends TabActivity implements View.OnClickListener{
     private TabHost mTabHost;
 
     public static final int MODE_COLLECTION = 0;
-    public static final int MODE_TRUNIN= 1;
-    public static final int MODE_TRUNOUT= 2;
-    private  int undeal=0;
+    public static final int MODE_TRUNIN = 1;
+    public static final int MODE_TRUNOUT = 2;
+    private int undeal = 0;
 
     private MyApplication application;
 
     private MainBroadCast receiver;
     public static final String BRAODCAST_MAIN = "com.chen.insurre.ui.BroadCast";
+
+
+    private Timer timer;
+
     private class MainBroadCast extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            String undeal_count=intent.getStringExtra("undeal");
+            String undeal_count = intent.getStringExtra("undeal");
             int int_undel;
-            if(TextUtils.isEmpty(undeal_count)){
-                int_undel=0;
-            }else{
-                int_undel=Integer.parseInt(undeal_count);
+            if (TextUtils.isEmpty(undeal_count)) {
+                int_undel = 0;
+            } else {
+                int_undel = Integer.parseInt(undeal_count);
             }
-            Message message=new Message();
-            message.obj=int_undel;
-            message.what=100;
+            Message message = new Message();
+            message.obj = int_undel;
+            message.what = 100;
             handler.sendMessage(message);
         }
     }
@@ -80,13 +85,13 @@ public class MainActivity extends TabActivity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.view_main);
-        application=MyApplication.getInstance();
+        application = MyApplication.getInstance();
         // 注册广播
         receiver = new MainBroadCast();
         IntentFilter filter = new IntentFilter();
         filter.addAction(BRAODCAST_MAIN);
         registerReceiver(receiver, filter);
-        undeal=getIntent().getIntExtra("undeal",0);
+        undeal = getIntent().getIntExtra("undeal", 0);
 
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -98,41 +103,58 @@ public class MainActivity extends TabActivity implements View.OnClickListener{
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        String name = PreferencesUtils.getString(mContext, Constant.SP_USER_NAME);
+        if (TextUtils.isEmpty(name)) {
+            Intent intent = new Intent(mContext, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(receiver);
+        if (timer != null) {
+            timer.cancel();
+            timer = null;
+        }
     }
 
     private void initView() {
         NameTextView = (TextView) findViewById(R.id.NameTextView);
-        NameTextView.setText("采集人员："+PreferencesUtils.getString(mContext, Constant.SP_USER_NAME));
+        NameTextView.setText("采集人员：" + PreferencesUtils.getString(mContext, Constant.SP_USER_NAME));
 
-        CollectionTextView= (TextView) findViewById(R.id.CollectionTextView);
-        TurnInTextView= (TextView) findViewById(R.id.TurnInTextView);
-        TurnOutTextView= (TextView) findViewById(R.id.TurnOutTextView);
+        CollectionTextView = (TextView) findViewById(R.id.CollectionTextView);
+        TurnInTextView = (TextView) findViewById(R.id.TurnInTextView);
+        TurnOutTextView = (TextView) findViewById(R.id.TurnOutTextView);
 
-        TurnInTagImageView= (ImageView) findViewById(R.id.TurnInTagImageView);
+        TurnInTagImageView = (ImageView) findViewById(R.id.TurnInTagImageView);
 
         CollectionTextView.setOnClickListener(this);
         TurnInTextView.setOnClickListener(this);
         TurnOutTextView.setOnClickListener(this);
 
-        if(undeal>0){
+        if (undeal > 0) {
             TurnInTagImageView.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             TurnInTagImageView.setVisibility(View.GONE);
         }
 
         initTabHost();
         switchMode(mMode);
 
-        new Thread(GetTurinInRunnable).start();
+        timer = new Timer();
+        timer.schedule(task, 2000, 1000 * 20);
     }
 
-    Handler handler=new Handler(){
+
+    Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            if(msg.what==100) {
+            if (msg.what == 100) {
                 super.handleMessage(msg);
                 int index = (int) msg.obj;
                 if (index > 0) {
@@ -140,7 +162,6 @@ public class MainActivity extends TabActivity implements View.OnClickListener{
                 } else {
                     TurnInTagImageView.setVisibility(View.GONE);
                 }
-                handler.postDelayed(GetTurinInRunnable, 1000 * 60);
             }
         }
     };
@@ -149,7 +170,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener{
     public void LogOut(View view) {
         if (!NetworkUtil.networkIsAvailable(mContext)) {
             ToastUtil.showToastShort(this, "请检查网络连接状态。");
-            return ;
+            return;
         }
         if (mLogOutTask != null
                 && mLogOutTask.getStatus() != AsyncTask.Status.FINISHED)
@@ -160,13 +181,11 @@ public class MainActivity extends TabActivity implements View.OnClickListener{
     }
 
 
-
     private void initTabHost() {
         if (mTabHost != null) {
             mTabHost.clearAllTabs();
         }
         mTabHost = getTabHost();
-
 
 
         TabHost.TabSpec mineTabSpec = mTabHost.newTabSpec("collection_tab");
@@ -227,6 +246,9 @@ public class MainActivity extends TabActivity implements View.OnClickListener{
     }
 
 
+    /**
+     * 退出登录
+     */
     private class LogOutTask extends AsyncTask<String, Void, ResultInfo> {
         private Dialog dialog;
 
@@ -284,10 +306,11 @@ public class MainActivity extends TabActivity implements View.OnClickListener{
     }
 
 
-    Runnable GetTurinInRunnable=new Runnable() {
+    //定时请求走访转入
+    TimerTask task = new TimerTask() {
         @Override
         public void run() {
-            String url  = CommTools.getRequestUrl(mContext, R.string.trun_in_url);
+            String url = CommTools.getRequestUrl(mContext, R.string.trun_in_url);
             HashMap<String, String> hashParams = new HashMap<String, String>();
             hashParams.put("regkey", PreferencesUtils.getString(mContext, Constant.SP_USER_REGKEY));
             String result = null;
@@ -304,22 +327,23 @@ public class MainActivity extends TabActivity implements View.OnClickListener{
                 if (Item != null && Item.getResult() != null
                         && Item.getResult().equals("0")) {
                     TurnItemInfo mTurnItemInfo = ((TurnItemInfo) Item.getBean());
-                    String undeal=mTurnItemInfo.getUndeal();
-                    if(TextUtils.isEmpty(undeal)){
-                        int_undel=0;
-                    }else{
-                        int_undel=Integer.parseInt(undeal);
+                    String undeal = mTurnItemInfo.getUndeal();
+                    if (TextUtils.isEmpty(undeal)) {
+                        int_undel = 0;
+                    } else {
+                        int_undel = Integer.parseInt(undeal);
                     }
                 }
-                Message message=new Message();
-                message.obj=int_undel;
-                message.what=100;
+
+                Message message = new Message();
+                message.obj = int_undel;
+                message.what = 100;
                 handler.sendMessage(message);
+
+
             }
         }
     };
-
-
 
 
 }
