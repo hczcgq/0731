@@ -1,339 +1,334 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_margin="10dp"
+    android:background="@drawable/content_corners_bg"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:visibility="visible">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@mipmap/u43"
+        android:drawablePadding="5dp"
+        android:gravity="center|left"
+        android:text="外地参保信息"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/login_text_size"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:background="@drawable/content_corners_bg"
+        android:layout_marginTop="10dp"
+        android:background="@android:color/white"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center|left"
+            android:padding="10dp"
+            android:text="参保地："
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/common_text_size" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="center|left"
+            android:orientation="horizontal">
+
+            <Spinner
+                android:id="@+id/WDCBprovSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:gravity="center|left" />
+
+            <Spinner
+                android:id="@+id/WDCBcitySpinner"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center|left" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@android:color/white"
         android:orientation="vertical"
-        android:padding="10dp"
-        android:visibility="visible">
+        android:padding="10dp">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="外地参保信息"
-            android:drawableLeft="@mipmap/u43"
-            android:drawablePadding="5dp"
             android:gravity="center|left"
+            android:padding="10dp"
+            android:text="养老保险："
             android:textColor="@android:color/black"
-            android:textSize="@dimen/login_text_size"
-            android:textStyle="bold" />
+            android:textSize="@dimen/common_text_size" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@android:color/white"
-            android:orientation="horizontal"
-            android:padding="10dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center|left"
-                android:padding="10dp"
-                android:text="参保地："
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/common_text_size" />
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:gravity="center|left"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="10dp">
 
-                <Spinner
-                    android:id="@+id/WDCBprovSpinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="1"
-                    android:gravity="center|left" />
+                <CheckBox
+                    android:id="@+id/WDCBzzJfCheckBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
-                <Spinner
-                    android:id="@+id/WDCBcitySpinner"
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center|left" />
+                    android:layout_height="wrap_content"
+                    android:gravity="center|left"
+                    android:padding="10dp"
+                    android:text="在职缴费（含灵活就业缴费）"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/common_text_size" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <CheckBox
+                    android:id="@+id/WDCBltDyCheckBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center|left"
+                    android:padding="10dp"
+                    android:text="离退休待遇"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/common_text_size" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <CheckBox
+                    android:id="@+id/WDCBjnJfCheckBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center|left"
+                    android:padding="10dp"
+                    android:text="居（农）保缴费"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/common_text_size" />
             </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@android:color/white"
-            android:orientation="vertical"
-            android:padding="10dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center|left"
-                android:padding="10dp"
-                android:text="养老保险："
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/common_text_size" />
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_weight="1"
+                android:background="@android:color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="10dp">
 
-                <LinearLayout
+                <CheckBox
+                    android:id="@+id/WDCBjnDyCheckBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@android:color/white"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:padding="10dp">
-
-                    <CheckBox
-                        android:id="@+id/WDCBzzJfCheckBox"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center|left"
-                        android:padding="10dp"
-                        android:text="在职缴费（含灵活就业缴费）"
-                        android:textColor="@android:color/black"
-                        android:textSize="@dimen/common_text_size" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@android:color/white"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:padding="10dp">
-
-                    <CheckBox
-                        android:id="@+id/WDCBltDyCheckBox"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center|left"
-                        android:padding="10dp"
-                        android:text="离退休待遇"
-                        android:textColor="@android:color/black"
-                        android:textSize="@dimen/common_text_size" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@android:color/white"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:padding="10dp">
-
-                    <CheckBox
-                        android:id="@+id/WDCBjnJfCheckBox"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center|left"
-                        android:padding="10dp"
-                        android:text="居（农）保缴费"
-                        android:textColor="@android:color/black"
-                        android:textSize="@dimen/common_text_size" />
-                </LinearLayout>
+                    android:gravity="center|left"
+                    android:padding="10dp"
+                    android:text="居（农）保待遇"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/common_text_size" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_weight="1"
+                android:background="@android:color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="10dp">
 
-                <LinearLayout
+                <CheckBox
+                    android:id="@+id/WDCBqtJfCheckBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@android:color/white"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:padding="10dp">
-
-                    <CheckBox
-                        android:id="@+id/WDCBjnDyCheckBox"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center|left"
-                        android:padding="10dp"
-                        android:text="居（农）保待遇"
-                        android:textColor="@android:color/black"
-                        android:textSize="@dimen/common_text_size" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@android:color/white"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:padding="10dp">
-
-                    <CheckBox
-                        android:id="@+id/WDCBqtJfCheckBox"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center|left"
-                        android:padding="10dp"
-                        android:text="其他缴费"
-                        android:textColor="@android:color/black"
-                        android:textSize="@dimen/common_text_size" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@android:color/white"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:padding="10dp">
-
-                    <CheckBox
-                        android:id="@+id/WDCBqtDyCheckBox"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center|left"
-                        android:padding="10dp"
-                        android:text="其他养老待遇"
-                        android:textColor="@android:color/black"
-                        android:textSize="@dimen/common_text_size" />
-                </LinearLayout>
+                    android:gravity="center|left"
+                    android:padding="10dp"
+                    android:text="其他缴费"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/common_text_size" />
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <CheckBox
+                    android:id="@+id/WDCBqtDyCheckBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center|left"
+                    android:padding="10dp"
+                    android:text="其他养老待遇"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/common_text_size" />
+            </LinearLayout>
         </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@android:color/white"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center|left"
+            android:padding="10dp"
+            android:text="医疗保险："
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/common_text_size" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@android:color/white"
-            android:orientation="vertical"
-            android:padding="10dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center|left"
-                android:padding="10dp"
-                android:text="医疗保险："
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/common_text_size" />
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_weight="1"
+                android:background="@android:color/white"
 
-                <LinearLayout
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <CheckBox
+                    android:id="@+id/WDCBzgYbCheckBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@android:color/white"
+                    android:gravity="center|left"
+                    android:padding="10dp"
+                    android:text="职工医保"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/common_text_size" />
+            </LinearLayout>
 
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:padding="10dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="10dp">
 
-                    <CheckBox
-                        android:id="@+id/WDCBzgYbCheckBox"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                <CheckBox
+                    android:id="@+id/WDCBjnYbCheckBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center|left"
-                        android:padding="10dp"
-                        android:text="职工医保"
-                        android:textColor="@android:color/black"
-                        android:textSize="@dimen/common_text_size" />
-                </LinearLayout>
-
-                <LinearLayout
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@android:color/white"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:padding="10dp">
+                    android:gravity="center|left"
+                    android:padding="10dp"
+                    android:text="居民医保（新农合）"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/common_text_size" />
+            </LinearLayout>
 
-                    <CheckBox
-                        android:id="@+id/WDCBjnYbCheckBox"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="10dp">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center|left"
-                        android:padding="10dp"
-                        android:text="居民医保（新农合）"
-                        android:textColor="@android:color/black"
-                        android:textSize="@dimen/common_text_size" />
-                </LinearLayout>
+                <CheckBox
+                    android:id="@+id/WDCBqtYbCheckBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
-                <LinearLayout
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@android:color/white"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:padding="10dp">
-
-                    <CheckBox
-                        android:id="@+id/WDCBqtYbCheckBox"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center|left"
-                        android:padding="10dp"
-                        android:text="其他"
-                        android:textColor="@android:color/black"
-                        android:textSize="@dimen/common_text_size" />
-                </LinearLayout>
+                    android:gravity="center|left"
+                    android:padding="10dp"
+                    android:text="其他"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/common_text_size" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

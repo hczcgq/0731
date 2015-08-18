@@ -6,6 +6,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
@@ -180,8 +182,6 @@ public class CollectionActivity extends Activity {
 
         saveButton= (Button) findViewById(R.id.saveButton);
         resetButton= (Button) findViewById(R.id.resetButton);
-
-        hidenKeyboard();
     }
 
     private void initEvent() {
@@ -695,13 +695,6 @@ public class CollectionActivity extends Activity {
 
 
     private void ShowContentInfo(CollectionInfo info) {
-//        if (cityList != null) {
-//            cityList.clear();
-//        }
-//        if (townList != null) {
-//            townList.clear();
-//        }
-
         //户籍信息
         PersonInfo personInfo = info.getPersonInfo();
         NameTextView.setText(personInfo.getName());
@@ -832,11 +825,21 @@ public class CollectionActivity extends Activity {
 
 
     private void showWaidiCanbao(WaidiCanbaoInfo waidiCanbaoInfo) {
-        setSpinnerData(WDCBprovSpinner, waidiCanbaoInfo.getProv());
-        setSpinnerData(WDCBcitySpinner, waidiCanbaoInfo.getCity());
 
         wdcbPro = waidiCanbaoInfo.getProv();
         WdcbCity = waidiCanbaoInfo.getCity();
+
+        if(TextUtils.isEmpty(wdcbPro)){
+            wdcbPro="320000";
+        }
+        if(TextUtils.isEmpty(WdcbCity)){
+            WdcbCity= "320500";
+        }
+        setSpinnerData(WDCBprovSpinner, wdcbPro);
+        setSpinnerData(WDCBcitySpinner, WdcbCity);
+
+
+
 
         setCheckBoxtDate(WDCBzzJfCheckBox, waidiCanbaoInfo.getZzJf());
         setCheckBoxtDate(WDCBltDyCheckBox, waidiCanbaoInfo.getLtDy());
@@ -860,24 +863,44 @@ public class CollectionActivity extends Activity {
             WCBCheckBox.setChecked(false);
         }
 
-        setSpinnerData(WCBprovSpinner, weiCanbaoInfo.getProv());
-        setSpinnerData(WCBcitySpinner, weiCanbaoInfo.getCity());
-        setSpinnerData(WCBtownSpinner, weiCanbaoInfo.getTown());
 
         prov = weiCanbaoInfo.getProv();
         city = weiCanbaoInfo.getCity();
         town = weiCanbaoInfo.getTown();
 
+        if(TextUtils.isEmpty(prov)){
+            prov="320000";
+        }
+        if(TextUtils.isEmpty(city)){
+            city= "320500";
+        }
+        if(TextUtils.isEmpty(town)){
+            town="320540";
+        }
+        setSpinnerData(WCBprovSpinner, prov);
+        setSpinnerData(WCBcitySpinner, city);
+        setSpinnerData(WCBtownSpinner, town);
+
+
+
         setSpinnerData(WCBStatusSpinner, weiCanbaoInfo.getStatus());
         setSpinnerData(WCBReasonSpinner, weiCanbaoInfo.getReason());
-
-        setSpinnerData(WCBorgProvSpinner, weiCanbaoInfo.getOrgProv());
-        setSpinnerData(WCBorgCitySpinner, weiCanbaoInfo.getOrgCity());
-        setSpinnerData(WCBorgTownSpinner, weiCanbaoInfo.getOrgTown());
 
         orgProv = weiCanbaoInfo.getOrgProv();
         orgCity = weiCanbaoInfo.getOrgCity();
         orgTown = weiCanbaoInfo.getOrgTown();
+        if(TextUtils.isEmpty(orgProv)){
+            orgProv="320000";
+        }
+        if(TextUtils.isEmpty(orgCity)){
+            orgCity="320500";
+        }
+        if(TextUtils.isEmpty(orgTown)){
+            orgTown="320540";
+        }
+        setSpinnerData(WCBorgProvSpinner, orgProv);
+        setSpinnerData(WCBorgCitySpinner, orgCity);
+        setSpinnerData(WCBorgTownSpinner, orgTown);
 
     }
 
@@ -918,7 +941,9 @@ public class CollectionActivity extends Activity {
             }
             for (int i = 0; i < WdcbprovsList.size(); i++) {
                 String item = WdcbprovsList.get(i).getId();
+
                 if (item.equals(text)) {
+
                     spinner.setSelection(i);
                     WdcbcityList = WdcbprovsList.get(i).getChild();
                     break;
@@ -953,7 +978,9 @@ public class CollectionActivity extends Activity {
             }
             for (int i = 0; i < cityList.size(); i++) {
                 String item = cityList.get(i).getId();
+                Log.e("----",item+"--"+text);
                 if (item.equals(text)) {
+                    Log.e("----",WdcbprovsList.get(i).getName());
                     spinner.setSelection(i);
                     townList = cityList.get(i).getChild();
                     break;
@@ -994,7 +1021,7 @@ public class CollectionActivity extends Activity {
                     break;
                 }
             }
-        } else if (spinner == WCBorgCitySpinner) {
+        } else if (spinner == WCBorgTownSpinner) {
             if (OrgtownList == null || OrgtownList.size() == 0) {
                 return;
             }

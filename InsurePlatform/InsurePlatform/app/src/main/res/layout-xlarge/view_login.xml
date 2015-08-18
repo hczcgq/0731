@@ -18,7 +18,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:text="全名参保采集平台"
+            android:text="全民参保采集平台"
             android:textColor="@android:color/white"
             android:gravity="center"
             android:textSize="@dimen/header_size"

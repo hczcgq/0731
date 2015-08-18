@@ -126,9 +126,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener{
         initTabHost();
         switchMode(mMode);
 
-//        new Thread(GetParamRunnable).start();
         new Thread(GetTurinInRunnable).start();
-
     }
 
     Handler handler=new Handler(){
@@ -284,37 +282,6 @@ public class MainActivity extends TabActivity implements View.OnClickListener{
             }
         }
     }
-
-
-
-
-    Runnable GetParamRunnable=new Runnable() {
-        @Override
-        public void run() {
-            HashMap<String, String> hashParams = new HashMap<String, String>();
-            String url = CommTools.getRequestUrl(mContext, R.string.param_url);
-            hashParams.put("regkey", PreferencesUtils.getString(mContext, Constant.SP_USER_REGKEY));
-            hashParams.put("r", "Y");
-            ResultInfo resultInfo = null;
-            try {
-                String result = HttpHelper.doRequestForString(mContext, url,
-                        HttpHelper.HTTP_GET, hashParams);
-                resultInfo = new Gson().fromJson(result, new TypeToken<ResultInfo<ParamInfo>>() {
-                }.getType());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            if (resultInfo != null && resultInfo.getResult() != null
-                    && resultInfo.getResult().equals("0")) {
-                ParamInfo paramInfo = (ParamInfo) resultInfo.getBean();
-                application.setCaijiList(paramInfo.getCaiji());
-                application.setReasonList(paramInfo.getReason());
-                application.setProvsList(paramInfo.getProvs());
-                application.setStateList(paramInfo.getState());
-                application.setCanbaoList(paramInfo.getCanbao());
-            }
-        }
-    };
 
 
     Runnable GetTurinInRunnable=new Runnable() {
