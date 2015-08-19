@@ -55,7 +55,6 @@ public class TurnInReceiveDialogActivity extends Activity{
     @Override
     protected void onPause() {
         super.onPause();
-        TurnInActivity.fromDialog=true;
     }
 
     public void ComfirmClick(View view){
