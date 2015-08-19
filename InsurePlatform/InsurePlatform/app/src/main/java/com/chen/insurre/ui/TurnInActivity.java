@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -113,10 +112,10 @@ public class TurnInActivity extends Activity implements View.OnClickListener {
     protected void onResume() {
         super.onResume();
         if(viewFlipper!=null&&!fromDialog) {
-            fromDialog=false;
             viewFlipper.setDisplayedChild(0);
             loadDate(TRUN_IN);
         }
+        fromDialog=false;
     }
 
     private void initView() {
@@ -404,7 +403,6 @@ public class TurnInActivity extends Activity implements View.OnClickListener {
                 url = CommTools.getRequestUrl(mContext, R.string.trun_in_detail_url);
             }
             HashMap<String, String> hashParams = new HashMap<String, String>();
-            Log.e("e", PreferencesUtils.getString(mContext, Constant.SP_USER_REGKEY));
             hashParams.put("regkey", PreferencesUtils.getString(mContext, Constant.SP_USER_REGKEY));
             if (requestType == TRUN_IN_DETAIL) {
                 hashParams.put("cardno", cardno);
@@ -417,8 +415,6 @@ public class TurnInActivity extends Activity implements View.OnClickListener {
             try {
                 result = HttpHelper.doRequestForString(mContext, url,
                         HttpHelper.HTTP_GET, hashParams);
-                Log.d("Tag", result);
-                //resultInfo = new Gson().fromJson(result, ResultInfo.class);
             } catch (Exception e) {
                 e.printStackTrace();
             }

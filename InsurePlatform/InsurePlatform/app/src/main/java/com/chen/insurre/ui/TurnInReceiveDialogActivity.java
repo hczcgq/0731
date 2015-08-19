@@ -52,6 +52,12 @@ public class TurnInReceiveDialogActivity extends Activity{
         decribeTextView.setText("您是否确认接收"+name+"的转入");
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        TurnInActivity.fromDialog=true;
+    }
+
     public void ComfirmClick(View view){
         if (!NetworkUtil.networkIsAvailable(mContext)) {
             ToastUtil.showToastShort(this, "请检查网络连接状态。");

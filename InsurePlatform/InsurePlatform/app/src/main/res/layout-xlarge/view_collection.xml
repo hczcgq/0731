@@ -16,12 +16,14 @@
             android:id="@+id/IDCardEdittext"
             android:layout_width="0dp"
             android:layout_height="60dp"
-            android:background="@drawable/input_bg"
-            android:padding="5dp"
-            android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:text=""
-            android:textColor="#686868" />
+            android:background="@drawable/input_bg"
+            android:layout_marginRight="5dp"
+            android:padding="5dp"
+            android:inputType="text"
+            android:maxLength="18"
+            android:textColor="#686868"/>
 
         <Button
             android:layout_width="150dp"

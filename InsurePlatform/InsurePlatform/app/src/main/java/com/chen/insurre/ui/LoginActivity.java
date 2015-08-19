@@ -8,12 +8,12 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
 import com.chen.insurre.MyApplication;
 import com.chen.insurre.R;
 import com.chen.insurre.bean.LoginInfo;
@@ -30,6 +30,7 @@ import com.chen.insurre.util.ToastUtil;
 import com.chen.insurre.view.ValidateImageView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -243,7 +244,6 @@ public class LoginActivity extends Activity {
                     return;//返回到程序的被调用处
                 }
                 File fileDir=new File(getExternalFilesDir(null)+"/json");
-                Log.e("chen",fileDir.getAbsolutePath());
                 fileDir.mkdirs();
                 File file=new File(fileDir,"json.txt");
                 if(!file.exists()){
@@ -354,7 +354,6 @@ public class LoginActivity extends Activity {
 
             String url  = CommTools.getRequestUrl(mContext, R.string.trun_in_url);
             HashMap<String, String> hashParams = new HashMap<String, String>();
-            Log.e("e", PreferencesUtils.getString(mContext, Constant.SP_USER_REGKEY));
             hashParams.put("regkey", PreferencesUtils.getString(mContext, Constant.SP_USER_REGKEY));
             String result = null;
             try {
