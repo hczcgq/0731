@@ -94,7 +94,7 @@ public class TurnInActivity extends Activity implements View.OnClickListener {
 
     private boolean isLoadMore=false;
 
-    private int pagesize=10;
+    private int pagesize=15;
 
     private int offset=1;
 
@@ -195,6 +195,7 @@ public class TurnInActivity extends Activity implements View.OnClickListener {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                isLoadMore=false;
                 cardno = datas.get(position).getCardno();
                 name = datas.get(position).getName();
                 loadDate(TRUN_IN_DETAIL);
@@ -213,6 +214,10 @@ public class TurnInActivity extends Activity implements View.OnClickListener {
             viewLoadMore.setVisibility(View.GONE);
             mPullToRefreshLayout
                     .setRefreshMode(PullToRefreshLayout.PULL_NONE);
+        }else{
+            viewLoadMore.setVisibility(View.VISIBLE);
+            mPullToRefreshLayout
+                    .setRefreshMode(PullToRefreshLayout.PULL_DOWN);
         }
         if (datas == null) {
             datas = new ArrayList<TurnListItem>();
@@ -237,6 +242,9 @@ public class TurnInActivity extends Activity implements View.OnClickListener {
     }
 
     private void showNext(){
+        if (isLoadMore) {
+            return;
+        }
         viewFlipper.showNext();
     }
 
@@ -337,7 +345,6 @@ public class TurnInActivity extends Activity implements View.OnClickListener {
             CharSequence receiceMsg = Html.fromHtml("转入人员<font color=\"#FB1E27\">(未处理" + index + "人)</font>");
             TurnListNameTextView.setText(receiceMsg);
         }
-
     }
 
     /**
@@ -357,11 +364,6 @@ public class TurnInActivity extends Activity implements View.OnClickListener {
             TurnDetailNameTextView.setText(receiceMsg);
         }
     }
-
-
-
-
-
 
 
     private class TurnInTask extends AsyncTask<String, Void, String> {
@@ -408,7 +410,7 @@ public class TurnInActivity extends Activity implements View.OnClickListener {
                 hashParams.put("cardno", cardno);
             }
             if(requestType==TRUN_IN_RECEIVE||requestType==TRUN_IN_REJECT||requestType==TRUN_IN_UNDEAL){
-                hashParams.put("page", String.valueOf(offset));
+                hashParams.put("pageno", String.valueOf(offset));
                 hashParams.put("pagesize", String.valueOf(pagesize));
             }
             String result = null;

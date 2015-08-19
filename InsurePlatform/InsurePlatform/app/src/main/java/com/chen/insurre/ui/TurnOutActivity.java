@@ -89,7 +89,7 @@ public class TurnOutActivity extends Activity implements View.OnClickListener {
 
     private boolean isLoadMore = false; //是否下啦刷新
 
-    private int pagesize = 10;
+    private int pagesize = 15;
 
     private int offset = 1;
 
@@ -183,6 +183,7 @@ public class TurnOutActivity extends Activity implements View.OnClickListener {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                isLoadMore=false;
                 cardno = datas.get(position).getCardno();
                 loadDate(TRUN_OUT_DETAIL);
             }
@@ -200,6 +201,10 @@ public class TurnOutActivity extends Activity implements View.OnClickListener {
             viewLoadMore.setVisibility(View.GONE);
             mPullToRefreshLayout
                     .setRefreshMode(PullToRefreshLayout.PULL_NONE);
+        }else{
+            viewLoadMore.setVisibility(View.VISIBLE);
+            mPullToRefreshLayout
+                    .setRefreshMode(PullToRefreshLayout.PULL_DOWN);
         }
         if (datas == null) {
             datas = new ArrayList<TurnListItem>();
@@ -378,7 +383,7 @@ public class TurnOutActivity extends Activity implements View.OnClickListener {
                 hashParams.put("cardno", cardno);
             }
             if (requestType == TRUN_OUT_RECEIVE || requestType == TRUN_OUT_REJECT || requestType == TRUN_OUT_UNDEAL) {
-                hashParams.put("page", String.valueOf(offset));
+                hashParams.put("pageno", String.valueOf(offset));
                 hashParams.put("pagesize", String.valueOf(pagesize));
             }
             String result = null;

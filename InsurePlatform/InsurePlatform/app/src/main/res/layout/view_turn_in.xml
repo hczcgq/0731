@@ -186,14 +186,14 @@
                     android:layout_height="wrap_content" />
 
                 <include
-                    android:id="@+id/DetailDialogView"
-                    layout="@layout/view_turn_in_detail_global_receive"
+                    android:id="@+id/DetailRejectView"
+                    layout="@layout/view_turn_in_detail_global_reject"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
                 <include
-                    android:id="@+id/DetailRejectView"
-                    layout="@layout/view_turn_in_detail_global_reject"
+                    android:id="@+id/DetailDialogView"
+                    layout="@layout/view_turn_in_detail_global_receive"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </LinearLayout>

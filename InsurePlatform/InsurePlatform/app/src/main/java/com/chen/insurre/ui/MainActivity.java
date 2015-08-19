@@ -14,6 +14,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.StrictMode;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
@@ -310,6 +311,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
     TimerTask task = new TimerTask() {
         @Override
         public void run() {
+            Log.e("----","------------------1111111111111");
             String url = CommTools.getRequestUrl(mContext, R.string.trun_in_url);
             HashMap<String, String> hashParams = new HashMap<String, String>();
             hashParams.put("regkey", PreferencesUtils.getString(mContext, Constant.SP_USER_REGKEY));
