@@ -25,70 +25,87 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:background="@android:color/white"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:padding="10dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center|left"
-            android:padding="10dp"
-            android:text="当前常住地："
-            android:textColor="@android:color/black"
-            android:textSize="@dimen/common_text_size" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_gravity="center"
-            android:gravity="center|left"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
             android:orientation="horizontal">
 
-            <Spinner
-                android:id="@+id/WCBprovSpinner"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginRight="5dp"
-                android:layout_weight="1"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:gravity="center|left"
-                android:spinnerMode="dropdown" />
+                android:padding="10dp"
+                android:text="当前常住地："
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/common_text_size" />
 
-            <Spinner
-                android:id="@+id/WCBcitySpinner"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_height="48dp"
+                android:layout_gravity="center"
                 android:gravity="center|left"
-                android:spinnerMode="dropdown" />
+                android:orientation="horizontal">
 
-            <Spinner
-                android:id="@+id/WCBtownSpinner"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center|left"
-                android:spinnerMode="dropdown" />
+                <Spinner
+                    android:id="@+id/WCBprovSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:gravity="center|left"
+                    android:spinnerMode="dropdown" />
+
+                <Spinner
+                    android:id="@+id/WCBcitySpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center|left"
+                    android:spinnerMode="dropdown" />
+
+                <Spinner
+                    android:id="@+id/WCBtownSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center|left"
+                    android:spinnerMode="dropdown" />
+            </LinearLayout>
         </LinearLayout>
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center|left"
-            android:padding="10dp"
-            android:text="地址："
-            android:textColor="@android:color/black"
-            android:textSize="@dimen/common_text_size" />
+            android:background="@android:color/white"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/WCBaddressEditText"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:gravity="center|left"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:textColor="@android:color/black"
-            android:textSize="@dimen/common_text_size" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center|left"
+                android:padding="10dp"
+                android:text="地址："
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/common_text_size" />
+
+            <EditText
+                android:id="@+id/WCBaddressEditText"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/input_bg"
+                android:gravity="center|left"
+                android:padding="5dp"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/common_text_size" />
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -188,7 +205,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
             <TextView
@@ -251,7 +268,7 @@
             <EditText
                 android:id="@+id/WCBorgAddrEditText"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="60dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/input_bg"

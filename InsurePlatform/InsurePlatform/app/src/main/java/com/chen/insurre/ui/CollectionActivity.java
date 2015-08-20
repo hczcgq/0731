@@ -820,9 +820,7 @@ public class CollectionActivity extends Activity {
             saveButton.setEnabled(true);
             resetButton.setEnabled(true);
         }
-
     }
-
 
     private void showWaidiCanbao(WaidiCanbaoInfo waidiCanbaoInfo) {
 
@@ -854,7 +852,7 @@ public class CollectionActivity extends Activity {
 
     private void showWeicanbao(WeiCanbaoInfo weiCanbaoInfo) {
         WCBorgNameEditText.setText(weiCanbaoInfo.getOrgName());
-        WCBaddressEditText.setText(weiCanbaoInfo.getOrgAddr());
+        WCBaddressEditText.setText(weiCanbaoInfo.getAddr());
         WCBorgAddrEditText.setText(weiCanbaoInfo.getOrgAddr());
 
         if (weiCanbaoInfo.getCanbao().equals("Y")) {

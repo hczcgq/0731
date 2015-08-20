@@ -8,7 +8,7 @@ public class WeiCanbaoInfo {
     private String prov;//当前常住地所在省代码
     private String city;//所在市代码
     private String town;//所在区县代码
-//    private String addr; //常住地地址
+    private String addr; //常住地地址
     private String status;//当前状态： 1  学龄前 2  在校（园）学生 3 单位就业 4   灵活就业 5 无业 6    务农 7 参军 8  服刑 9 老年无待遇
     private String reason;//目前未参保原因代码： 1 无意愿参保 2 无缴费能力 3 政策不了解 4 单位未参保 5 学校（园）未参保 6 不符合参保条件
     private String orgName;//工作或学校单位名称
@@ -40,6 +40,14 @@ public class WeiCanbaoInfo {
 
     public void setTown(String town) {
         this.town = town;
+    }
+
+    public String getAddr() {
+        return addr;
+    }
+
+    public void setAddr(String addr) {
+        this.addr = addr;
     }
 
     public String getStatus() {
