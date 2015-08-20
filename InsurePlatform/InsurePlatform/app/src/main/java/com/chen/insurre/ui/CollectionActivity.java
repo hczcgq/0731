@@ -192,6 +192,9 @@ public class CollectionActivity extends Activity {
                     return;
                 }
                 cbstatus = caijiList.get(position).getId();
+                if(canbaoList!=null&&canbaoList.size()>0) {
+                    setSpinnerData(CBSpinner, canbaoList.get(0).getId());
+                }
                 if (cbstatus.equals("1")) {
                     if (cbstate.equals("3")) {
                         weicanboaView.setVisibility(View.GONE);
@@ -200,8 +203,8 @@ public class CollectionActivity extends Activity {
                         weicanboaView.setVisibility(View.VISIBLE);
                         waidicanbaoView.setVisibility(View.GONE);
                     }
-
                 } else {
+                    setSpinnerData(CBSpinner, "");
                     weicanboaView.setVisibility(View.GONE);
                     waidicanbaoView.setVisibility(View.GONE);
                 }
@@ -220,11 +223,16 @@ public class CollectionActivity extends Activity {
                     return;
                 }
                 cbstate = canbaoList.get(position).getId();
-                if (canbaoList.get(position).getName().contains("在外地参保")) {
+                if (cbstatus.equals("1")) {
+                    if (canbaoList.get(position).getName().contains("在外地参保")) {
+                        weicanboaView.setVisibility(View.GONE);
+                        waidicanbaoView.setVisibility(View.VISIBLE);
+                    } else {
+                        weicanboaView.setVisibility(View.VISIBLE);
+                        waidicanbaoView.setVisibility(View.GONE);
+                    }
+                }else{
                     weicanboaView.setVisibility(View.GONE);
-                    waidicanbaoView.setVisibility(View.VISIBLE);
-                } else {
-                    weicanboaView.setVisibility(View.VISIBLE);
                     waidicanbaoView.setVisibility(View.GONE);
                 }
             }
@@ -311,6 +319,20 @@ public class CollectionActivity extends Activity {
                         orgProv = "320000";
                         orgCity = "320500";
                         orgTown = "";
+
+                    } else {
+                        orgProv = "";
+                        orgCity = "";
+                        orgTown = "";
+                    }
+                    setSpinnerData(WCBorgProvSpinner, orgProv);
+                    setSpinnerData(WCBorgCitySpinner, orgCity);
+                    setSpinnerData(WCBorgTownSpinner, orgTown);
+                }else{
+                    if (status.equals("2") || status.equals("3")) {
+                        orgProv = tempCollectionInfo.getWeiCanbaoInfo().getOrgProv();
+                        orgCity = tempCollectionInfo.getWeiCanbaoInfo().getOrgCity();
+                        orgTown = tempCollectionInfo.getWeiCanbaoInfo().getOrgTown();
 
                     } else {
                         orgProv = "";
@@ -486,107 +508,99 @@ public class CollectionActivity extends Activity {
         String jhtelephone = JHRMobileEditText.getText().toString();
         String telephone = MobileEditText.getText().toString();
         String comment = DescribeEditText.getText().toString();
-        if (cbstate.equals("3")) {
-            String zzJf, ltDy, jnJf, jnDy, qtJf, qtDy, zgYb, jnYb, qtYb;
-            if (WDCBzzJfCheckBox.isChecked()) {
-                zzJf = "1";
-            } else {
-                zzJf = "0";
-            }
-            if (WDCBltDyCheckBox.isChecked()) {
-                ltDy = "1";
-            } else {
-                ltDy = "0";
-            }
-            if (WDCBjnJfCheckBox.isChecked()) {
-                jnJf = "1";
-            } else {
-                jnJf = "0";
-            }
-            if (WDCBjnDyCheckBox.isChecked()) {
-                jnDy = "1";
-            } else {
-                jnDy = "0";
-            }
-            if (WDCBqtJfCheckBox.isChecked()) {
-                qtJf = "1";
-            } else {
-                qtJf = "0";
-            }
-            if (WDCBqtDyCheckBox.isChecked()) {
-                qtDy = "1";
-            } else {
-                qtDy = "0";
-            }
-            if (WDCBzgYbCheckBox.isChecked()) {
-                zgYb = "1";
-            } else {
-                zgYb = "0";
-            }
-            if (WDCBjnYbCheckBox.isChecked()) {
-                jnYb = "1";
-            } else {
-                jnYb = "0";
-            }
+        hashParams.put("cardno", cardno);
+        hashParams.put("name", name);
+        hashParams.put("jhname", jhname);
+        hashParams.put("jhcardno", jhcardno);
+        hashParams.put("jhtelephone", jhtelephone);
+        hashParams.put("cbstatus", cbstatus);
+        hashParams.put("cbstate", cbstate);
+        hashParams.put("telephone", telephone);
+        hashParams.put("comment", comment);
+        if (cbstatus.equals("1")) {
+            if (cbstate.equals("3")) {
+                String zzJf, ltDy, jnJf, jnDy, qtJf, qtDy, zgYb, jnYb, qtYb;
+                if (WDCBzzJfCheckBox.isChecked()) {
+                    zzJf = "1";
+                } else {
+                    zzJf = "0";
+                }
+                if (WDCBltDyCheckBox.isChecked()) {
+                    ltDy = "1";
+                } else {
+                    ltDy = "0";
+                }
+                if (WDCBjnJfCheckBox.isChecked()) {
+                    jnJf = "1";
+                } else {
+                    jnJf = "0";
+                }
+                if (WDCBjnDyCheckBox.isChecked()) {
+                    jnDy = "1";
+                } else {
+                    jnDy = "0";
+                }
+                if (WDCBqtJfCheckBox.isChecked()) {
+                    qtJf = "1";
+                } else {
+                    qtJf = "0";
+                }
+                if (WDCBqtDyCheckBox.isChecked()) {
+                    qtDy = "1";
+                } else {
+                    qtDy = "0";
+                }
+                if (WDCBzgYbCheckBox.isChecked()) {
+                    zgYb = "1";
+                } else {
+                    zgYb = "0";
+                }
+                if (WDCBjnYbCheckBox.isChecked()) {
+                    jnYb = "1";
+                } else {
+                    jnYb = "0";
+                }
 
-            if (WDCBqtYbCheckBox.isChecked()) {
-                qtYb = "1";
-            } else {
-                qtYb = "0";
-            }
+                if (WDCBqtYbCheckBox.isChecked()) {
+                    qtYb = "1";
+                } else {
+                    qtYb = "0";
+                }
 
-            hashParams.put("cardno", cardno);
-            hashParams.put("name", name);
-            hashParams.put("jhname", jhname);
-            hashParams.put("jhcardno", jhcardno);
-            hashParams.put("jhtelephone", jhtelephone);
-            hashParams.put("cbstatus", cbstatus);
-            hashParams.put("cbstate", cbstate);
-            hashParams.put("telephone", telephone);
-            hashParams.put("comment", comment);
-            hashParams.put("prov", wdcbPro);
-            hashParams.put("city", WdcbCity);
-            hashParams.put("zzJf", zzJf);
-            hashParams.put("ltDy", ltDy);
-            hashParams.put("jnJf", jnJf);
-            hashParams.put("jnDy", jnDy);
-            hashParams.put("qtJf", qtJf);
-            hashParams.put("qtDy", qtDy);
-            hashParams.put("zgYb", zgYb);
-            hashParams.put("jnYb", jnYb);
-            hashParams.put("qtYb", qtYb);
-        } else {
-            String addr = WCBaddressEditText.getText().toString();
-            String orgName = WCBorgNameEditText.getText().toString();
-            String orgAddr = WCBorgAddrEditText.getText().toString();
-            String canbao;
-            if (WCBCheckBox.isChecked()) {
-                canbao = "Y";
+                hashParams.put("prov", wdcbPro);
+                hashParams.put("city", WdcbCity);
+                hashParams.put("zzJf", zzJf);
+                hashParams.put("ltDy", ltDy);
+                hashParams.put("jnJf", jnJf);
+                hashParams.put("jnDy", jnDy);
+                hashParams.put("qtJf", qtJf);
+                hashParams.put("qtDy", qtDy);
+                hashParams.put("zgYb", zgYb);
+                hashParams.put("jnYb", jnYb);
+                hashParams.put("qtYb", qtYb);
             } else {
-                canbao = "N";
+                String addr = WCBaddressEditText.getText().toString();
+                String orgName = WCBorgNameEditText.getText().toString();
+                String orgAddr = WCBorgAddrEditText.getText().toString();
+                String canbao;
+                if (WCBCheckBox.isChecked()) {
+                    canbao = "Y";
+                } else {
+                    canbao = "N";
+                }
+                hashParams.put("prov", prov);
+                hashParams.put("city", city);
+                hashParams.put("town", town);
+                hashParams.put("addr", addr);
+                hashParams.put("status", status);
+                hashParams.put("reason", reason);
+                hashParams.put("orgName", orgName);
+                hashParams.put("orgProv", orgProv);
+                hashParams.put("orgCity", orgCity);
+                hashParams.put("orgTown", orgTown);
+                hashParams.put("orgAddr", orgAddr);
+                hashParams.put("canbao", canbao);
             }
-
-            hashParams.put("cardno", cardno);
-            hashParams.put("name", name);
-            hashParams.put("jhname", jhname);
-            hashParams.put("jhcardno", jhcardno);
-            hashParams.put("jhtelephone", jhtelephone);
-            hashParams.put("cbstatus", cbstatus);
-            hashParams.put("cbstate", cbstate);
-            hashParams.put("telephone", telephone);
-            hashParams.put("comment", comment);
-            hashParams.put("prov", prov);
-            hashParams.put("city", city);
-            hashParams.put("town", town);
-            hashParams.put("addr", addr);
-            hashParams.put("status", status);
-            hashParams.put("reason", reason);
-            hashParams.put("orgName", orgName);
-            hashParams.put("orgProv", orgProv);
-            hashParams.put("orgCity", orgCity);
-            hashParams.put("orgTown", orgTown);
-            hashParams.put("orgAddr", orgAddr);
-            hashParams.put("canbao", canbao);
         }
 
         if (!NetworkUtil.networkIsAvailable(mContext)) {
@@ -740,13 +754,18 @@ public class CollectionActivity extends Activity {
         JHRNameEditText.setText(canbaoInfo.getJhname());
         JHRIDCardEditText.setText(canbaoInfo.getJhcardno());
         JHRMobileEditText.setText(canbaoInfo.getJhtelephone());
-        setSpinnerData(CJSpinner, canbaoInfo.getCbstatus());
-        setSpinnerData(CBSpinner, canbaoInfo.getCbstate());
         MobileEditText.setText(canbaoInfo.getTelephone());
         DescribeEditText.setText(canbaoInfo.getComment());
 
         cbstate = canbaoInfo.getCbstate();
         cbstatus = canbaoInfo.getCbstatus();
+        setSpinnerData(CJSpinner, cbstate);
+        if(cbstate.equals("1")){
+            setSpinnerData(CBSpinner, cbstatus);
+        }else{
+            setSpinnerData(CBSpinner, "");
+        }
+
 
         //外地参保
         WaidiCanbaoInfo waidiCanbaoInfo = info.getWaidiCanbaoInfo();
@@ -770,7 +789,6 @@ public class CollectionActivity extends Activity {
             weicanboaView.setVisibility(View.GONE);
             waidicanbaoView.setVisibility(View.GONE);
         }
-
 
         if (info.getCanEdit().equals("0")) {
             JHRNameEditText.setEnabled(false);
@@ -961,6 +979,13 @@ public class CollectionActivity extends Activity {
             if (canbaoList == null || canbaoList.size() == 0) {
                 return;
             }
+            if(TextUtils.isEmpty(text)){
+                if(isListNUll("item",canbaoList)) {
+                    canbaoList.add(new ItemInfo("-1", ""));
+                }
+                spinner.setSelection(canbaoList.size()-1);
+                return;
+            }
             for (int i = 0; i < canbaoList.size(); i++) {
                 String item = canbaoList.get(i).getId();
                 if (item.equals(text)) {
@@ -1022,7 +1047,9 @@ public class CollectionActivity extends Activity {
                 return;
             }
             if (TextUtils.isEmpty(text)) {
-                townList.add(new TownInfo("-1", ""));
+                if(isListNUll("town",townList)) {
+                    townList.add(new TownInfo("-1", ""));
+                }
                 spinner.setSelection(townList.size() - 1);
                 return;
             }
@@ -1039,7 +1066,9 @@ public class CollectionActivity extends Activity {
             }
 
             if (TextUtils.isEmpty(text)) {
-                OrgprovsList.add(new ProvinceInfo("-1", ""));
+                if(isListNUll("pro",OrgprovsList)) {
+                    OrgprovsList.add(new ProvinceInfo("-1", ""));
+                }
                 spinner.setSelection(OrgprovsList.size() - 1);
                 return;
             }
@@ -1056,7 +1085,9 @@ public class CollectionActivity extends Activity {
                 return;
             }
             if (TextUtils.isEmpty(text)) {
-                OrgcityList.add(new CityInfo("-1", ""));
+                if(isListNUll("city",OrgcityList)) {
+                    OrgcityList.add(new CityInfo("-1", ""));
+                }
                 spinner.setSelection(OrgcityList.size() - 1);
                 return;
             }
@@ -1074,7 +1105,9 @@ public class CollectionActivity extends Activity {
             }
 
             if (TextUtils.isEmpty(text)) {
-                OrgtownList.add(new TownInfo("-1", ""));
+                if(isListNUll("town",OrgtownList)) {
+                    OrgtownList.add(new TownInfo("-1", ""));
+                }
                 spinner.setSelection(OrgtownList.size() - 1);
                 return;
             }
@@ -1109,4 +1142,45 @@ public class CollectionActivity extends Activity {
             }
         }
     }
+
+    private boolean isListNUll(String str ,List<?> orgtownList) {
+        int len=orgtownList.size();
+        boolean isnull=true;
+        if(str.equals("pro")){
+            for(int i=0;i<len;i++){
+                ProvinceInfo info=(ProvinceInfo)orgtownList.get(i);
+                if(info.getId().equals("-1")){
+                    isnull=false;
+                    return  isnull;
+                }
+            }
+        }else if(str.equals("city")){
+            for(int i=0;i<len;i++){
+                CityInfo info=(CityInfo)orgtownList.get(i);
+                if(info.getId().equals("-1")){
+                    isnull=false;
+                    return  isnull;
+                }
+            }
+        }else if(str.equals("town")){
+            for(int i=0;i<len;i++){
+                TownInfo info=(TownInfo)orgtownList.get(i);
+                if(info.getId().equals("-1")){
+                    isnull=false;
+                    return  isnull;
+                }
+            }
+        }else if(str.equals("item")){
+            for(int i=0;i<len;i++){
+                ItemInfo info=(ItemInfo)orgtownList.get(i);
+                if(info.getId().equals("-1")){
+                    isnull=false;
+                    return  isnull;
+                }
+            }
+        }
+        return isnull;
+    }
+
+
 }
