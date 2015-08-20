@@ -34,7 +34,7 @@
                     android:textSize="@dimen/common_text_size" />
 
                 <TextView
-                    android:id="@+id/RejectTimeTextView"
+                    android:id="@+id/TurnInRejectTimeTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
@@ -60,7 +60,7 @@
                     android:textSize="@dimen/common_text_size" />
 
                 <TextView
-                    android:id="@+id/RejectReasonTextView"
+                    android:id="@+id/TurnInRejectReasonTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:singleLine="true"

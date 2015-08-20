@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.EditText;
@@ -64,19 +65,37 @@ public class TurnInRejectDialogActivity extends Activity{
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if(checkedId==R.id.RadioButton1){
-                    reason="非本区人员";
+                    reason="0";
                 }else if(checkedId==R.id.RadioButton2){
-                    reason="查无此人";
+                    reason="1";
                 }else if(checkedId==R.id.RadioButton3){
-                    reason=OtherEdittext.getText().toString();
+                    reason="2";
                 }
             }
         });
     }
 
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
 
     public void ComfirmClick(View view){
+
+        if(reason.equals("0")){
+            reason="非本区人员";
+        }else if(reason.equals("1")){
+            reason="查无此人";
+        }else if(reason.equals("2")){
+            reason=OtherEdittext.getText().toString();
+            if(TextUtils.isEmpty(reason)){
+                reason="2";
+                ToastUtil.showToastShort(this,"请输入其他原因");
+                return;
+            }
+        }
+
 
         if (!NetworkUtil.networkIsAvailable(mContext)) {
             ToastUtil.showToastShort(this, "请检查网络连接状态。");

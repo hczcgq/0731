@@ -7,7 +7,6 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
@@ -976,9 +975,7 @@ public class CollectionActivity extends Activity {
             }
             for (int i = 0; i < cityList.size(); i++) {
                 String item = cityList.get(i).getId();
-                Log.e("----",item+"--"+text);
                 if (item.equals(text)) {
-                    Log.e("----",WdcbprovsList.get(i).getName());
                     spinner.setSelection(i);
                     townList = cityList.get(i).getChild();
                     break;
