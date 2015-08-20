@@ -1,48 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:background="@android:color/white"
     android:orientation="vertical">
 
-
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="48dp">
+        android:layout_width="fill_parent"
+        android:layout_height="48.0dip">
 
         <TextView
+            android:id="@+id/NameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/login_text_size"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="10.0dip"
             android:textColor="@android:color/black"
-            android:id="@+id/NameTextView" />
+            android:textSize="@dimen/login_text_size" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="退出登录"
-            android:onClick="LogOut"
-            android:textColor="@android:color/black"
-            android:textSize="@dimen/login_text_size"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:layout_centerVertical="true" />
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10.0dip"
+            android:onClick="LogOut"
+            android:padding="10.0dip"
+            android:text="退出登录"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/login_text_size" />
     </RelativeLayout>
 
     <TabHost
         android:id="@android:id/tabhost"
         android:layout_width="fill_parent"
-        android:layout_marginTop="10dp"
-        android:layout_height="fill_parent">
+        android:layout_height="fill_parent"
+        android:layout_marginTop="10.0dip">
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:orientation="vertical">
-
 
             <TabWidget
                 android:id="@android:id/tabs"
@@ -53,68 +52,69 @@
 
             <LinearLayout
                 android:layout_width="fill_parent"
-                android:layout_height="48dp"
+                android:layout_height="48.0dip"
                 android:layout_gravity="top"
                 android:background="@drawable/main_corners_bg"
                 android:gravity="center_vertical"
-                android:padding="1dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="1.0dip">
 
                 <TextView
                     android:id="@+id/CollectionTextView"
-                    android:layout_width="match_parent"
-                    android:textSize="@dimen/login_text_size"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1.0"
+                    android:gravity="center"
                     android:text="走访对象采集"
                     android:textColor="@android:color/black"
-                    android:gravity="center"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="1" />
+                    android:textSize="@dimen/login_text_size" />
 
                 <TextView
-                    android:layout_width="1px"
+                    android:layout_width="1.0px"
                     android:layout_height="fill_parent"
-                    android:background="#aeaeae" />
+                    android:background="#ffaeaeae" />
 
                 <RelativeLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1.0">
 
                     <TextView
                         android:id="@+id/TurnInTextView"
-                        android:layout_width="match_parent"
-                        android:textSize="@dimen/login_text_size"
-                        android:text="走访对象转入"
-                        android:textColor="@android:color/black"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:layout_height="fill_parent" />
+                        android:text="走访对象转入"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/login_text_size" />
+
                     <ImageView
                         android:id="@+id/TurnInTagImageView"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:padding="3dp"
-                        android:visibility="gone"
+                        android:layout_width="20.0dip"
+                        android:layout_height="20.0dip"
                         android:layout_alignParentRight="true"
                         android:layout_alignParentTop="true"
-                        android:src="@mipmap/u13"/>
+                        android:padding="3.0dip"
+                        android:src="@mipmap/u13"
+                        android:visibility="gone" />
                 </RelativeLayout>
 
                 <TextView
-                    android:layout_width="1px"
+                    android:layout_width="1.0px"
                     android:layout_height="fill_parent"
-                    android:background="#aeaeae" />
+                    android:background="#ffaeaeae" />
 
                 <TextView
                     android:id="@+id/TurnOutTextView"
-                    android:layout_width="match_parent"
-                    android:textSize="@dimen/login_text_size"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1.0"
+                    android:gravity="center"
                     android:text="走访对象转出"
                     android:textColor="@android:color/black"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="1" />
+                    android:textSize="@dimen/login_text_size" />
             </LinearLayout>
 
             <FrameLayout
@@ -124,6 +124,4 @@
                 android:layout_weight="1.0" />
         </LinearLayout>
     </TabHost>
-
-
 </LinearLayout>

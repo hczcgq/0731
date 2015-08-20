@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/canbaoLinearLayout"
-    android:layout_width="match_parent"
+    android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
+    android:layout_margin="10.0dip"
     android:background="@drawable/content_corners_bg"
     android:orientation="vertical"
-    android:padding="10dp"
+    android:padding="10.0dip"
     android:visibility="visible">
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:drawableLeft="@mipmap/u43"
-        android:drawablePadding="5dp"
+        android:drawablePadding="5.0dip"
         android:gravity="center|left"
         android:text="社保采集信息"
         android:textColor="@android:color/black"
@@ -23,32 +21,32 @@
         android:textStyle="bold" />
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="10.0dip"
         android:background="@android:color/white"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:padding="10.0dip">
 
         <TextView
-            android:layout_width="100dp"
+            android:layout_width="100.0dip"
             android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
+            android:layout_marginRight="5.0dip"
             android:gravity="center|right"
             android:text="监护人信息"
             android:textColor="@android:color/black"
             android:textSize="@dimen/common_text_size" />
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center|left"
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="100dp"
+                android:layout_width="100.0dip"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
+                android:layout_marginRight="5.0dip"
                 android:gravity="center|right"
                 android:text="姓名："
                 android:textColor="@android:color/black"
@@ -57,24 +55,24 @@
             <EditText
                 android:id="@+id/JHRNameEditText"
                 android:layout_width="fill_parent"
-                android:layout_height="40dp"
+                android:layout_height="40.0dip"
                 android:background="@drawable/input_bg"
-                android:padding="5dp"
+                android:padding="5.0dip"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/common_text_size" />
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="5.0dip"
             android:gravity="center|left"
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="100dp"
+                android:layout_width="100.0dip"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
+                android:layout_marginRight="5.0dip"
                 android:gravity="center|right"
                 android:text="身份证号："
                 android:textColor="@android:color/black"
@@ -83,25 +81,25 @@
             <EditText
                 android:id="@+id/JHRIDCardEditText"
                 android:layout_width="fill_parent"
-                android:layout_height="40dp"
+                android:layout_height="40.0dip"
                 android:background="@drawable/input_bg"
                 android:maxLength="18"
-                android:padding="5dp"
+                android:padding="5.0dip"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/common_text_size" />
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="5.0dip"
             android:gravity="center|left"
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="100dp"
+                android:layout_width="100.0dip"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
+                android:layout_marginRight="5.0dip"
                 android:gravity="center|right"
                 android:text="手机："
                 android:textColor="@android:color/black"
@@ -110,34 +108,34 @@
             <EditText
                 android:id="@+id/JHRMobileEditText"
                 android:layout_width="fill_parent"
-                android:layout_height="40dp"
+                android:layout_height="40.0dip"
                 android:background="@drawable/input_bg"
                 android:inputType="number"
                 android:maxLength="11"
-                android:padding="5dp"
+                android:padding="5.0dip"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/common_text_size" />
         </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="10.0dip"
         android:background="@android:color/white"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:padding="10.0dip">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_width="fill_parent"
+            android:layout_height="48.0dip"
             android:gravity="center|left"
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="100dp"
+                android:layout_width="100.0dip"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
+                android:layout_marginRight="5.0dip"
                 android:gravity="center|right"
                 android:text="采集状态："
                 android:textColor="@android:color/black"
@@ -154,15 +152,15 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_width="fill_parent"
+            android:layout_height="48.0dip"
             android:gravity="center|left"
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="100dp"
+                android:layout_width="100.0dip"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
+                android:layout_marginRight="5.0dip"
                 android:gravity="center|right"
                 android:text="参保状态："
                 android:textColor="@android:color/black"
@@ -179,15 +177,15 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center|left"
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="100dp"
+                android:layout_width="100.0dip"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
+                android:layout_marginRight="5.0dip"
                 android:gravity="center|right"
                 android:text="手机："
                 android:textColor="@android:color/black"
@@ -196,11 +194,11 @@
             <EditText
                 android:id="@+id/MobileEditText"
                 android:layout_width="fill_parent"
-                android:layout_height="40dp"
+                android:layout_height="40.0dip"
                 android:background="@drawable/input_bg"
                 android:inputType="number"
                 android:maxLength="11"
-                android:padding="5dp"
+                android:padding="5.0dip"
                 android:singleLine="true"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/common_text_size" />
@@ -209,8 +207,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center|left"
             android:layout_marginTop="10dp"
+            android:gravity="center|left"
             android:orientation="horizontal">
 
             <TextView
@@ -227,7 +225,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/input_bg"
-                android:inputType="number"
+                android:inputType="text"
                 android:minHeight="40dp"
                 android:padding="5dp"
                 android:textColor="@android:color/black"

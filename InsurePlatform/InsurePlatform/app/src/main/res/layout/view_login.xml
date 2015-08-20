@@ -1,146 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="80dp"
-        android:paddingBottom="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="20.0dip"
+        android:layout_marginRight="20.0dip"
+        android:layout_marginTop="80.0dip"
         android:background="@drawable/login_corners_bg"
         android:orientation="vertical"
-        android:layout_centerHorizontal="true">
+        android:paddingBottom="20.0dip">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_width="fill_parent"
+            android:layout_height="48.0dip"
+            android:background="@mipmap/u7"
+            android:gravity="center"
             android:text="全民参保采集平台"
             android:textColor="@android:color/white"
-            android:gravity="center"
             android:textSize="@dimen/header_size"
-            android:textStyle="bold"
-            android:background="@mipmap/u7"/>
+            android:textStyle="bold" />
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="48.0dip"
             android:layout_gravity="center"
+            android:layout_marginTop="20.0dip"
             android:gravity="center"
-            android:layout_marginTop="20dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp">
+            android:orientation="horizontal"
+            android:paddingLeft="10.0dip"
+            android:paddingRight="10.0dip">
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="用户名："
+                android:layout_height="fill_parent"
                 android:gravity="center"
-                android:textSize="@dimen/login_text_size"
-                android:textColor="@android:color/black" />
-            <!--zkc-->
+                android:text="用户名："
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/login_text_size" />
+
             <EditText
                 android:id="@+id/UsernameEditext"
                 android:layout_width="fill_parent"
-                android:textColor="#686868"
-                android:text=""
+                android:layout_height="fill_parent"
+                android:background="@drawable/input_bg"
                 android:inputType="text"
                 android:maxLength="8"
-                android:padding="5dp"
-                android:background="@drawable/input_bg"
-                android:layout_height="match_parent" />
+                android:padding="5.0dip"
+                android:text=""
+                android:textColor="#ff686868" />
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="48.0dip"
             android:layout_gravity="center"
+            android:layout_marginTop="5.0dip"
             android:gravity="center"
-            android:layout_marginTop="5dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp">
+            android:orientation="horizontal"
+            android:paddingLeft="10.0dip"
+            android:paddingRight="10.0dip">
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="密    码："
-                android:textSize="@dimen/login_text_size"
+                android:layout_height="fill_parent"
                 android:gravity="center"
-                android:textColor="@android:color/black" />
+                android:text="密    码："
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/login_text_size" />
 
-            <!--1-->
             <EditText
                 android:id="@+id/PasswordEditext"
                 android:layout_width="fill_parent"
-                android:text=""
+                android:layout_height="fill_parent"
+                android:background="@drawable/input_bg"
                 android:inputType="textPassword"
                 android:maxLength="6"
-                android:textColor="#686868"
-                android:padding="5dp"
-                android:background="@drawable/input_bg"
-                android:layout_height="match_parent" />
+                android:padding="5.0dip"
+                android:text=""
+                android:textColor="#ff686868" />
         </LinearLayout>
 
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="48.0dip"
             android:layout_gravity="center"
+            android:layout_marginTop="5.0dip"
             android:gravity="center"
-            android:layout_marginTop="5dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp">
+            android:orientation="horizontal"
+            android:paddingLeft="10.0dip"
+            android:paddingRight="10.0dip">
 
             <TextView
                 android:id="@+id/yzm"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="验证码："
-                android:gravity="center"
-                android:layout_centerVertical="true"
+                android:layout_height="fill_parent"
                 android:layout_alignParentLeft="true"
-                android:textSize="@dimen/login_text_size"
-                android:textColor="@android:color/black" />
-
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="验证码："
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/login_text_size" />
 
             <LinearLayout
-                android:layout_alignParentRight="true"
                 android:id="@+id/VerifyLayout"
-                android:layout_width="110dp"
+                android:layout_width="110.0dip"
+                android:layout_height="48.0dip"
+                android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_height="48dp"
-                android:gravity="center"
                 android:layout_gravity="center"
+                android:gravity="center"
                 android:orientation="horizontal" />
 
             <EditText
                 android:id="@+id/VerifyEditText"
                 android:layout_width="fill_parent"
+                android:layout_height="48.0dip"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
-                android:padding="5dp"
-                android:background="@drawable/input_bg"
-                android:layout_height="48dp"
-                android:layout_toRightOf="@+id/yzm"
+                android:layout_marginRight="10.0dip"
                 android:layout_toLeftOf="@+id/VerifyLayout"
-                android:textColor="#686868" />
+                android:layout_toRightOf="@+id/yzm"
+                android:background="@drawable/input_bg"
+                android:padding="5.0dip"
+                android:textColor="#ff686868" />
         </RelativeLayout>
 
         <Button
-            android:layout_width="150dp"
-            android:layout_height="48dp"
-            android:gravity="center"
-            android:layout_marginTop="20dp"
+            android:layout_width="150.0dip"
+            android:layout_height="48.0dip"
             android:layout_gravity="center"
-            android:text="登录"
+            android:layout_marginTop="20.0dip"
+            android:gravity="center"
             android:onClick="Login"
-            android:textSize="@dimen/button_text_size"/>
-
+            android:text="登录"
+            android:textSize="@dimen/button_text_size" />
     </LinearLayout>
-
 </RelativeLayout>

@@ -1,27 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
 <ViewFlipper xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/viewFlipper"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:flipInterval="1000"
     android:persistentDrawingCache="animation">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:background="@android:color/white"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/UndealTextview"
             android:layout_width="fill_parent"
-            android:layout_height="60dp"
-            android:layout_margin="10dp"
+            android:layout_height="60.0dip"
+            android:layout_margin="10.0dip"
             android:background="@drawable/content_corners_bg"
             android:drawableLeft="@mipmap/u43"
-            android:drawablePadding="5dp"
+            android:drawablePadding="5.0dip"
             android:drawableRight="@mipmap/u32"
             android:gravity="center|left"
-            android:padding="10dp"
+            android:padding="10.0dip"
             android:text="转入人员"
             android:textColor="@android:color/black"
             android:textSize="@dimen/login_text_size" />
@@ -29,14 +30,14 @@
         <TextView
             android:id="@+id/ReceiveTextview"
             android:layout_width="fill_parent"
-            android:layout_height="60dp"
-            android:layout_margin="10dp"
+            android:layout_height="60.0dip"
+            android:layout_margin="10.0dip"
             android:background="@drawable/content_corners_bg"
             android:drawableLeft="@mipmap/u43"
-            android:drawablePadding="5dp"
+            android:drawablePadding="5.0dip"
             android:drawableRight="@mipmap/u32"
             android:gravity="center|left"
-            android:padding="10dp"
+            android:padding="10.0dip"
             android:text="转入人员"
             android:textColor="@android:color/black"
             android:textSize="@dimen/login_text_size" />
@@ -44,29 +45,29 @@
         <TextView
             android:id="@+id/RejectTextview"
             android:layout_width="fill_parent"
-            android:layout_height="60dp"
-            android:layout_margin="10dp"
+            android:layout_height="60.0dip"
+            android:layout_margin="10.0dip"
             android:background="@drawable/content_corners_bg"
             android:drawableLeft="@mipmap/u43"
-            android:drawablePadding="5dp"
+            android:drawablePadding="5.0dip"
             android:drawableRight="@mipmap/u32"
             android:gravity="center|left"
-            android:padding="10dp"
+            android:padding="10.0dip"
             android:text="转入人员"
             android:textColor="@android:color/black"
             android:textSize="@dimen/login_text_size" />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="10.0dip"
         android:background="@drawable/content_corners_bg"
         android:orientation="vertical">
 
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_width="fill_parent"
+            android:layout_height="48.0dip"
             android:orientation="horizontal">
 
             <TextView
@@ -75,9 +76,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="10.0dip"
                 android:drawableLeft="@mipmap/u43"
-                android:drawablePadding="5dp"
+                android:drawablePadding="5.0dip"
                 android:gravity="center|left"
                 android:text="转出人员"
                 android:textColor="@android:color/black"
@@ -85,36 +86,33 @@
 
             <Button
                 android:id="@+id/ListViewButton"
-                android:layout_width="100dp"
-                android:layout_height="48dp"
+                android:layout_width="100.0dip"
+                android:layout_height="48.0dip"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="10.0dip"
                 android:text="返回"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/button_text_size" />
         </RelativeLayout>
 
-
-
         <com.chen.listview.library.PullToRefreshLayout
             android:id="@+id/pull_refresh_layout"
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_margin="10.0dip"
             android:background="@android:color/transparent"
             android:orientation="vertical">
 
             <include layout="@layout/refresh_head" />
-            <!-- 支持所有实现Pullable接口的View -->
 
             <com.chen.listview.library.PullableListView
                 android:id="@+id/list"
-                android:layout_width="match_parent"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:divider="@android:color/transparent"
-                android:dividerHeight="10dp"
-                android:scrollbars="none"/>
+                android:dividerHeight="10.0dip"
+                android:scrollbars="none" />
 
             <include
                 android:id="@+id/viewLoadMore"
@@ -123,15 +121,15 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="10.0dip"
         android:background="@drawable/content_corners_bg"
         android:orientation="vertical">
 
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_width="fill_parent"
+            android:layout_height="48.0dip"
             android:orientation="horizontal">
 
             <TextView
@@ -140,9 +138,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="10.0dip"
                 android:drawableLeft="@mipmap/u43"
-                android:drawablePadding="5dp"
+                android:drawablePadding="5.0dip"
                 android:gravity="center|left"
                 android:text="转出人员"
                 android:textColor="@android:color/black"
@@ -150,51 +148,51 @@
 
             <Button
                 android:id="@+id/DetailButton"
-                android:layout_width="100dp"
-                android:layout_height="48dp"
+                android:layout_width="100.0dip"
+                android:layout_height="48.0dip"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="10.0dip"
                 android:text="返回"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/button_text_size" />
         </RelativeLayout>
 
         <ScrollView
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="10dp"
+            android:paddingBottom="10.0dip"
             android:scrollbars="none">
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:background="#f2f2f2"
+                android:layout_margin="10.0dip"
+                android:background="#fff2f2f2"
                 android:orientation="vertical">
 
                 <include
                     android:id="@+id/DetailUndealView"
                     layout="@layout/view_turn_in_detail_global_person"
-                    android:layout_width="match_parent"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content" />
 
                 <include
                     android:id="@+id/DetailReceiveView"
                     layout="@layout/view_turn_in_detail_global_turnin"
-                    android:layout_width="match_parent"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content" />
 
                 <include
                     android:id="@+id/DetailRejectView"
                     layout="@layout/view_turn_in_detail_global_reject"
-                    android:layout_width="match_parent"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content" />
 
                 <include
                     android:id="@+id/DetailDialogView"
                     layout="@layout/view_turn_in_detail_global_receive"
-                    android:layout_width="match_parent"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content" />
             </LinearLayout>
         </ScrollView>

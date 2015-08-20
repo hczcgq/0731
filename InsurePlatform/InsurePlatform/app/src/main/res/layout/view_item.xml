@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
 
     <TextView
         android:id="@+id/NameTextView"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:textColor="@android:color/black"
-        android:textSize="@dimen/login_text_size"
-        android:paddingLeft="10dp"
+        android:layout_width="fill_parent"
+        android:layout_height="48.0dip"
         android:layout_gravity="center|left"
-        android:text="ddd"
-        android:singleLine="true"
         android:ellipsize="middle"
-        android:gravity="center|left"/>
+        android:gravity="center|left"
+        android:paddingLeft="10.0dip"
+        android:singleLine="true"
+        android:text="ddd"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/login_text_size" />
 </LinearLayout>

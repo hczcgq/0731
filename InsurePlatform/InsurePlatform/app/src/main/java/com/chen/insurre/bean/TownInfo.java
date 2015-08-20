@@ -7,6 +7,11 @@ public class TownInfo {
     private String id;
     private String name;
 
+    public TownInfo(String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public void setId(String id) {
         this.id = id;
     }

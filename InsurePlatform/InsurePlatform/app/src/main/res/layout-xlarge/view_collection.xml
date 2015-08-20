@@ -1,106 +1,20 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/white"
-    android:orientation="vertical">
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_margin="10dp"
-        android:orientation="horizontal">
-
-        <!--210922198803023322-->
-        <EditText
-            android:id="@+id/IDCardEdittext"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:layout_weight="1"
-            android:text=""
-            android:background="@drawable/input_bg"
-            android:layout_marginRight="5dp"
-            android:padding="5dp"
-            android:inputType="text"
-            android:maxLength="18"
-            android:textColor="#686868"/>
-
-
-        <Button
-            android:layout_width="150dp"
-            android:layout_height="60dp"
-            android:onClick="Search"
-            android:text="查询"
-            android:textColor="@android:color/black"
-            android:textSize="@dimen/button_text_size" />
-
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:background="@android:color/white" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="60.0dip" android:layout_margin="10.0dip">
+        <EditText android:textColor="#ff686868" android:id="@+id/IDCardEdittext" android:background="@drawable/input_bg" android:padding="5.0dip" android:layout_width="0.0dip" android:layout_height="60.0dip" android:layout_marginRight="5.0dip" android:text="" android:maxLength="18" android:layout_weight="1.0" android:inputType="text" />
+        <Button android:textSize="@dimen/button_text_size" android:textColor="@android:color/black" android:layout_width="150.0dip" android:layout_height="60.0dip" android:text="查询" android:onClick="Search" />
     </LinearLayout>
-
-    <ScrollView
-        android:id="@+id/myScrollView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            android:id="@+id/ContentLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="5dp"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <include
-                layout="@layout/view_collection_person"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <include
-                layout="@layout/view_collection_canbao"
-                android:layout_width="match_parent"
-                android:layout_marginTop="10dp"
-                android:layout_height="wrap_content" />
-
-            <include
-                android:id="@+id/weicanboaView"
-                layout="@layout/view_collection_weicanbao"
-                android:layout_width="match_parent"
-                android:layout_marginTop="10dp"
-                android:layout_height="wrap_content" />
-
-            <include
-                android:id="@+id/waidicanbaoView"
-                layout="@layout/view_collection_waidicanbao"
-                android:layout_width="match_parent"
-                android:layout_marginTop="10dp"
-                android:layout_height="wrap_content" />
-            
-            <LinearLayout
-                android:layout_width="300dp"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-                <Button
-                    android:id="@+id/saveButton"
-                    android:onClick="SaveClick"
-                    android:layout_width="130dp"
-                    android:layout_height="40dp"
-                   android:layout_margin="10dp"
-                    android:text="保存"
-                    android:textColor="@android:color/black"
-                    android:textSize="@dimen/button_text_size" />
-                <Button
-                    android:id="@+id/resetButton"
-                    android:onClick="ResetClick"
-                    android:layout_width="130dp"
-                    android:layout_height="40dp"
-                    android:layout_margin="10dp"
-                    android:text="重置"
-                    android:textColor="@android:color/black"
-                    android:textSize="@dimen/button_text_size" />
-                </LinearLayout>
+    <ScrollView android:id="@+id/myScrollView" android:layout_width="fill_parent" android:layout_height="fill_parent">
+        <LinearLayout android:orientation="vertical" android:id="@+id/ContentLayout" android:padding="5.0dip" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="fill_parent">
+            <include android:layout_width="fill_parent" android:layout_height="wrap_content" layout="@layout/view_collection_person" />
+            <include android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="10.0dip" layout="@layout/view_collection_canbao" />
+            <include android:id="@+id/weicanboaView" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="10.0dip" layout="@layout/view_collection_weicanbao" />
+            <include android:id="@+id/waidicanbaoView" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="10.0dip" layout="@layout/view_collection_waidicanbao" />
+            <LinearLayout android:gravity="center" android:layout_gravity="center" android:orientation="horizontal" android:layout_width="300.0dip" android:layout_height="wrap_content" android:layout_marginTop="10.0dip">
+                <Button android:textSize="@dimen/button_text_size" android:textColor="@android:color/black" android:id="@+id/saveButton" android:layout_width="130.0dip" android:layout_height="40.0dip" android:layout_margin="10.0dip" android:text="保存" android:onClick="SaveClick" />
+                <Button android:textSize="@dimen/button_text_size" android:textColor="@android:color/black" android:id="@+id/resetButton" android:layout_width="130.0dip" android:layout_height="40.0dip" android:layout_margin="10.0dip" android:text="重置" android:onClick="ResetClick" />
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
-
 </LinearLayout>

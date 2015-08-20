@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
+    android:layout_margin="10.0dip"
     android:background="@drawable/content_corners_bg"
     android:orientation="vertical"
-    android:padding="10dp">
+    android:padding="10.0dip">
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:drawableLeft="@mipmap/u43"
-        android:drawablePadding="5dp"
+        android:drawablePadding="5.0dip"
         android:gravity="center|left"
         android:text="公安户籍信息"
         android:textColor="@android:color/black"
@@ -19,24 +19,23 @@
         android:textStyle="bold" />
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="10.0dip"
         android:background="@android:color/white"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:padding="10.0dip">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center|left"
-
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="100dp"
+                android:layout_width="100.0dip"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
+                android:layout_marginRight="5.0dip"
                 android:gravity="center|right"
                 android:text="姓名："
                 android:textColor="@android:color/black"
@@ -52,16 +51,16 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="5.0dip"
             android:gravity="center|left"
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="100dp"
+                android:layout_width="100.0dip"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
+                android:layout_marginRight="5.0dip"
                 android:gravity="center|right"
                 android:text="性别："
                 android:textColor="@android:color/black"
@@ -77,16 +76,16 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="5.0dip"
             android:gravity="center|left"
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="100dp"
+                android:layout_width="100.0dip"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
+                android:layout_marginRight="5.0dip"
                 android:gravity="center|right"
                 android:text="出生日期："
                 android:textColor="@android:color/black"
@@ -102,16 +101,16 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="5.0dip"
             android:gravity="center|left"
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="100dp"
+                android:layout_width="100.0dip"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
+                android:layout_marginRight="5.0dip"
                 android:gravity="center|right"
                 android:text="年龄："
                 android:textColor="@android:color/black"
@@ -127,16 +126,16 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="5.0dip"
             android:gravity="center|left"
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="100dp"
+                android:layout_width="100.0dip"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
+                android:layout_marginRight="5.0dip"
                 android:gravity="center|right"
                 android:text="户号："
                 android:textColor="@android:color/black"
@@ -152,16 +151,16 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="5.0dip"
             android:gravity="center|left"
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="100dp"
+                android:layout_width="100.0dip"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
+                android:layout_marginRight="5.0dip"
                 android:gravity="center|right"
                 android:text="联系方式："
                 android:textColor="@android:color/black"
@@ -177,16 +176,16 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="5.0dip"
             android:gravity="center|left"
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="100dp"
+                android:layout_width="100.0dip"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
+                android:layout_marginRight="5.0dip"
                 android:gravity="center|right"
                 android:text="区："
                 android:textColor="@android:color/black"
@@ -202,18 +201,18 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="5.0dip"
             android:gravity="center|left"
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="100dp"
+                android:layout_width="100.0dip"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
+                android:layout_marginRight="5.0dip"
                 android:gravity="center|right"
-                android:text="街道："
+                android:text="社区："
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/common_text_size" />
 
@@ -227,18 +226,18 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="5.0dip"
             android:gravity="center|left"
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="100dp"
+                android:layout_width="100.0dip"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
+                android:layout_marginRight="5.0dip"
                 android:gravity="center|right"
-                android:text="社区："
+                android:text="人员分类："
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/common_text_size" />
 
@@ -252,16 +251,16 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="5.0dip"
             android:gravity="center|left"
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="100dp"
+                android:layout_width="100.0dip"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
+                android:layout_marginRight="5.0dip"
                 android:gravity="center|right"
                 android:text="户籍地址："
                 android:textColor="@android:color/black"
@@ -277,4 +276,3 @@
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
-

@@ -880,7 +880,7 @@ public class CollectionActivity extends Activity {
             city= "320500";
         }
         if(TextUtils.isEmpty(town)){
-            town="320540";
+            town="";
         }
         setSpinnerData(WCBprovSpinner, prov);
         setSpinnerData(WCBcitySpinner, city);
@@ -901,7 +901,12 @@ public class CollectionActivity extends Activity {
             orgCity="320500";
         }
         if(TextUtils.isEmpty(orgTown)){
-            orgTown="320540";
+            if(weiCanbaoInfo.getStatus().equals("2")||weiCanbaoInfo.getStatus().equals("3")){
+                orgTown="";
+            }else{
+                orgTown="320540";
+            }
+
         }
         setSpinnerData(WCBorgProvSpinner, orgProv);
         setSpinnerData(WCBorgCitySpinner, orgCity);
@@ -993,6 +998,11 @@ public class CollectionActivity extends Activity {
             if (townList == null || townList.size() == 0) {
                 return;
             }
+            townList.add(new TownInfo("-1",""));
+            if(TextUtils.isEmpty(text)){
+                spinner.setSelection(townList.size()-1);
+                return;
+            }
             for (int i = 0; i < townList.size(); i++) {
                 String item = townList.get(i).getId();
                 if (item.equals(text)) {
@@ -1026,6 +1036,11 @@ public class CollectionActivity extends Activity {
             }
         } else if (spinner == WCBorgTownSpinner) {
             if (OrgtownList == null || OrgtownList.size() == 0) {
+                return;
+            }
+            OrgtownList.add(new TownInfo("-1",""));
+            if(TextUtils.isEmpty(text)){
+                spinner.setSelection(OrgtownList.size()-1);
                 return;
             }
             for (int i = 0; i < OrgtownList.size(); i++) {
