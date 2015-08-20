@@ -10,6 +10,11 @@ public class ProvinceInfo {
     private List<CityInfo> child;
     private String name;
 
+    public ProvinceInfo(String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public void setId(String id) {
         this.id = id;
     }

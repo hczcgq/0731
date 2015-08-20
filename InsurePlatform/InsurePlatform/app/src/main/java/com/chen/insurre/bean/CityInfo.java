@@ -10,6 +10,11 @@ public class CityInfo {
     private List<TownInfo> child;
     private String name;
 
+    public CityInfo(String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public void setId(String id) {
         this.id = id;
     }
