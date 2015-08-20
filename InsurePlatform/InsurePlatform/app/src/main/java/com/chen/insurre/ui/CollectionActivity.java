@@ -79,7 +79,7 @@ public class CollectionActivity extends Activity {
     private TextView NameTextView, SexTextView, BirthTextView, AgeTextView, RoonNoTextView, ContractTextView, RegionTextView, AreaTextView, PropTextView, LocationTextView;
 
     //参保
-    private EditText JHRNameEditText, JHRIDCardEditText, JHRMobileEditText, MobileEditText;
+    private EditText JHRNameEditText, JHRIDCardEditText, JHRMobileEditText, MobileEditText,DescribeEditText;
     private Spinner CJSpinner, CBSpinner;
     //未参保
     private Spinner WCBprovSpinner, WCBcitySpinner, WCBtownSpinner, WCBStatusSpinner, WCBReasonSpinner, WCBorgProvSpinner, WCBorgCitySpinner, WCBorgTownSpinner;
@@ -145,6 +145,7 @@ public class CollectionActivity extends Activity {
         JHRIDCardEditText = (EditText) findViewById(R.id.JHRIDCardEditText);
         JHRMobileEditText = (EditText) findViewById(R.id.JHRMobileEditText);
         MobileEditText = (EditText) findViewById(R.id.MobileEditText);
+        DescribeEditText = (EditText) findViewById(R.id.DescribeEditText);
         CJSpinner = (Spinner) findViewById(R.id.CJSpinner);
         CBSpinner = (Spinner) findViewById(R.id.CBSpinner);
 
@@ -467,6 +468,7 @@ public class CollectionActivity extends Activity {
         String jhcardno = JHRIDCardEditText.getText().toString();
         String jhtelephone = JHRMobileEditText.getText().toString();
         String telephone = MobileEditText.getText().toString();
+        String comment=DescribeEditText.getText().toString();
         if (cbstate.equals("3")) {
             String zzJf, ltDy, jnJf, jnDy, qtJf, qtDy, zgYb, jnYb, qtYb;
             if (WDCBzzJfCheckBox.isChecked()) {
@@ -524,6 +526,7 @@ public class CollectionActivity extends Activity {
             hashParams.put("cbstatus", cbstatus);
             hashParams.put("cbstate", cbstate);
             hashParams.put("telephone", telephone);
+            hashParams.put("comment", comment);
             hashParams.put("prov", wdcbPro);
             hashParams.put("city", WdcbCity);
             hashParams.put("zzJf", zzJf);
@@ -554,6 +557,7 @@ public class CollectionActivity extends Activity {
             hashParams.put("cbstatus", cbstatus);
             hashParams.put("cbstate", cbstate);
             hashParams.put("telephone", telephone);
+            hashParams.put("comment", comment);
             hashParams.put("prov", prov);
             hashParams.put("city", city);
             hashParams.put("town", town);
@@ -685,10 +689,13 @@ public class CollectionActivity extends Activity {
                 Toast.makeText(mContext, "请求失败，请稍后再试!", Toast.LENGTH_SHORT)
                         .show();
             }
-            myScrollView.fullScroll(ScrollView.FOCUS_UP);
-            NameTextView.setFocusable(true);
-            NameTextView.setFocusableInTouchMode(true);
-            NameTextView.requestFocus();
+
+            if(requestCode == REQUEST_SEARCH) {
+                myScrollView.fullScroll(ScrollView.FOCUS_UP);
+                NameTextView.setFocusable(true);
+                NameTextView.setFocusableInTouchMode(true);
+                NameTextView.requestFocus();
+            }
         }
     }
 
@@ -718,6 +725,7 @@ public class CollectionActivity extends Activity {
         setSpinnerData(CJSpinner, canbaoInfo.getCbstatus());
         setSpinnerData(CBSpinner, canbaoInfo.getCbstate());
         MobileEditText.setText(canbaoInfo.getTelephone());
+        DescribeEditText.setText(canbaoInfo.getComment());
 
         cbstate = canbaoInfo.getCbstate();
         cbstatus = canbaoInfo.getCbstatus();

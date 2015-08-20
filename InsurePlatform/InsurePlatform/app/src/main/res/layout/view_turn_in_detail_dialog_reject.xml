@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center|left"
                 android:text="您将拒绝XXX的转入，请选择或输入拒绝原因"
-                android:textColor="@android:color/holo_red_dark"
+                android:textColor="#CC0000"
                 android:textSize="@dimen/common_text_size" />
 
 

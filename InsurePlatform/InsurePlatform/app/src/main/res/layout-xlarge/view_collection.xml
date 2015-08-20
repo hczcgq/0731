@@ -17,9 +17,6 @@
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_weight="1"
-<<<<<<< HEAD
-            android:textColor="#686868" />
-=======
             android:text=""
             android:background="@drawable/input_bg"
             android:layout_marginRight="5dp"
@@ -27,7 +24,7 @@
             android:inputType="text"
             android:maxLength="18"
             android:textColor="#686868"/>
->>>>>>> 01440139ef58d45340043cf729ea0e2d15aaed56
+
 
         <Button
             android:layout_width="150dp"

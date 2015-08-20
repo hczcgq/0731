@@ -211,4 +211,31 @@
                 android:textSize="@dimen/common_text_size" />
         </LinearLayout>
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@android:color/white"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:gravity="center|right"
+            android:text="备注："
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/common_text_size" />
+
+        <EditText
+            android:id="@+id/DescribeEditText"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/input_bg"
+            android:padding="5dp"
+            android:minHeight="48dp"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/common_text_size" />
+    </LinearLayout>
 </LinearLayout>

@@ -10,6 +10,7 @@ public class CanbaoInfo {
     private String cbstatus;//采集状态代码： 1 已采集 2 人户分离未采集 3   长期外出未采集 4 情况不明未采集
     private String cbstate;//当前参保状态代码： 1 从未参保 2 参保后断保 3 在外地参保（或享受社保待遇）
     private String telephone;//手机
+    private String comment; //备注
 
     public String getJhname() {
         return jhname;
@@ -57,5 +58,13 @@ public class CanbaoInfo {
 
     public void setTelephone(String telephone) {
         this.telephone = telephone;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 }
