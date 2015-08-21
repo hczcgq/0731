@@ -324,6 +324,9 @@ public class CollectionActivity extends Activity {
                         orgProv = "";
                         orgCity = "";
                         orgTown = "";
+
+                        WCBorgNameEditText.setText("");
+                        WCBorgAddrEditText.setText("");
                     }
                     setSpinnerData(WCBorgProvSpinner, orgProv);
                     setSpinnerData(WCBorgCitySpinner, orgCity);
@@ -338,6 +341,8 @@ public class CollectionActivity extends Activity {
                         orgProv = "";
                         orgCity = "";
                         orgTown = "";
+                        WCBorgNameEditText.setText("");
+                        WCBorgAddrEditText.setText("");
                     }
                     setSpinnerData(WCBorgProvSpinner, orgProv);
                     setSpinnerData(WCBorgCitySpinner, orgCity);
@@ -757,11 +762,11 @@ public class CollectionActivity extends Activity {
         MobileEditText.setText(canbaoInfo.getTelephone());
         DescribeEditText.setText(canbaoInfo.getComment());
 
-        cbstate = canbaoInfo.getCbstate();
         cbstatus = canbaoInfo.getCbstatus();
-        setSpinnerData(CJSpinner, cbstate);
-        if(cbstate.equals("1")){
-            setSpinnerData(CBSpinner, cbstatus);
+        cbstate = canbaoInfo.getCbstate();
+        setSpinnerData(CJSpinner, cbstatus);
+        if(cbstatus.equals("1")){
+            setSpinnerData(CBSpinner, cbstate);
         }else{
             setSpinnerData(CBSpinner, "");
         }
@@ -923,6 +928,11 @@ public class CollectionActivity extends Activity {
 
         setSpinnerData(WCBStatusSpinner, weiCanbaoInfo.getStatus());
         setSpinnerData(WCBReasonSpinner, weiCanbaoInfo.getReason());
+
+        if(!weiCanbaoInfo.getStatus().equals("2") ||!weiCanbaoInfo.getStatus().equals("3")){
+            WCBorgNameEditText.setText("");
+            WCBorgAddrEditText.setText("");
+        }
 
         orgProv = weiCanbaoInfo.getOrgProv();
         orgCity = weiCanbaoInfo.getOrgCity();
