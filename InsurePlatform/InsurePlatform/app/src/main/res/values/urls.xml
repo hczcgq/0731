@@ -2,6 +2,8 @@
 <resources>
 
     <string name="base_url">http://58.210.160.69/</string>
+    <!--<string name="base_url">http://weixin.sipspf.org.cn/</string>-->
+    <!--<string name="base_url">http://weixin.sipspf.org.cn:7003/</string>-->
     <string name="api_prefix_url">allpeople/</string>
     <string name="login_url">login</string>
     <string name="logout_url">logout</string>
@@ -18,4 +20,4 @@
     <string name="trun_out_detail_url">out/detail</string>
     <string name="param_url">param</string>
 
-</resources>
+ </resources>

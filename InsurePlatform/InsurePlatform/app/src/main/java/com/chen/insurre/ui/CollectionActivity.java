@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
@@ -88,7 +89,7 @@ public class CollectionActivity extends Activity {
     private Spinner WDCBprovSpinner, WDCBcitySpinner;
     private CheckBox WDCBzzJfCheckBox, WDCBltDyCheckBox, WDCBjnJfCheckBox, WDCBjnDyCheckBox, WDCBqtJfCheckBox, WDCBqtDyCheckBox, WDCBzgYbCheckBox, WDCBjnYbCheckBox, WDCBqtYbCheckBox;
 
-    private View canbaoView, weicanboaView, waidicanbaoView;
+    private View canbaoView, weicanboaView, waidicanbaoView,personInfoView;
 
     private Button saveButton, resetButton;
 
@@ -108,6 +109,8 @@ public class CollectionActivity extends Activity {
 
 
     private CollectionInfo tempCollectionInfo;
+
+    private TextView PersonInfoTextView;
 
 
     @Override
@@ -181,6 +184,9 @@ public class CollectionActivity extends Activity {
 
         saveButton = (Button) findViewById(R.id.saveButton);
         resetButton = (Button) findViewById(R.id.resetButton);
+
+        personInfoView=findViewById(R.id.personinfoView);
+        PersonInfoTextView=(TextView)personInfoView.findViewById(R.id.PersonInfoTextView);
     }
 
     private void initEvent() {
@@ -319,12 +325,13 @@ public class CollectionActivity extends Activity {
                         orgProv = "320000";
                         orgCity = "320500";
                         orgTown = "";
+                        WCBorgNameEditText.setText(tempCollectionInfo.getWeiCanbaoInfo().getOrgName());
+                        WCBorgAddrEditText.setText(tempCollectionInfo.getWeiCanbaoInfo().getOrgAddr());
 
                     } else {
                         orgProv = "";
                         orgCity = "";
                         orgTown = "";
-
                         WCBorgNameEditText.setText("");
                         WCBorgAddrEditText.setText("");
                     }
@@ -336,7 +343,8 @@ public class CollectionActivity extends Activity {
                         orgProv = tempCollectionInfo.getWeiCanbaoInfo().getOrgProv();
                         orgCity = tempCollectionInfo.getWeiCanbaoInfo().getOrgCity();
                         orgTown = tempCollectionInfo.getWeiCanbaoInfo().getOrgTown();
-
+                        WCBorgNameEditText.setText(tempCollectionInfo.getWeiCanbaoInfo().getOrgName());
+                        WCBorgAddrEditText.setText(tempCollectionInfo.getWeiCanbaoInfo().getOrgAddr());
                     } else {
                         orgProv = "";
                         orgCity = "";
@@ -796,6 +804,7 @@ public class CollectionActivity extends Activity {
         }
 
         if (info.getCanEdit().equals("0")) {
+            showCanEdit();
             JHRNameEditText.setEnabled(false);
             JHRNameEditText.setEnabled(false);
             JHRIDCardEditText.setEnabled(false);
@@ -803,6 +812,7 @@ public class CollectionActivity extends Activity {
             CJSpinner.setEnabled(false);
             CBSpinner.setEnabled(false);
             MobileEditText.setEnabled(false);
+            DescribeEditText.setEnabled(false);
 
             WCBorgNameEditText.setEnabled(false);
             WCBaddressEditText.setEnabled(false);
@@ -832,6 +842,7 @@ public class CollectionActivity extends Activity {
             saveButton.setEnabled(false);
             resetButton.setEnabled(false);
         } else {
+            PersonInfoTextView.setText("公安户籍信息");
             JHRNameEditText.setEnabled(true);
             JHRNameEditText.setEnabled(true);
             JHRIDCardEditText.setEnabled(true);
@@ -839,6 +850,7 @@ public class CollectionActivity extends Activity {
             CJSpinner.setEnabled(true);
             CBSpinner.setEnabled(true);
             MobileEditText.setEnabled(true);
+            DescribeEditText.setEnabled(true);
 
             WCBorgNameEditText.setEnabled(true);
             WCBaddressEditText.setEnabled(true);
@@ -868,6 +880,11 @@ public class CollectionActivity extends Activity {
             saveButton.setEnabled(true);
             resetButton.setEnabled(true);
         }
+    }
+
+    private void showCanEdit(){
+        CharSequence receiceMsg = Html.fromHtml("公安户籍信息<font color=\"#FB1E27\">(非本社区人员不能采集)</font>");
+        PersonInfoTextView.setText(receiceMsg);
     }
 
     private void showWaidiCanbao(WaidiCanbaoInfo waidiCanbaoInfo) {
@@ -929,7 +946,7 @@ public class CollectionActivity extends Activity {
         setSpinnerData(WCBStatusSpinner, weiCanbaoInfo.getStatus());
         setSpinnerData(WCBReasonSpinner, weiCanbaoInfo.getReason());
 
-        if(!weiCanbaoInfo.getStatus().equals("2") ||!weiCanbaoInfo.getStatus().equals("3")){
+        if(!weiCanbaoInfo.getStatus().equals("2") && !weiCanbaoInfo.getStatus().equals("3")){
             WCBorgNameEditText.setText("");
             WCBorgAddrEditText.setText("");
         }

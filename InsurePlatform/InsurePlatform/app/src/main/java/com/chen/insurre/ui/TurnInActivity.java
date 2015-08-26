@@ -57,17 +57,16 @@ public class TurnInActivity extends Activity implements View.OnClickListener {
 
     private Button ListViewButton, DetailButton;
 
-    private View DetailUndealView, DetailReceiveView, DetailRejectView,DetailDialogView;
+    private View DetailUndealView, DetailReceiveView, DetailRejectView, DetailDialogView;
 
     private ViewFlipper viewFlipper;
 
-    private TextView TurnNameTextView,TurnSexTextView,TurnBirthTextView,TurnAgeTextView,TurnRoonNoTextView,TurnContractTextView,TurnRegionTextView,
-            TurnAreaTextView,TurnPropTextView,TurnLocationTextView;
+    private TextView TurnNameTextView, TurnSexTextView, TurnBirthTextView, TurnAgeTextView, TurnRoonNoTextView, TurnContractTextView, TurnRegionTextView,
+            TurnAreaTextView, TurnPropTextView, TurnLocationTextView;
 
-    private TextView TurnInRoadTextView,TurnInAreaTextView,TurnInReasonTextView,TurnInApplyTimeTextView,TurnInVerifyTimeTextView
-            ,TurnInBeforeRoadTextView,TurnInBeforeAreaTextView;
+    private TextView TurnInRoadTextView, TurnInAreaTextView, TurnInReasonTextView, TurnInApplyTimeTextView, TurnInVerifyTimeTextView, TurnInBeforeRoadTextView, TurnInBeforeAreaTextView;
 
-    private TextView TurnInRejectTimeTextView,TurnInRejectReasonTextView;
+    private TextView TurnInRejectTimeTextView, TurnInRejectReasonTextView;
 
     private TurnInTask mTurnInTask;
 
@@ -89,21 +88,22 @@ public class TurnInActivity extends Activity implements View.OnClickListener {
 
     private int Tag = TRUN_IN_UNDEAL;
 
-    public static boolean fromDialog=false;
+    public static boolean fromDialog = false;
 
-    private boolean isLoadMore=false;
+    private boolean isLoadMore = false;
 
-    private int pagesize=15;
+    private int pagesize = 15;
 
-    private int offset=1;
+    private int offset = 1;
 
     private View viewLoadMore;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.view_turn_in);
-        fromDialog=false;
+        fromDialog = false;
         initView();
 
     }
@@ -111,11 +111,11 @@ public class TurnInActivity extends Activity implements View.OnClickListener {
     @Override
     protected void onResume() {
         super.onResume();
-        if(viewFlipper!=null&&!fromDialog) {
+        if (viewFlipper != null && !fromDialog) {
             viewFlipper.setDisplayedChild(0);
             loadDate(TRUN_IN);
         }
-        fromDialog=false;
+        fromDialog = false;
     }
 
     private void initView() {
@@ -136,32 +136,32 @@ public class TurnInActivity extends Activity implements View.OnClickListener {
         DetailUndealView = findViewById(R.id.DetailUndealView);
         DetailReceiveView = findViewById(R.id.DetailReceiveView);
         DetailRejectView = findViewById(R.id.DetailRejectView);
-        DetailDialogView=findViewById(R.id.DetailDialogView);
+        DetailDialogView = findViewById(R.id.DetailDialogView);
 
 
         //转入转入详情公共部分
-        TurnNameTextView= (TextView) findViewById(R.id.TurnNameTextView);
-        TurnSexTextView= (TextView) findViewById(R.id.TurnSexTextView);
-        TurnBirthTextView= (TextView) findViewById(R.id.TurnBirthTextView);
-        TurnAgeTextView= (TextView) findViewById(R.id.TurnAgeTextView);
-        TurnRoonNoTextView= (TextView) findViewById(R.id.TurnRoonNoTextView);
-        TurnContractTextView= (TextView) findViewById(R.id.TurnContractTextView);
-        TurnRegionTextView= (TextView) findViewById(R.id.TurnRegionTextView);
-        TurnAreaTextView= (TextView) findViewById(R.id.TurnAreaTextView);
-        TurnPropTextView= (TextView) findViewById(R.id.TurnPropTextView);
-        TurnLocationTextView= (TextView) findViewById(R.id.TurnLocationTextView);
+        TurnNameTextView = (TextView) findViewById(R.id.TurnNameTextView);
+        TurnSexTextView = (TextView) findViewById(R.id.TurnSexTextView);
+        TurnBirthTextView = (TextView) findViewById(R.id.TurnBirthTextView);
+        TurnAgeTextView = (TextView) findViewById(R.id.TurnAgeTextView);
+        TurnRoonNoTextView = (TextView) findViewById(R.id.TurnRoonNoTextView);
+        TurnContractTextView = (TextView) findViewById(R.id.TurnContractTextView);
+        TurnRegionTextView = (TextView) findViewById(R.id.TurnRegionTextView);
+        TurnAreaTextView = (TextView) findViewById(R.id.TurnAreaTextView);
+        TurnPropTextView = (TextView) findViewById(R.id.TurnPropTextView);
+        TurnLocationTextView = (TextView) findViewById(R.id.TurnLocationTextView);
 
         //未处理,已接收
-        TurnInRoadTextView= (TextView) findViewById(R.id.TurnInRoadTextView);
-        TurnInAreaTextView= (TextView) findViewById(R.id.TurnInAreaTextView);
-        TurnInReasonTextView= (TextView) findViewById(R.id.TurnInReasonTextView);
-        TurnInApplyTimeTextView= (TextView) findViewById(R.id.TurnInApplyTimeTextView);
-        TurnInVerifyTimeTextView= (TextView) findViewById(R.id.TurnInVerifyTimeTextView);
-        TurnInBeforeRoadTextView= (TextView) findViewById(R.id.TurnInBeforeRoadTextView);
-        TurnInBeforeAreaTextView= (TextView) findViewById(R.id.TurnInBeforeAreaTextView);
+        TurnInRoadTextView = (TextView) findViewById(R.id.TurnInRoadTextView);
+        TurnInAreaTextView = (TextView) findViewById(R.id.TurnInAreaTextView);
+        TurnInReasonTextView = (TextView) findViewById(R.id.TurnInReasonTextView);
+        TurnInApplyTimeTextView = (TextView) findViewById(R.id.TurnInApplyTimeTextView);
+        TurnInVerifyTimeTextView = (TextView) findViewById(R.id.TurnInVerifyTimeTextView);
+        TurnInBeforeRoadTextView = (TextView) findViewById(R.id.TurnInBeforeRoadTextView);
+        TurnInBeforeAreaTextView = (TextView) findViewById(R.id.TurnInBeforeAreaTextView);
 
-        TurnInRejectTimeTextView= (TextView) findViewById(R.id.TurnInRejectTimeTextView);
-        TurnInRejectReasonTextView=(TextView)findViewById(R.id.TurnInRejectReasonTextView);
+        TurnInRejectTimeTextView = (TextView) findViewById(R.id.TurnInRejectTimeTextView);
+        TurnInRejectReasonTextView = (TextView) findViewById(R.id.TurnInRejectReasonTextView);
 
 
         ReceiveTextview.setOnClickListener(this);
@@ -172,8 +172,7 @@ public class TurnInActivity extends Activity implements View.OnClickListener {
         DetailButton.setOnClickListener(this);
 
 
-
-        viewLoadMore=findViewById(R.id.viewLoadMore);
+        viewLoadMore = findViewById(R.id.viewLoadMore);
         mPullToRefreshLayout = (PullToRefreshLayout) findViewById(R.id.pull_refresh_layout);
         mPullToRefreshLayout
                 .setRefreshMode(PullToRefreshLayout.PULL_DOWN);
@@ -186,7 +185,7 @@ public class TurnInActivity extends Activity implements View.OnClickListener {
             @Override
             public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
                 viewLoadMore.setVisibility(View.VISIBLE);
-                isLoadMore=true;
+                isLoadMore = true;
                 loadDate(Tag);
             }
         });
@@ -194,7 +193,7 @@ public class TurnInActivity extends Activity implements View.OnClickListener {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                isLoadMore=false;
+                isLoadMore = false;
                 cardno = datas.get(position).getCardno();
                 name = datas.get(position).getName();
                 loadDate(TRUN_IN_DETAIL);
@@ -209,11 +208,11 @@ public class TurnInActivity extends Activity implements View.OnClickListener {
      * @param list
      */
     private void showList(List<TurnListItem> list) {
-        if(list.size()<pagesize){
+        if (list.size() < pagesize) {
             viewLoadMore.setVisibility(View.GONE);
             mPullToRefreshLayout
                     .setRefreshMode(PullToRefreshLayout.PULL_NONE);
-        }else{
+        } else {
             viewLoadMore.setVisibility(View.VISIBLE);
             mPullToRefreshLayout
                     .setRefreshMode(PullToRefreshLayout.PULL_DOWN);
@@ -222,7 +221,7 @@ public class TurnInActivity extends Activity implements View.OnClickListener {
             datas = new ArrayList<TurnListItem>();
         }
 
-        if(!isLoadMore) {
+        if (!isLoadMore) {
             datas.clear();
         }
         datas.addAll(list);
@@ -234,13 +233,13 @@ public class TurnInActivity extends Activity implements View.OnClickListener {
         }
     }
 
-    private void showPrevious(){
+    private void showPrevious() {
         if (viewFlipper.getDisplayedChild() != 0) {
             viewFlipper.showPrevious();
         }
     }
 
-    private void showNext(){
+    private void showNext() {
         if (isLoadMore) {
             return;
         }
@@ -249,8 +248,8 @@ public class TurnInActivity extends Activity implements View.OnClickListener {
 
     private void loadDate(int requestType) {
         if (!NetworkUtil.networkIsAvailable(mContext)) {
-            ToastUtil.showToastShort(this,"请检查网络连接状态。");
-            return ;
+            ToastUtil.showToastShort(this, "请检查网络连接状态。");
+            return;
         }
 
         if (isLoadMore) {
@@ -270,20 +269,20 @@ public class TurnInActivity extends Activity implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ReceiveTextview:
-                    isLoadMore=false;
-                    Tag = TRUN_IN_RECEIVE;
-                    loadDate(TRUN_IN_RECEIVE);
+                isLoadMore = false;
+                Tag = TRUN_IN_RECEIVE;
+                loadDate(TRUN_IN_RECEIVE);
                 break;
             case R.id.RejectTextview:
-                    isLoadMore=false;
-                    Tag = TRUN_IN_REJECT;
-                    loadDate(TRUN_IN_REJECT);
+                isLoadMore = false;
+                Tag = TRUN_IN_REJECT;
+                loadDate(TRUN_IN_REJECT);
 
                 break;
             case R.id.UndealTextview:
-                    isLoadMore=false;
-                    Tag = TRUN_IN_UNDEAL;
-                    loadDate(TRUN_IN_UNDEAL);
+                isLoadMore = false;
+                Tag = TRUN_IN_UNDEAL;
+                loadDate(TRUN_IN_UNDEAL);
                 break;
             case R.id.ListViewButton:
                 showPrevious();
@@ -407,7 +406,7 @@ public class TurnInActivity extends Activity implements View.OnClickListener {
             if (requestType == TRUN_IN_DETAIL) {
                 hashParams.put("cardno", cardno);
             }
-            if(requestType==TRUN_IN_RECEIVE||requestType==TRUN_IN_REJECT||requestType==TRUN_IN_UNDEAL){
+            if (requestType == TRUN_IN_RECEIVE || requestType == TRUN_IN_REJECT || requestType == TRUN_IN_UNDEAL) {
                 hashParams.put("pageno", String.valueOf(offset));
                 hashParams.put("pagesize", String.valueOf(pagesize));
             }
@@ -426,99 +425,101 @@ public class TurnInActivity extends Activity implements View.OnClickListener {
             super.onPostExecute(result);
             if (dialog != null)
                 dialog.dismiss();
-            if(isLoadMore){
+            if (isLoadMore) {
                 mPullToRefreshLayout
                         .loadmoreFinish(PullToRefreshLayout.SUCCEED);
             }
             if (result != null) {
-                System.out.println("result:" + result);
-                if (requestType == TRUN_IN) {
-                    ResultInfo<TurnItemInfo> Item = new Gson().fromJson(result, new TypeToken<ResultInfo<TurnItemInfo>>() {
-                    }.getType());
-                    if (Item != null && Item.getResult() != null
-                            && Item.getResult().equals("0")) {
-                        mTurnItemInfo = ((TurnItemInfo) Item.getBean());
-                        showItemDate(mTurnItemInfo);
-                        Intent intent = new Intent(MainActivity.BRAODCAST_MAIN);
-                        intent.putExtra("undeal",mTurnItemInfo.getUndeal());
-                        sendBroadcast(intent);
-                    } else {
-                        showFaik(Item);
-                    }
-                } else if (requestType == TRUN_IN_RECEIVE) {
-                    showTurnListName(TRUN_IN_RECEIVE, mTurnItemInfo.getReceive());
-                    ResultInfo<List<TurnListItem>> Item = new Gson().fromJson(result, new TypeToken<ResultInfo<List<TurnListItem>>>() {
-                    }.getType());
-                    if (Item != null && Item.getResult() != null
-                            && Item.getResult().equals("0")) {
-                        List<TurnListItem> list = Item.getBean();
-                        showList(list);
-                        showNext();
-                    } else {
-                        showFaik(Item);
-                    }
-
-                } else if (requestType == TRUN_IN_REJECT) {
-                    showTurnListName(TRUN_IN_REJECT, mTurnItemInfo.getReject());
-                    ResultInfo<List<TurnListItem>> Item = new Gson().fromJson(result, new TypeToken<ResultInfo<List<TurnListItem>>>() {
-                    }.getType());
-                    if (Item != null && Item.getResult() != null
-                            && Item.getResult().equals("0")) {
-                        List<TurnListItem> list = Item.getBean();
-                        showList(list);
-                        showNext();
-                    } else {
-                        showFaik(Item);
-                    }
-                } else if (requestType == TRUN_IN_UNDEAL) {
-                    showTurnListName(TRUN_IN_UNDEAL, mTurnItemInfo.getUndeal());
-                    ResultInfo<List<TurnListItem>> Item = new Gson().fromJson(result, new TypeToken<ResultInfo<List<TurnListItem>>>() {
-                    }.getType());
-                    if (Item != null && Item.getResult() != null
-                            && Item.getResult().equals("0")) {
-                        List<TurnListItem> list = Item.getBean();
-                        showList(list);
-                        showNext();
-                    } else {
-                        showFaik(Item);
-                    }
-                } else if (requestType == TRUN_IN_DETAIL) {
-                    showTurnDetailName(Tag);
-                    ResultInfo<TurnInDetailInfo> Item = new Gson().fromJson(result, new TypeToken<ResultInfo<TurnInDetailInfo>>() {
-                    }.getType());
-                    if (viewFlipper.getDisplayedChild() != 0) {
+                try {
+                    if (requestType == TRUN_IN) {
+                        ResultInfo<TurnItemInfo> Item = new Gson().fromJson(result, new TypeToken<ResultInfo<TurnItemInfo>>() {
+                        }.getType());
                         if (Item != null && Item.getResult() != null
                                 && Item.getResult().equals("0")) {
-                            TurnInDetailInfo detailInfo = Item.getBean();
-                            if (Tag == TRUN_IN_RECEIVE) {
-                                DetailReceiveView.setVisibility(View.VISIBLE);
-                                DetailRejectView.setVisibility(View.GONE);
-                                DetailUndealView.setVisibility(View.VISIBLE);
-                                DetailDialogView.setVisibility(View.GONE);
-                            } else if (Tag == TRUN_IN_REJECT) {
-                                DetailReceiveView.setVisibility(View.VISIBLE);
-                                DetailRejectView.setVisibility(View.VISIBLE);
-                                DetailUndealView.setVisibility(View.VISIBLE);
-                                DetailDialogView.setVisibility(View.GONE);
-                            } else if (Tag == TRUN_IN_UNDEAL) {
-                                DetailReceiveView.setVisibility(View.VISIBLE);
-                                DetailRejectView.setVisibility(View.GONE);
-                                DetailUndealView.setVisibility(View.VISIBLE);
-                                DetailDialogView.setVisibility(View.VISIBLE);
-                            }
-                            showGlobalDetail(detailInfo,Tag);
+                            mTurnItemInfo = ((TurnItemInfo) Item.getBean());
+                            showItemDate(mTurnItemInfo);
+                            Intent intent = new Intent(MainActivity.BRAODCAST_MAIN);
+                            intent.putExtra("undeal", mTurnItemInfo.getUndeal());
+                            sendBroadcast(intent);
+                        } else {
+                            showFaik(Item);
+                        }
+                    } else if (requestType == TRUN_IN_RECEIVE) {
+                        showTurnListName(TRUN_IN_RECEIVE, mTurnItemInfo.getReceive());
+                        ResultInfo<List<TurnListItem>> Item = new Gson().fromJson(result, new TypeToken<ResultInfo<List<TurnListItem>>>() {
+                        }.getType());
+                        if (Item != null && Item.getResult() != null
+                                && Item.getResult().equals("0")) {
+                            List<TurnListItem> list = Item.getBean();
+                            showList(list);
                             showNext();
                         } else {
                             showFaik(Item);
                         }
 
+                    } else if (requestType == TRUN_IN_REJECT) {
+                        showTurnListName(TRUN_IN_REJECT, mTurnItemInfo.getReject());
+                        ResultInfo<List<TurnListItem>> Item = new Gson().fromJson(result, new TypeToken<ResultInfo<List<TurnListItem>>>() {
+                        }.getType());
+                        if (Item != null && Item.getResult() != null
+                                && Item.getResult().equals("0")) {
+                            List<TurnListItem> list = Item.getBean();
+                            showList(list);
+                            showNext();
+                        } else {
+                            showFaik(Item);
+                        }
+                    } else if (requestType == TRUN_IN_UNDEAL) {
+                        showTurnListName(TRUN_IN_UNDEAL, mTurnItemInfo.getUndeal());
+                        ResultInfo<List<TurnListItem>> Item = new Gson().fromJson(result, new TypeToken<ResultInfo<List<TurnListItem>>>() {
+                        }.getType());
+                        if (Item != null && Item.getResult() != null
+                                && Item.getResult().equals("0")) {
+                            List<TurnListItem> list = Item.getBean();
+                            showList(list);
+                            showNext();
+                        } else {
+                            showFaik(Item);
+                        }
+                    } else if (requestType == TRUN_IN_DETAIL) {
+                        showTurnDetailName(Tag);
+                        ResultInfo<TurnInDetailInfo> Item = new Gson().fromJson(result, new TypeToken<ResultInfo<TurnInDetailInfo>>() {
+                        }.getType());
+                        if (viewFlipper.getDisplayedChild() != 0) {
+                            if (Item != null && Item.getResult() != null
+                                    && Item.getResult().equals("0")) {
+                                TurnInDetailInfo detailInfo = Item.getBean();
+                                if (Tag == TRUN_IN_RECEIVE) {
+                                    DetailReceiveView.setVisibility(View.VISIBLE);
+                                    DetailRejectView.setVisibility(View.GONE);
+                                    DetailUndealView.setVisibility(View.VISIBLE);
+                                    DetailDialogView.setVisibility(View.GONE);
+                                } else if (Tag == TRUN_IN_REJECT) {
+                                    DetailReceiveView.setVisibility(View.VISIBLE);
+                                    DetailRejectView.setVisibility(View.VISIBLE);
+                                    DetailUndealView.setVisibility(View.VISIBLE);
+                                    DetailDialogView.setVisibility(View.GONE);
+                                } else if (Tag == TRUN_IN_UNDEAL) {
+                                    DetailReceiveView.setVisibility(View.VISIBLE);
+                                    DetailRejectView.setVisibility(View.GONE);
+                                    DetailUndealView.setVisibility(View.VISIBLE);
+                                    DetailDialogView.setVisibility(View.VISIBLE);
+                                }
+                                showGlobalDetail(detailInfo, Tag);
+                                showNext();
+                            } else {
+                                showFaik(Item);
+                            }
+                        }
                     }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         }
     }
 
-    private void showGlobalDetail(TurnInDetailInfo item,int index){
+    private void showGlobalDetail(TurnInDetailInfo item, int index) {
         PersonInfo personInfo = item.getPersonInfo();
         TurnNameTextView.setText(personInfo.getName());
         TurnSexTextView.setText(personInfo.getSex());
@@ -540,7 +541,7 @@ public class TurnInActivity extends Activity implements View.OnClickListener {
         TurnInBeforeRoadTextView.setText(turnInInfo.getyStreet());
         TurnInBeforeAreaTextView.setText(turnInInfo.getyArea());
 
-        if(index==TRUN_IN_REJECT) {
+        if (index == TRUN_IN_REJECT) {
             TurnInRejectTimeTextView.setText(turnInInfo.getRejectDate());
             TurnInRejectReasonTextView.setText(turnInInfo.getRejectReason());
         }

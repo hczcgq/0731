@@ -8,6 +8,7 @@
     android:padding="10.0dip">
 
     <TextView
+        android:id="@+id/PersonInfoTextView"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:drawableLeft="@mipmap/u43"

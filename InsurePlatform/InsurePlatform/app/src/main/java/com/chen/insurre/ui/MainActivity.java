@@ -311,7 +311,6 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
     TimerTask task = new TimerTask() {
         @Override
         public void run() {
-            Log.e("----","------------------1111111111111");
             String url = CommTools.getRequestUrl(mContext, R.string.trun_in_url);
             HashMap<String, String> hashParams = new HashMap<String, String>();
             hashParams.put("regkey", PreferencesUtils.getString(mContext, Constant.SP_USER_REGKEY));
@@ -324,19 +323,22 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
             }
             if (result != null) {
                 int int_undel = 0;
-                ResultInfo<TurnItemInfo> Item = new Gson().fromJson(result, new TypeToken<ResultInfo<TurnItemInfo>>() {
-                }.getType());
-                if (Item != null && Item.getResult() != null
-                        && Item.getResult().equals("0")) {
-                    TurnItemInfo mTurnItemInfo = ((TurnItemInfo) Item.getBean());
-                    String undeal = mTurnItemInfo.getUndeal();
-                    if (TextUtils.isEmpty(undeal)) {
-                        int_undel = 0;
-                    } else {
-                        int_undel = Integer.parseInt(undeal);
+                try {
+                    ResultInfo<TurnItemInfo> Item = new Gson().fromJson(result, new TypeToken<ResultInfo<TurnItemInfo>>() {
+                    }.getType());
+                    if (Item != null && Item.getResult() != null
+                            && Item.getResult().equals("0")) {
+                        TurnItemInfo mTurnItemInfo = ((TurnItemInfo) Item.getBean());
+                        String undeal = mTurnItemInfo.getUndeal();
+                        if (TextUtils.isEmpty(undeal)) {
+                            int_undel = 0;
+                        } else {
+                            int_undel = Integer.parseInt(undeal);
+                        }
                     }
+                }catch (Exception e){
+                    e.printStackTrace();
                 }
-
                 Message message = new Message();
                 message.obj = int_undel;
                 message.what = 100;

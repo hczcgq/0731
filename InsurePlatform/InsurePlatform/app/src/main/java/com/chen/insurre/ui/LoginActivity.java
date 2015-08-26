@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
@@ -372,17 +373,21 @@ public class LoginActivity extends Activity {
             if (dialog != null)
                 dialog.dismiss();
             if (result != null) {
-                ResultInfo<TurnItemInfo> Item = new Gson().fromJson(result, new TypeToken<ResultInfo<TurnItemInfo>>() {
-                }.getType());
-                if (Item != null && Item.getResult() != null
-                        && Item.getResult().equals("0")) {
-                    TurnItemInfo mTurnItemInfo = ((TurnItemInfo) Item.getBean());
-                    String undeal=mTurnItemInfo.getUndeal();
-                    if(TextUtils.isEmpty(undeal)){
-                        int_undel=0;
-                    }else{
-                        int_undel=Integer.parseInt(undeal);
+                try {
+                    ResultInfo<TurnItemInfo> Item = new Gson().fromJson(result, new TypeToken<ResultInfo<TurnItemInfo>>() {
+                    }.getType());
+                    if (Item != null && Item.getResult() != null
+                            && Item.getResult().equals("0")) {
+                        TurnItemInfo mTurnItemInfo = ((TurnItemInfo) Item.getBean());
+                        String undeal=mTurnItemInfo.getUndeal();
+                        if(TextUtils.isEmpty(undeal)){
+                            int_undel=0;
+                        }else{
+                            int_undel=Integer.parseInt(undeal);
+                        }
                     }
+                }catch (Exception e){
+                    e.printStackTrace();
                 }
             }
             Intent intent=new Intent(mContext,MainActivity.class);

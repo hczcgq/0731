@@ -161,7 +161,7 @@ public class TurnOutActivity extends Activity implements View.OnClickListener {
         DetailButton.setOnClickListener(this);
 
 
-        viewLoadMore=findViewById(R.id.viewLoadMore);
+        viewLoadMore = findViewById(R.id.viewLoadMore);
 
         mPullToRefreshLayout = (PullToRefreshLayout) findViewById(R.id.pull_refresh_layout);
         mPullToRefreshLayout
@@ -183,7 +183,7 @@ public class TurnOutActivity extends Activity implements View.OnClickListener {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                isLoadMore=false;
+                isLoadMore = false;
                 cardno = datas.get(position).getCardno();
                 loadDate(TRUN_OUT_DETAIL);
             }
@@ -201,7 +201,7 @@ public class TurnOutActivity extends Activity implements View.OnClickListener {
             viewLoadMore.setVisibility(View.GONE);
             mPullToRefreshLayout
                     .setRefreshMode(PullToRefreshLayout.PULL_NONE);
-        }else{
+        } else {
             viewLoadMore.setVisibility(View.VISIBLE);
             mPullToRefreshLayout
                     .setRefreshMode(PullToRefreshLayout.PULL_DOWN);
@@ -390,8 +390,6 @@ public class TurnOutActivity extends Activity implements View.OnClickListener {
             try {
                 result = HttpHelper.doRequestForString(mContext, url,
                         HttpHelper.HTTP_GET, hashParams);
-                Log.d("Tag", result);
-                //resultInfo = new Gson().fromJson(result, ResultInfo.class);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -403,85 +401,89 @@ public class TurnOutActivity extends Activity implements View.OnClickListener {
             super.onPostExecute(result);
             if (dialog != null)
                 dialog.dismiss();
-            if(isLoadMore){
+            if (isLoadMore) {
                 mPullToRefreshLayout
                         .loadmoreFinish(PullToRefreshLayout.SUCCEED);
             }
-            if (result != null) {
-                System.out.println("result:" + result);
-                if (requestType == TRUN_OUT) {
-                    ResultInfo<TurnItemInfo> Item = new Gson().fromJson(result, new TypeToken<ResultInfo<TurnItemInfo>>() {
-                    }.getType());
-                    if (Item != null && Item.getResult() != null
-                            && Item.getResult().equals("0")) {
-                        Log.d("ccc", Item.getDescription() + "---" + Item.getBean());
-                        mTurnItemInfo = ((TurnItemInfo) Item.getBean());
-                        showItemDate(mTurnItemInfo);
-                    } else {
-                        showFaik(Item);
-                    }
-                } else if (requestType == TRUN_OUT_RECEIVE) {
-                    showTurnListName(TRUN_OUT_RECEIVE, mTurnItemInfo.getReceive());
 
-                    ResultInfo<List<TurnListItem>> Item = new Gson().fromJson(result, new TypeToken<ResultInfo<List<TurnListItem>>>() {
-                    }.getType());
-                    if (Item != null && Item.getResult() != null
-                            && Item.getResult().equals("0")) {
-                        List<TurnListItem> list = Item.getBean();
-                        showList(list);
-                        showNext();
-                    } else {
-                        showFaik(Item);
-                    }
-                } else if (requestType == TRUN_OUT_REJECT) {
-                    showTurnListName(TRUN_OUT_REJECT, mTurnItemInfo.getReject());
-                    ResultInfo<List<TurnListItem>> Item = new Gson().fromJson(result, new TypeToken<ResultInfo<List<TurnListItem>>>() {
-                    }.getType());
-                    if (Item != null && Item.getResult() != null
-                            && Item.getResult().equals("0")) {
-                        List<TurnListItem> list = Item.getBean();
-                        showList(list);
-                        showNext();
-                    } else {
-                        showFaik(Item);
-                    }
-                } else if (requestType == TRUN_OUT_UNDEAL) {
-                    showTurnListName(TRUN_OUT_UNDEAL, mTurnItemInfo.getUndeal());
-                    ResultInfo<List<TurnListItem>> Item = new Gson().fromJson(result, new TypeToken<ResultInfo<List<TurnListItem>>>() {
-                    }.getType());
-                    if (Item != null && Item.getResult() != null
-                            && Item.getResult().equals("0")) {
-                        List<TurnListItem> list = Item.getBean();
-                        showList(list);
-                        showNext();
-                    } else {
-                        showFaik(Item);
-                    }
-                } else if (requestType == TRUN_OUT_DETAIL) {
-                    showTurnDetailName(Tag);
-                    ResultInfo<TurnOutDetailInfo> Item = new Gson().fromJson(result, new TypeToken<ResultInfo<TurnOutDetailInfo>>() {
-                    }.getType());
-                    if (Item != null && Item.getResult() != null
-                            && Item.getResult().equals("0")) {
-                        TurnOutDetailInfo detailInfo = Item.getBean();
-                        if (Tag == TRUN_OUT_RECEIVE) {
-                            DetailReceiveView.setVisibility(View.VISIBLE);
-                            DetailRejectView.setVisibility(View.GONE);
-                            DetailUndealView.setVisibility(View.VISIBLE);
-                        } else if (Tag == TRUN_OUT_REJECT) {
-                            DetailReceiveView.setVisibility(View.VISIBLE);
-                            DetailRejectView.setVisibility(View.VISIBLE);
-                            DetailUndealView.setVisibility(View.VISIBLE);
-                        } else if (Tag == TRUN_OUT_UNDEAL) {
-                            DetailReceiveView.setVisibility(View.VISIBLE);
-                            DetailRejectView.setVisibility(View.GONE);
-                            DetailUndealView.setVisibility(View.VISIBLE);
+            if (result != null) {
+                try {
+                    if (requestType == TRUN_OUT) {
+                        ResultInfo<TurnItemInfo> Item = new Gson().fromJson(result, new TypeToken<ResultInfo<TurnItemInfo>>() {
+                        }.getType());
+                        if (Item != null && Item.getResult() != null
+                                && Item.getResult().equals("0")) {
+                            Log.d("ccc", Item.getDescription() + "---" + Item.getBean());
+                            mTurnItemInfo = ((TurnItemInfo) Item.getBean());
+                            showItemDate(mTurnItemInfo);
+                        } else {
+                            showFaik(Item);
                         }
-                        showGlobalDetail(detailInfo, Tag);
-                        viewFlipper.showNext();
-                    } else {
-                        showFaik(Item);
+                    } else if (requestType == TRUN_OUT_RECEIVE) {
+                        showTurnListName(TRUN_OUT_RECEIVE, mTurnItemInfo.getReceive());
+
+                        ResultInfo<List<TurnListItem>> Item = new Gson().fromJson(result, new TypeToken<ResultInfo<List<TurnListItem>>>() {
+                        }.getType());
+                        if (Item != null && Item.getResult() != null
+                                && Item.getResult().equals("0")) {
+                            List<TurnListItem> list = Item.getBean();
+                            showList(list);
+                            showNext();
+                        } else {
+                            showFaik(Item);
+                        }
+                    } else if (requestType == TRUN_OUT_REJECT) {
+                        showTurnListName(TRUN_OUT_REJECT, mTurnItemInfo.getReject());
+                        ResultInfo<List<TurnListItem>> Item = new Gson().fromJson(result, new TypeToken<ResultInfo<List<TurnListItem>>>() {
+                        }.getType());
+                        if (Item != null && Item.getResult() != null
+                                && Item.getResult().equals("0")) {
+                            List<TurnListItem> list = Item.getBean();
+                            showList(list);
+                            showNext();
+                        } else {
+                            showFaik(Item);
+                        }
+                    } else if (requestType == TRUN_OUT_UNDEAL) {
+                        showTurnListName(TRUN_OUT_UNDEAL, mTurnItemInfo.getUndeal());
+                        ResultInfo<List<TurnListItem>> Item = new Gson().fromJson(result, new TypeToken<ResultInfo<List<TurnListItem>>>() {
+                        }.getType());
+                        if (Item != null && Item.getResult() != null
+                                && Item.getResult().equals("0")) {
+                            List<TurnListItem> list = Item.getBean();
+                            showList(list);
+                            showNext();
+                        } else {
+                            showFaik(Item);
+                        }
+                    } else if (requestType == TRUN_OUT_DETAIL) {
+                        showTurnDetailName(Tag);
+                        ResultInfo<TurnOutDetailInfo> Item = new Gson().fromJson(result, new TypeToken<ResultInfo<TurnOutDetailInfo>>() {
+                        }.getType());
+                        if (Item != null && Item.getResult() != null
+                                && Item.getResult().equals("0")) {
+                            TurnOutDetailInfo detailInfo = Item.getBean();
+                            if (Tag == TRUN_OUT_RECEIVE) {
+                                DetailReceiveView.setVisibility(View.VISIBLE);
+                                DetailRejectView.setVisibility(View.GONE);
+                                DetailUndealView.setVisibility(View.VISIBLE);
+                            } else if (Tag == TRUN_OUT_REJECT) {
+                                DetailReceiveView.setVisibility(View.VISIBLE);
+                                DetailRejectView.setVisibility(View.VISIBLE);
+                                DetailUndealView.setVisibility(View.VISIBLE);
+                            } else if (Tag == TRUN_OUT_UNDEAL) {
+                                DetailReceiveView.setVisibility(View.VISIBLE);
+                                DetailRejectView.setVisibility(View.GONE);
+                                DetailUndealView.setVisibility(View.VISIBLE);
+                            }
+                            showGlobalDetail(detailInfo, Tag);
+                            viewFlipper.showNext();
+                        } else {
+                            showFaik(Item);
+                        }
                     }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         }
@@ -514,6 +516,7 @@ public class TurnOutActivity extends Activity implements View.OnClickListener {
 
     /**
      * 加载失败
+     *
      * @param items
      */
     private void showFaik(ResultInfo<?> items) {

@@ -48,6 +48,7 @@
             android:visibility="gone">
 
             <include
+                android:id="@+id/personinfoView"
                 layout="@layout/view_collection_person"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content" />

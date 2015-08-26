@@ -19,7 +19,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="10.0dip"
             android:onClick="UndealReceiveClick"
-            android:text="接受"
+            android:text="接收"
             android:textColor="@android:color/black"
             android:textSize="@dimen/button_text_size" />
 
